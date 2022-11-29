@@ -1,0 +1,175 @@
+import "u-test" as test
+import "dump" as { :dump }
+
+import "parse_layout_row" as { :parse_layout_row }
+
+const ast = {
+  row_count: 3,
+  col_count: 5
+}
+
+pl = (row_string) ->
+  parse_layout_row(ast, row_string)
+
+----- blank and comment
+
+test.blank["empty row"] = () ->
+  result = pl("")
+  test.equal result.type, "blank"
+
+test.blank["just spaces"] = () ->
+  result = pl("      ")
+  test.equal result.type, "blank"
+
+test.blank["comment"] = () ->
+  result = pl("-- this is a comment      ")
+  test.equal result.type, "blank"
+
+test.blank["comment with leading spaces"] = () ->
+  result = pl("  -- this is a comment      ")
+  test.equal result.type, "blank"
+
+----- caption
+
+for prefix in *{ ":", "#", "###"}
+  test.caption["with #{prefix}"] = () ->
+    result = pl("#{prefix} a caption")
+    test.equal result.type, "caption"
+    test.equal result.caption, "a caption"
+
+----- global
+ 
+----- selector
+
+test.alignment["alignment spelled out"] = () ->
+  result = pl("r1 = align(lt)")
+  test.equal result.type, "selector"
+  f = result.formats
+  test.equal f[1].type, "align"
+  test.equal f[1].spec, "lt"
+
+test.alignment["alignment value only"] = () ->
+  result = pl("r1 = align(rb)")
+  test.equal result.type, "selector"
+  f = result.formats
+  test.equal f[1].type, "align"
+  test.equal f[1].spec, "rb"
+
+---
+
+test.color["bg color (random) spelled out"] = () ->
+  result = pl("r1 = bg(wombat)")
+  test.equal result.type, "selector"
+  f = result.formats
+  test.equal f[1].type, "any-color"
+  test.equal f[1].spec, "wombat"
+  test.equal f[1].ground, "bg"
+
+test.color["bg color (known) spelled out"] = () ->
+  result = pl("r1 = bg(green6)")
+  test.equal result.type, "selector"
+  f = result.formats
+  test.equal f[1].type, "named-color"
+  test.equal f[1].name, "green"
+  test.equal f[1].suffix, 6
+  test.equal f[1].ground, "bg"
+
+test.color["bg color (hex3) spelled out"] = () ->
+  result = pl("r1 = bg(#2a6)")
+  test.equal result.type, "selector"
+  f = result.formats
+  test.equal f[1].type, "rgb"
+  test.equal f[1].spec, "#2a6"
+  test.equal f[1].ground, "bg"
+
+test.color["bg color (known) value only"] = () ->
+  result = pl("r1 = green6")
+  test.equal result.type, "selector"
+  f = result.formats
+  test.equal f[1].type, "named-color"
+  test.equal f[1].name, "green"
+  test.equal f[1].suffix, 6
+  test.equal f[1].ground, "bg"
+
+test.color["bg color (hex3) value only"] = () ->
+  result = pl("r1 = #2a6")
+  test.equal result.type, "selector"
+  f = result.formats
+  test.equal f[1].type, "rgb"
+  test.equal f[1].spec, "#2a6"
+  test.equal f[1].ground, "bg"
+
+---
+
+test.color["fg color (random) spelled out"] = () ->
+  result = pl("r1 = fg(wombat)")
+  test.equal result.type, "selector"
+  f = result.formats
+  test.equal f[1].type, "any-color"
+  test.equal f[1].spec, "wombat"
+  test.equal f[1].ground, "fg"
+
+test.color["fg color (known) spelled out"] = () ->
+  result = pl("r1 = fg(green6)")
+  test.equal result.type, "selector"
+  f = result.formats
+  test.equal f[1].type, "named-color"
+  test.equal f[1].name, "green"
+  test.equal f[1].suffix, 6
+  test.equal f[1].ground, "fg"
+
+test.color["fg color (hex3) spelled out"] = () ->
+  result = pl("r1 = fg(#2a6)")
+  test.equal result.type, "selector"
+  f = result.formats
+  test.equal f[1].type, "rgb"
+  test.equal f[1].spec, "#2a6"
+  test.equal f[1].ground, "fg"
+
+---
+
+test.style["single"] = () ->
+  result = pl("r1 = .shaded")
+  test.equal result.type, "selector"
+  f = result.formats
+  test.equal f[1].type, "style"
+  test.equal f[1].spec, "shaded"
+
+---
+
+test.lines["lines spelled out"] = () ->
+  result = pl("r1 = lines([_])")
+  test.equal result.type, "selector"
+  f = result.formats
+  test.equal f[1].type, "lines"
+  test.equal f[1].spec, "[_]"
+
+test.lines["lines value only"] = () ->
+  result = pl("r1 = [_]")
+  test.equal result.type, "selector"
+  f = result.formats
+  test.equal f[1].type, "lines"
+  test.equal f[1].spec, "[_]"
+
+---
+
+test.width["width spelled out"] = () ->
+  result = pl("r1 = width(123)")
+  test.equal result.type, "selector"
+  f = result.formats
+  test.equal f[1].type, "width"
+  test.equal f[1].spec, 123
+
+test.width["width value only"] = () ->
+  result = pl("r1 = 123")
+  test.equal result.type, "selector"
+  f = result.formats
+  test.equal f[1].type, "width"
+  test.equal f[1].spec, 123
+
+
+-----
+
+test.summary!
+
+

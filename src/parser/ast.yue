@@ -1,0 +1,134 @@
+import "parse_tableau" as { :parse_tableau }
+import "inspect"
+import "util"
+import "parse_data_row"   as {:parse_data_row}
+import "parse_layout_row" as {:parse_layout_row}
+
+import "re"
+
+const LINE_CONTINUATION = "\\\n"
+const NEWLINE_PATTERN = "\r?\n"
+
+
+dump = (v) -> print(inspect(v))
+
+class Ast
+  new: () =>
+    @row_count = 0
+    @col_count = 0
+    @rows = {}
+
+  add_row: (row) =>
+    @rows[] = row
+    @row_count += 1
+    @col_count = math.max(@col_count, #row)
+
+  add_layout: (layout) ->
+    dump({ add_layout: layout })
+-- class Ast 
+
+  -- new: (table_source) =>
+  --   table = merge_continuation_lines(table)
+  --   local rows = split_into_rows(table)    data_source, layout_source = parse_tableau(table_source)
+  --   @data = \parse_data(data_source)
+
+
+  -- parse_data: (str) =>
+  --   rows = util.split(str)
+
+
+--------------------------------------------------------------------------------
+merge_continuation_lines = (table) ->
+  table\gsub(LINE_CONTINUATION, "")
+
+--------------------------------------------------------------------------------
+split_into_rows = (table) ->
+  table
+  |> util.trim()
+  |> util.split(NEWLINE_PATTERN)
+ 
+--------------------------------------------------------------------------------
+split_into_data_and_layout = (source) ->
+  data = source
+  layout = nil
+
+  s, e = source\find("\n===%s*\n")
+  if s
+    data = source\sub(1, s-1)
+    layout = source\sub(e+1)
+  {data, layout}
+
+--------------------------------------------------------------------------------
+decode_column_number = (c) ->
+  dump(c)
+  if c\find("^%d+")
+    c |> tonumber()
+  else
+    c\byte(1) - "a"\byte(1) + 1
+
+
+--------------------------------------------------------------------------------
+-- expand tabs (stolen from pl.stringx)
+expandtabs = (str,tabsize=8) ->
+  str\gsub("([^\t\r\n]*)\t", (before_tab) ->
+        before_tab .. (" ")\rep(tabsize - #before_tab % tabsize))
+
+--------------------------------------------------------------------------------
+-- remove leading whitespace
+normalize = (content) ->
+  spaces = 9999
+  for i = 1, #content
+    content[i] = expandtabs(content[i])
+    _, e = content[i]\find("^%s+")
+    spaces = math.min(spaces, e)
+  dump{:content, :spaces}
+  return [ r\sub(spaces+1) for r in *content ]
+
+--------------------------------------------------------------------------------
+col_text_re = re.compile([[
+  colheader <- prefix ':' [ \t]* {| colnumber |}
+  prefix    <- 'column' / 'col'
+  colnumber <- {:col: [1-9][0-9]?  / [a-z] :} 
+]])
+
+parse_data = (ast, data) ->
+  rows = split_into_rows(data)
+  i = 1
+  while i <= #rows
+    last_row = parse_data_row(rows[i])
+    i += 1
+    if i < #rows
+      -- check for "col: nn" block
+      next = rows[i]\lower()
+      col = col_text_re\match(next)
+      if col
+        content = {}
+        col = decode_column_number(col.col)
+        i += 1
+        r = rows[i]
+        while r\find("^%s+") and i < #rows
+          content[] = r
+          i += 1
+          r = rows[i]
+        last_row[col].content = normalize(content)
+
+    ast\add_row(last_row)
+
+--------------------------------------------------------------------------------
+parse_layout = (ast, layout) ->
+  rows = split_into_rows(data)
+  return if #rows == 0
+  
+  for i = 1, #rows
+    layout = parse_layout_row(rows[i])
+    ast\add_layout(layout)
+
+--------------------------------------------------------------------------------
+export parse = (source) ->
+  source = merge_continuation_lines(source)
+  {data,layout} =  source |> merge_continuation_lines() |> split_into_data_and_layout()
+  ast = Ast()
+  parse_data(ast, data)
+  parse_layout(ast, layout) if layout
+  dump ast  
+

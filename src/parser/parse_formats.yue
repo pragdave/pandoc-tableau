@@ -1,0 +1,156 @@
+--     fg(color)
+--     bg(color)
+--     align([lcrj][tmb])   l c r j t m b
+--     width(n)             [0-9]
+--     lines([ []_~ ]+)     [ ] _ ~
+--     style(a,b,c)         .a .b .c
+
+import "util" as { :dump, :expect }
+
+const color_names = {
+  azure:   true,
+  black:   true,
+  blue:    true,
+  brown:   true,
+  cyan:    true,
+  gray:    true,
+  green:   true,
+  magenta: true,
+  olive:   true,
+  purple:  true,
+  red:     true,
+  teal:    true,
+  violet:  true,
+  white:   true,
+  yellow:  true,
+}
+
+const color_hx3 = "#%x%x%x"
+const color_hx6 = "#%x%x%x%x%x%x"
+
+
+--------------------------------------------------------------------------------
+named_color = (text) ->
+  text\save_place()
+  name = text\scan("%a+%f[%A]")
+  unless name and color_names[name]
+    text\restore_place()
+    return nil
+
+  suffix = text\scan("%d%f[%D]") |> tonumber
+  { type: "named-color", :name, :suffix }
+
+--------------------------------------------------------------------------------
+known_color = (text) ->
+  rgb = text\scan(color_hx6) or text\scan(color_hx3) 
+  if rgb
+    { type: "rgb", spec: rgb }
+  else
+    named_color(text)
+
+--------------------------------------------------------------------------------
+-- any word
+any_color = (text) ->
+  col = text\scan("[%w%-%_]+%f[^%w%-%_]")
+  if col
+    { type: "any-color", spec: col }
+
+--------------------------------------------------------------------------------
+--     align([lcrj][tmb])   l c r j t m b
+align = (text) ->
+  spec = nil
+  if text\scan("align%(")
+    spec = expect(align, text, "expecting alignment specifier [lcrj][tmb]")
+    text\expect("%)", "expected closing parenthesis after alignment specifier")
+  else
+    if text\scan("[lcrj][tmb]%f[%A]") or text\scan("[lcrj]%f[%A]") or text\scan("[tmb]%f[%A]")
+      spec = { type: "align", spec: text.last_match }
+  spec
+
+
+--------------------------------------------------------------------------------
+--     fg(color)
+color = (text, ground) ->
+  spec = nil
+  if text\scan("#{ground}%(")
+    unless spec = known_color(text)
+      spec = expect(any_color, text, "expecting color")
+    text\expect("%)", "expected a single-word color name followed by a ')' ")
+
+  if spec
+    text\skip("%s*")
+    spec.ground = ground
+  spec
+
+--------------------------------------------------------------------------------
+--     bg/fg(color)
+bg = (text) ->
+  spec = color(text, "bg") or known_color(text)
+  if spec
+    text\skip("%s*")
+    spec.ground = "bg"
+  spec 
+
+fg = (text) ->
+  spec = color(text, "fg")
+  if spec
+    text\skip("%s*")
+    spec.ground = "fg"
+  spec 
+
+
+--------------------------------------------------------------------------------
+--     lines([ []_~ ]+)     [ ] _ ~
+lines = (text) ->
+  spec = nil
+  if text\scan("lines?%(")
+    spec = expect(lines, text, "expecting line specifier, one or more of: ] _ ~ [")
+    text\expect("%)", "expected closing parenthesis after line specifier")
+  else
+    if text\scan("[%[%]_~]+")
+      spec = { type: "lines", spec: text.last_match }
+  spec
+
+--------------------------------------------------------------------------------
+--     style = .name
+style = (text) ->
+  spec = nil
+  if text\scan("%.[%w_-]+")
+    dump(text.last_match)
+    spec = string.sub(text.last_match, 2)
+    text\scan("%s*")
+  
+  if spec
+    { type: "style", :spec }
+
+
+--------------------------------------------------------------------------------
+--     width(n)             [0-9]
+width = (text) ->
+  spec = nil
+  if text\scan("width%(")
+    spec = expect(width, text, "expecting an integer width")
+    text\expect("%)", "expected closing parenthesis after width")
+  else
+    if text\scan("[1-9][0-9]*") 
+      spec = { type: "width", spec: text.last_match |> tonumber }
+  spec
+
+
+
+--------------------------------------------------------------------------------
+export parse_global_formats = (text) ->
+  false
+
+
+--------------------------------------------------------------------------------
+export parse_selector_formats = (text) ->
+  text\skip("%s+")
+  return if text\empty()
+
+  align(text) or 
+    bg(text) or 
+    fg(text) or 
+    lines(text) or 
+    style(text) or 
+    width(text)
