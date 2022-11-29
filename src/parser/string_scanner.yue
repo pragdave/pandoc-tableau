@@ -1,5 +1,3 @@
-import "dump" as dump
-
 export class StringScanner
 
   new: (str) =>

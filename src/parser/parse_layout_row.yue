@@ -1,9 +1,9 @@
 -- import "string_scanner" as { StringScanner }
 import "parse_selector" as { :parse_selector }
 import "parse_formats" as { :parse_selector_formats, :parse_global_formats }
-import "dump" as  {dump: dump}
 import "string_scanner" as { StringScanner: StringScanner }
 import "util"
+import "util" as { :expect, :dump }
 
 -- layout = blank | comment | caption | global | selected
 -- caption = [#:]+ .*
@@ -18,7 +18,6 @@ import "util"
 --
 -- global_formats = fg bg lines 
 
-import "util" as { :expect }
 
 ----------------------------------------------------------------------
 FMT_MSG = [[
@@ -37,8 +36,9 @@ parse_error = (row) ->
 ----------------------------------------------------------------------
 formats_list = (parser, row) ->
   format = expect(parser, row, "missing a format after 'selector ='")
-  result = { format }
+  result = { }
   while format
+    result[] = format
     row\skip("%s*,")
     row\skip("%s*")
     format = parser(row)
@@ -72,12 +72,12 @@ globl = (row) ->
 ----------------------------------------------------------------------
 export parse_layout_row = (ast, row_source) ->
   row = row_source |> util.trim() |> StringScanner()
-  blank_or_comment(row) or
+  result = blank_or_comment(row) or
     caption(row) or
     selected(ast, row) or
     globl(row) or
     parse_error(row)
-
+  result
 
 
 

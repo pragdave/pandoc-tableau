@@ -1,5 +1,3 @@
-import "parse_tableau" as { :parse_tableau }
-import "inspect"
 import "util"
 import "parse_data_row"   as {:parse_data_row}
 import "parse_layout_row" as {:parse_layout_row}
@@ -10,31 +8,39 @@ const LINE_CONTINUATION = "\\\n"
 const NEWLINE_PATTERN = "\r?\n"
 
 
-dump = (v) -> print(inspect(v))
+dump = util.dump
 
 class Ast
   new: () =>
     @row_count = 0
     @col_count = 0
     @rows = {}
+    @caption = nil
+    @selector_formats = {}
+    @global_formats = {}
 
   add_row: (row) =>
     @rows[] = row
     @row_count += 1
     @col_count = math.max(@col_count, #row)
 
-  add_layout: (layout) ->
-    dump({ add_layout: layout })
--- class Ast 
+  add_layout: (layout) =>
+    switch layout.type
+      when "blank"
+        nil
 
-  -- new: (table_source) =>
-  --   table = merge_continuation_lines(table)
-  --   local rows = split_into_rows(table)    data_source, layout_source = parse_tableau(table_source)
-  --   @data = \parse_data(data_source)
+      when "caption"
+        @caption = layout.caption
 
+      when "selector"
+        @selector_formats[] = { selector: layout.selector, formats: layout.formats }
 
-  -- parse_data: (str) =>
-  --   rows = util.split(str)
+      when "global"
+        @global_formats[] = { selector: layout.selector, formats: layout.formats }
+
+      else
+        error("unknown layout type: #{layout.type}")
+
 
 
 --------------------------------------------------------------------------------
@@ -60,7 +66,6 @@ split_into_data_and_layout = (source) ->
 
 --------------------------------------------------------------------------------
 decode_column_number = (c) ->
-  dump(c)
   if c\find("^%d+")
     c |> tonumber()
   else
@@ -81,7 +86,6 @@ normalize = (content) ->
     content[i] = expandtabs(content[i])
     _, e = content[i]\find("^%s+")
     spaces = math.min(spaces, e)
-  dump{:content, :spaces}
   return [ r\sub(spaces+1) for r in *content ]
 
 --------------------------------------------------------------------------------
@@ -116,19 +120,18 @@ parse_data = (ast, data) ->
 
 --------------------------------------------------------------------------------
 parse_layout = (ast, layout) ->
-  rows = split_into_rows(data)
+  rows = split_into_rows(layout)
   return if #rows == 0
   
   for i = 1, #rows
-    layout = parse_layout_row(rows[i])
+    layout = parse_layout_row(ast, rows[i])
     ast\add_layout(layout)
 
 --------------------------------------------------------------------------------
 export parse = (source) ->
-  source = merge_continuation_lines(source)
   {data,layout} =  source |> merge_continuation_lines() |> split_into_data_and_layout()
   ast = Ast()
   parse_data(ast, data)
   parse_layout(ast, layout) if layout
-  dump ast  
+  ast
 

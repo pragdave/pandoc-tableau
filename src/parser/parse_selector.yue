@@ -10,9 +10,8 @@
 -- adjustment = [-+] integer
 --
 
-import "dump" as  { :dump }
 import "string_scanner" as { :StringScanner }
-import "util" as { :expect }
+import "util" as { :dump, :expect }
 
 ---------------------------------------------------------------------------------
 
