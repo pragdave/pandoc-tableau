@@ -1,35 +1,40 @@
-PARSER=$(addprefix parser/, dump.yue row_parser.yue split.yue string_scanner.yue ast.yue util.yue)
-PARSER2=$(addprefix parser2/, dump.yue string_scanner.yue util.yue parse_spec.yue)
+targets_for = $(patsubst %.yue, $(TDIR)/%.lua, $1)
+PARSER=$(addprefix parser/, \
+	ast.yue \
+	parse_data_row.yue \
+	parse_formats.yue \
+	parse_layout_row.yue \
+	parse_selector.yue \
+	string_scanner.yue \
+	util.yue \
+	)
 
-TDIR=_extensions/tableau_pdf
-TPDIR=$(TDIR)/parser
-TP2DIR=$(TDIR)/parser2
+DRIVER=tableau_pre.yue
 
-TPARSER=$(patsubst %.yue, $(TDIR)/%.lua, $(PARSER))
-TPARSER2=$(patsubst %.yue, $(TDIR)/%.lua, $(PARSER2))
+ASSETS=assets/tableau_pre/tableau.css
 
-.default: build
+TDIR=_extensions/tableau_pre
+TDIR_PARSER=$(TDIR)/parser
+TDIR_ASSETS=$(TDIR)/assets
+TASSETS=$(TDIR_ASSETS)/tableau.css
+
+TDIRS=$(TDIR) $(TDIR_PARSER) $(TDIR_ASSETS)
+
+TPARSER=$(call targets_for, $(PARSER) $(DRIVER))
 
 $(TDIR)/%.lua:	src/%.yue
 	yue -o $@ $<
 
-build: tp1 tp2 $(TDIR)/tableau_pdf.lua 
 
-tp1: $(TPDIR) $(TPARSER) 
+.default: build
 
-tp2: $(TP2DIR) $(TPARSER2)
+build: $(TDIRS) $(TASSETS) $(TPARSER)
 
-# TDIR=_extensions/tableau
-# TARGETS=$(patsubst %.yue, $(TDIR)/%.lua, $(SRC))
+$(TASSETS): $(ASSETS)
+	cp $(ASSETS) $(TASSETS)
 
+$(TDIRS):
+		mkdir -p $@
 
-
-# build:	$(TDIR) $(TARGETS)
-
-# test:
-# 	cd src && yue -e test.yua
-
-$(TPDIR):
-		mkdir -p $(TPDIR)
-$(TP2DIR):
-		mkdir -p $(TP2DIR)
+# $(TDIR_PARSER):
+# 		mkdir -p $(TDIR_PARSER)

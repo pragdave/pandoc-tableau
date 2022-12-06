@@ -1,0 +1,279 @@
+dump = require("./parser/util").dump
+parse = require("./parser/ast").parse
+if false then dump("just here to remove the 'unused' warning") 
+
+----------------------------------------------------------------------------------
+--local append = table.insert
+--local md2ast = function (str)
+--  return pandoc.read(str).blocks
+--end
+
+----------------------------------------------------------------------------------
+const LINE_LEFT   = 1
+const LINE_RIGHT  = 2
+const LINE_TOP    = 4
+const LINE_BOTTOM = 8
+
+decode_lines = (spec) =>
+  result = 0
+  for i = 1, string.len(spec)
+    switch spec\sub(i, 1)
+      when "[" then result |= 1
+      when "]" then result |= 2
+      when "~" then result |= 4
+      when "_" then result |= 8
+  result
+
+class CellAttribute
+  new: (content)=> 
+    @content = content
+    @width   = nil
+    @fg      = nil
+    @bg      = nil
+    @align   = nil
+    @lines   = 0
+    @styles  = {}
+
+  merge: (format_list) =>
+    for fmt in *format_list
+      switch fmt.type
+
+        when "width"
+          @width = fmt.spec   -- overwrite
+
+        when "lines"
+          @lines |= decode_lines(fmt.spec)
+
+        else
+          io.error\write("\n\nUnknown format #{fmt.type} ignored\n\n")
+
+----------------------------------------------------------------------------------
+extract_cells_and_attributes = (ast) ->
+  cells = (row) ->
+    return [ CellAttribute(cell.content) for cells in *row ]
+  rows = [ cells(row) for row in *ast.rows ]
+  dump rows, "CELLS"
+
+----------------------------------------------------------------------------------
+caption = (ast) ->
+  if ast.caption 
+    local capt = md2ast(ast.caption)
+    pandoc.utils.blocks_to_inlines(capt, { pandoc.Str("7777") })
+  else
+    {}
+
+----------------------------------------------------------------------------------
+--local function alignmentFor(spec)
+--  if spec == "<" then
+--    return "AlignLeft"
+--  end
+--  if spec == ">" then
+--    return "AlignRight"
+--  end
+--  return "AlignCenter"
+--end
+
+----------------------------------------------------------------------------------
+--local function colspecs(ast)
+--  local result = {}
+--  local total_width = 0
+--  local widths = {}
+
+--  for i = 1, #ast.widths do
+--    widths[i] = ast.widths[i]
+--    total_width = total_width + widths[i]
+--  end
+
+--  -- for tables with a few columns, the min column width is roughly 10%. Otherwise 
+--  -- we just leave things as they are
+
+--  if #widths < 10 then
+--    local threshold = total_width / 10
+--    for i = 1, #widths do
+--      if widths[i] < threshold then
+--        widths[i] = threshold
+--      end
+--    end
+--  end
+
+--  for i, spec in pairs(ast.default_formats) do
+--    table.insert(result, { alignmentFor(spec.alignment), widths[i] })
+--  end
+--  return result
+--end
+
+---- a little hacky... if the first body has a head, move it to be 
+---- the table's head
+---- local function head(sects)
+----   if #sects == 0 or #sects[1].head == 0 then
+----     return pandoc.TableHead()
+----   end
+----   local head = sects[1].head
+----   sects[1].head = {}
+----   return pandoc.TableHead(head)
+---- end
+
+----------------------------------------------------------------------------------
+--local function foot()
+--  return pandoc.TableFoot()
+--end
+
+----------------------------------------------------------------------------------
+--local function attr(ast, id)
+--  local classes = { "table" }
+--  for _, cls in pairs(ast.table_classes) do
+--    append(classes, cls)
+--  end
+--  local table_attributes = {}
+--  if ast.width then
+--    table_attributes = {
+--      width = ast.width,
+--      style = "width: \"" .. ast.width .. "%\""
+--    }
+--  end
+
+--  table_attributes.has_hlines = ast.has_hlines
+--  table_attributes.all_hlines = ast.all_hlines
+--  table_attributes.all_vlines = ast.all_vlines
+--  table_attributes.box        = ast.box
+
+--  return pandoc.Attr(id or "", classes, table_attributes)
+--end
+
+
+----------------------------------------------------------------------------------
+--local function cell_attr(_, format)
+--  local classes = format.css_classes
+--  if format.heading then
+--    append(classes, "tableau-th")
+--  end
+--  return pandoc.Attr("", classes, pandoc.AttributeList(format.lines))
+--end
+
+----------------------------------------------------------------------------------
+--local function cell(c)
+--  local f = c.format
+--  return pandoc.Cell(
+--    md2ast(c.content),
+--    alignmentFor(f.alignment),
+--    c.rowspan_count+1,
+--    c.colspan_count+1,
+--    cell_attr(c, f)
+--  )
+--end
+
+
+---- There must be a better way, but...
+---- An HTML rowspan replaces the cells below:
+---- there are no td entries. In TeX, however,
+---- we need to include an & for each column.
+---- Because we're using the staqndard HTML writer,
+---- we have to generate a different AST depending
+---- on the target
+
+
+----------------------------------------------------------------------------------
+--local maybe_add_hidden_cell
+--if quarto.doc.is_format("pdf") then
+--  maybe_add_hidden_cell = function(cells, c)
+--    append(cells, cell(c))
+--  end
+--else
+--  maybe_add_hidden_cell = function(cells, c)
+--    if not c.hidden then
+--      append(cells, cell(c))
+--    end
+--  end
+--end
+
+----------------------------------------------------------------------------------
+--local function row(r)
+--  local cells = {}
+--  for _, c in pairs(r.cells) do
+--    maybe_add_hidden_cell(cells, c)
+--  end
+--  return pandoc.Row(cells)
+--end
+
+---- local function body(ast)
+----   local result = {}
+----   for _, r in pairs(ast.rows) do
+----     append(result, row(r))
+----   end
+----   return result
+---- end
+
+----------------------------------------------------------------------------------
+sections = (rows) ->
+  new_section = () ->
+    {
+      head = {},
+      body = {},
+      row_head_columns = 0,
+      attr = pandoc.Attr()
+    }
+
+  current = new_section()
+  sects = { current }
+
+  in_head = true
+
+  for r in *rows
+    -- pdrow = row(r)
+    -- if r\looks_like_header(r) then
+    --   if not in_head then
+    --     current = new_section()
+    --     append(sects, current)
+    --     in_head = true
+    --   end
+    --   append(current.head, pdrow)
+    -- else
+    --   in_head = false
+      append(current.body, pdrow)
+
+  -- promote the header of the first body part to be the table header
+  -- local main_head
+
+  -- if #sects == 0 or #sects[1].head == 0 then
+  --   main_head = pandoc.TableHead()
+  -- else
+  --   local head = sects[1].head
+  --   sects[1].head = {}
+  --   main_head = pandoc.TableHead(head)
+  -- end
+  return main_head, sects
+end
+
+
+----------------------------------------------------------------------------------
+table_for = (ast, id) ->
+  rows = extract_cells_and_attributes(ast)
+  pandoc.Table \
+    caption(ast),
+    {},
+    pandoc.TableHead({}),
+    {},
+    pandoc.TableFoot({}),
+    {}
+    -- colspecs(ast),
+    -- head,
+    -- sects,
+    -- foot(),
+    -- attr(ast, id)
+
+----------------------------------------------------------------------------------
+export CodeBlock = (block) ->
+  return unless block.classes[1] == "tableau"
+
+  ast = parse(block.text)
+  dump ast, "initial ast"
+  if ast 
+    return table_for(ast, block.attr.identifier)
+
+quarto.doc.add_html_dependency({
+  name: "tableau",
+  version: "1.0.0",
+  stylesheets: {"assets/tableau.css"}
+})
+
+export { :CodeBlock }

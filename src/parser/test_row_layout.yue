@@ -1,7 +1,7 @@
 import "u-test" as test
-import "dump" as { :dump }
+import "parser.util" as { :dump }
 
-import "parse_layout_row" as { :parse_layout_row }
+import "parser.parse_layout_row" as { :parse_layout_row }
 
 const ast = {
   row_count: 3,
@@ -10,6 +10,8 @@ const ast = {
 
 pl = (row_string) ->
   parse_layout_row(ast, row_string)
+
+print "\n\nTEST ROW LAYOUT\n"
 
 ----- blank and comment
 
@@ -61,43 +63,43 @@ test.color["bg color (random) spelled out"] = () ->
   result = pl("r1 = bg(wombat)")
   test.equal result.type, "selector"
   f = result.formats
-  test.equal f[1].type, "any-color"
-  test.equal f[1].spec, "wombat"
-  test.equal f[1].ground, "bg"
+  test.equal f[1].color_type, "any-color"
+  test.equal f[1].name, "wombat"
+  test.equal f[1].type, "bg"
 
 test.color["bg color (known) spelled out"] = () ->
   result = pl("r1 = bg(green6)")
   test.equal result.type, "selector"
   f = result.formats
-  test.equal f[1].type, "named-color"
+  test.equal f[1].color_type, "named-color"
   test.equal f[1].name, "green"
   test.equal f[1].suffix, 6
-  test.equal f[1].ground, "bg"
+  test.equal f[1].type, "bg"
 
 test.color["bg color (hex3) spelled out"] = () ->
   result = pl("r1 = bg(#2a6)")
   test.equal result.type, "selector"
   f = result.formats
-  test.equal f[1].type, "rgb"
-  test.equal f[1].spec, "#2a6"
-  test.equal f[1].ground, "bg"
+  test.equal f[1].color_type, "rgb"
+  test.equal f[1].name, "#2a6"
+  test.equal f[1].type, "bg"
 
 test.color["bg color (known) value only"] = () ->
   result = pl("r1 = green6")
   test.equal result.type, "selector"
   f = result.formats
-  test.equal f[1].type, "named-color"
+  test.equal f[1].color_type, "named-color"
   test.equal f[1].name, "green"
   test.equal f[1].suffix, 6
-  test.equal f[1].ground, "bg"
+  test.equal f[1].type, "bg"
 
 test.color["bg color (hex3) value only"] = () ->
   result = pl("r1 = #2a6")
   test.equal result.type, "selector"
   f = result.formats
-  test.equal f[1].type, "rgb"
-  test.equal f[1].spec, "#2a6"
-  test.equal f[1].ground, "bg"
+  test.equal f[1].color_type, "rgb"
+  test.equal f[1].name, "#2a6"
+  test.equal f[1].type, "bg"
 
 ---
 
@@ -105,26 +107,26 @@ test.color["fg color (random) spelled out"] = () ->
   result = pl("r1 = fg(wombat)")
   test.equal result.type, "selector"
   f = result.formats
-  test.equal f[1].type, "any-color"
-  test.equal f[1].spec, "wombat"
-  test.equal f[1].ground, "fg"
+  test.equal f[1].color_type, "any-color"
+  test.equal f[1].name, "wombat"
+  test.equal f[1].type, "fg"
 
 test.color["fg color (known) spelled out"] = () ->
   result = pl("r1 = fg(green6)")
   test.equal result.type, "selector"
   f = result.formats
-  test.equal f[1].type, "named-color"
+  test.equal f[1].color_type, "named-color"
   test.equal f[1].name, "green"
   test.equal f[1].suffix, 6
-  test.equal f[1].ground, "fg"
+  test.equal f[1].type, "fg"
 
 test.color["fg color (hex3) spelled out"] = () ->
   result = pl("r1 = fg(#2a6)")
   test.equal result.type, "selector"
   f = result.formats
-  test.equal f[1].type, "rgb"
-  test.equal f[1].spec, "#2a6"
-  test.equal f[1].ground, "fg"
+  test.equal f[1].color_type, "rgb"
+  test.equal f[1].name, "#2a6"
+  test.equal f[1].type, "fg"
 
 ---
 
@@ -169,7 +171,5 @@ test.width["width value only"] = () ->
 
 
 -----
-
-test.summary!
 
 

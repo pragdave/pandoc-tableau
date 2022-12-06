@@ -1,8 +1,15 @@
-import "util"
-import "parse_data_row"   as {:parse_data_row}
-import "parse_layout_row" as {:parse_layout_row}
+import "parser.util"
+import "parser.parse_data_row"   as {:parse_data_row}
+import "parser.parse_layout_row" as {:parse_layout_row}
 
-import "re"
+
+-- we want to use the pandoc versions if we're running inside
+-- pandoc, otherwise use the system installed lpeg
+local lpeg
+local re
+unless lpeg then import "lpeg"
+unless re   then import "re" 
+
 
 const LINE_CONTINUATION = "\\\n"
 const NEWLINE_PATTERN = "\r?\n"
@@ -10,14 +17,20 @@ const NEWLINE_PATTERN = "\r?\n"
 
 dump = util.dump
 
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
 class Ast
   new: () =>
     @row_count = 0
     @col_count = 0
     @rows = {}
     @caption = nil
+    @colspecs = {}
     @selector_formats = {}
-    @global_formats = {}
+    @table_formats = {}
+    @table_flags = {}
 
   add_row: (row) =>
     @rows[] = row
@@ -36,11 +49,25 @@ class Ast
         @selector_formats[] = { selector: layout.selector, formats: layout.formats }
 
       when "global"
-        @global_formats[] = { selector: layout.selector, formats: layout.formats }
+        @add_global_formats(layout.formats)
 
       else
         error("unknown layout type: #{layout.type}")
 
+  add_global_formats: (formats) =>
+    for fmt in *formats
+      switch fmt.type
+        when "boxed", "hlines", "vlines"
+          @table_flags[fmt.type] = true
+
+        when "fg", "bg", "align", "style"
+          @table_formats[] = fmt
+
+        when "cols"
+          @colspecs = fmt.colspec
+
+        else
+          io.stderr\write("Unknown table-level option: #{fmt.type}")
 
 
 --------------------------------------------------------------------------------
@@ -58,7 +85,7 @@ split_into_data_and_layout = (source) ->
   data = source
   layout = nil
 
-  s, e = source\find("\n===%s*\n")
+  s, e = source\find("\n%s*===%s*\n")
   if s
     data = source\sub(1, s-1)
     layout = source\sub(e+1)

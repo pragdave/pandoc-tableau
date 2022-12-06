@@ -1,3 +1,5 @@
+import "parser.util"
+
 export class StringScanner
 
   new: (str) =>
@@ -39,7 +41,11 @@ export class StringScanner
   restore_place: () => @pos = table.remove(@pos_stack)
 
   parse_error: (msg) =>
-    error("Error in table specification: #{msg}\n\n#{@state()}\n\n")
+    err = { "\nTableau: #{msg}\n#{@state()}\n" }
+    for level = 4,2,-1
+      f = debug.getinfo(level)
+      err[] = "#{f.source}: #{f.currentline} #{f.name}"
+    err |> table.concat("\n") |> error()
 
   state: () => 
     -- dump(self) 

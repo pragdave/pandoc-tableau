@@ -1,0 +1,148 @@
+import "parser.util" as { :dump }
+import "iterate_selector" as { :iterate_selectors }  -- TODO: rename file
+local Cell
+
+--------------------------------------------------------------------------------
+
+color_style = (fmt) ->
+  "#{fmt.name}#{fmt.suffix or ''}"
+
+--------------------------------------------------------------------------------
+split_align = (spec) ->
+  spec\match("[lcrj]"), spec\match("[tmb]")
+
+--------------------------------------------------------------------------------
+convert_cell = (cell) ->
+  Cell(cell.content)
+
+--------------------------------------------------------------------------------
+convert_row = (row) ->
+  return [ convert_cell(col) for col in *row ]
+
+--------------------------------------------------------------------------------
+adjust_to_max = (current_max, row) ->
+  for i = 1, #row
+    current_width = current_max[i][2]
+    incoming_width = row[i].width
+
+    if incoming_width > current_width
+      current_max[i][2] = incoming_width
+
+
+--------------------------------------------------------------------------------
+extract_styles = (style_list, cell) ->
+  for format in *style_list
+    switch format.type
+      when "style"
+        cell\add_style(format.spec)
+      when "bg"
+        cell\set_bg(color_style(format))
+      when "fg"
+        cell\set_fg(color_style(format))
+      when "align"
+        h, v = split_align(format.spec)
+        cell\set_align(h, v)
+      when "width", "lines", "header", "footer"
+        error("#{format.type} - not yet")
+      else
+        error("Unsupported global table option: #{format.type}")
+
+--     width(n)                    N          Y 
+--     lines([ []_~ ]+)            N          Y 
+--     header                      N          Y
+--     footer                      N          Y
+
+--------------------------------------------------------------------------------
+class Cell
+  new: (content) =>
+    @content = content
+    @styles = {}
+
+  merge_styles: (styles) =>
+    extract_styles(styles, @)
+
+  -- callbacks from extract_styles
+  add_style: (style) => @styles[] = style
+  set_fg:    (color) => @fg = color
+  set_bg:    (color) => @bg = color
+  set_align: (h, v)  => 
+    @align_h = h if h
+    @align_v = v if v
+
+--------------------------------------------------------------------------------
+
+export class VirtualTable
+
+  new: (ast) =>
+    @styles = {}
+    @import_content(ast)
+
+  --------------------  
+  import_content: (ast) =>
+    @import_global_options(ast)
+    @setup_rows_and_columns(ast)
+    @merge_table_level_options_into_cells()
+    @merge_styles_from_selectors(ast)
+
+  --------------------  
+  import_global_options: (ast) =>
+    for k, v in pairs(ast.table_flags)
+      @styles[] = "tbl-#{k}" if v
+
+    extract_styles(ast.table_formats, @)
+
+  --------------------   
+  setup_rows_and_columns: (ast) =>
+    @table = {}
+    @colspecs = [ {"c", 1} for i = 1, ast.col_count ]
+
+    for row in *ast.rows
+      @table[] = convert_row(row)
+      adjust_to_max(@colspecs, row)
+    
+  --------------------  
+  merge_table_level_options_into_cells: () =>
+    for row in *@table
+      for cell in *row
+        cell\set_align(@h_align, @v_align)
+
+  --------------------  
+  merge_styles_from_selectors: (ast)  =>
+    for {:selector, :formats} in *ast.selector_formats
+      iterate_selectors(selector, 
+        (row, col) -> 
+          @table[row][col]\merge_styles(formats))
+  
+  --------------------  
+  -- callbacks from extract_styles
+  add_style: (style) => @styles[] = style
+  set_fg:    (color) => @fg = color
+  set_bg:    (color) => @bg = color
+  set_align: (h, v)  => 
+    @align_h = h
+    @align_v = v
+
+  --------------------  
+
+  --------------------  
+
+  --------------------  
+
+  --------------------  
+
+  --------------------  
+
+  --------------------  
+
+  --------------------  
+
+  --------------------  
+
+  --------------------  
+
+  --------------------  
+
+  --------------------  
+
+  --------------------  
+

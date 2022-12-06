@@ -1,11 +1,19 @@
---     fg(color)
---     bg(color)
---     align([lcrj][tmb])   l c r j t m b
---     width(n)             [0-9]
---     lines([ []_~ ]+)     [ ] _ ~
---     style(a,b,c)         .a .b .c
+--                              Global     Selector
+--     fg(color)                   Y          Y
+--     bg(color)                   Y          Y
+--     align([lcrj][tmb])          Y          Y
+--     width(n)                    N          Y 
+--     lines([ []_~ ]+)            N          Y 
+--     style(a,b,c)                Y          Y
+--     header                      N          Y
+--     footer                      N          Y
+--
+--     cols( colspec, colspec...)  Y          N
+--     hlines                      Y          N
+--     vlines                      Y          N
+--     boxed                       Y          N
 
-import "util" as { :dump, :expect }
+import "parser.util" as { :dump, :expect }
 
 const color_names = {
   azure:   true,
@@ -28,6 +36,7 @@ const color_names = {
 const color_hx3 = "#%x%x%x"
 const color_hx6 = "#%x%x%x%x%x%x"
 
+gather_one_colspec = () -> "to be defined below"
 
 --------------------------------------------------------------------------------
 named_color = (text) ->
@@ -38,13 +47,13 @@ named_color = (text) ->
     return nil
 
   suffix = text\scan("%d%f[%D]") |> tonumber
-  { type: "named-color", :name, :suffix }
+  { color_type: "named-color", :name, :suffix }
 
 --------------------------------------------------------------------------------
 known_color = (text) ->
   rgb = text\scan(color_hx6) or text\scan(color_hx3) 
   if rgb
-    { type: "rgb", spec: rgb }
+    { color_type: "rgb", name: rgb }
   else
     named_color(text)
 
@@ -53,7 +62,7 @@ known_color = (text) ->
 any_color = (text) ->
   col = text\scan("[%w%-%_]+%f[^%w%-%_]")
   if col
-    { type: "any-color", spec: col }
+    { color_type: "any-color", name: col }
 
 --------------------------------------------------------------------------------
 --     align([lcrj][tmb])   l c r j t m b
@@ -67,9 +76,27 @@ align = (text) ->
       spec = { type: "align", spec: text.last_match }
   spec
 
+--------------------------------------------------------------------------------
+--     boxed
+boxed = (text) ->
+  if text\scan("boxed%f[%A]") or text\scan("box%f[%A]")
+    { type: "boxed" }
 
 --------------------------------------------------------------------------------
---     fg(color)
+--     cols(colspec, ...)
+cols = (text) ->
+  return unless text\scan("cols?%(%s*")
+  specs = {}
+  spec = gather_one_colspec(text)
+  while spec
+    specs[]= spec
+    text\skip("%s*,%s*")
+    spec = gather_one_colspec(text)
+  text\expect("%s*%)%s*", "missing close parenthesis after colspecs")
+  specs
+
+--------------------------------------------------------------------------------
+--    any color
 color = (text, ground) ->
   spec = nil
   if text\scan("#{ground}%(")
@@ -79,7 +106,7 @@ color = (text, ground) ->
 
   if spec
     text\skip("%s*")
-    spec.ground = ground
+    spec.type = ground
   spec
 
 --------------------------------------------------------------------------------
@@ -87,17 +114,30 @@ color = (text, ground) ->
 bg = (text) ->
   spec = color(text, "bg") or known_color(text)
   if spec
-    text\skip("%s*")
-    spec.ground = "bg"
+    spec.type = "bg"
   spec 
 
 fg = (text) ->
-  spec = color(text, "fg")
-  if spec
-    text\skip("%s*")
-    spec.ground = "fg"
-  spec 
+  color(text, "fg")
 
+
+--------------------------------------------------------------------------------
+--     footer
+footer = (text) ->
+  if text\scan("footer%f[%A]") or text\scan("foot%f[%A]")
+    { type: "footer" }
+
+--------------------------------------------------------------------------------
+--     header
+header = (text) ->
+  if text\scan("header%f[%A]") or text\scan("head%f[%A]")
+    { type: "header" }
+
+--------------------------------------------------------------------------------
+--     hlines
+hlines = (text) ->
+  if text\scan("hlines%f[%A]")
+    { type: "hlines" }
 
 --------------------------------------------------------------------------------
 --     lines([ []_~ ]+)     [ ] _ ~
@@ -116,13 +156,18 @@ lines = (text) ->
 style = (text) ->
   spec = nil
   if text\scan("%.[%w_-]+")
-    dump(text.last_match)
     spec = string.sub(text.last_match, 2)
     text\scan("%s*")
   
   if spec
     { type: "style", :spec }
 
+
+--------------------------------------------------------------------------------
+--     vlines
+vlines = (text) ->
+  if text\scan("vlines%f[%A]")
+    { type: "vlines" }
 
 --------------------------------------------------------------------------------
 --     width(n)             [0-9]
@@ -139,8 +184,27 @@ width = (text) ->
 
 
 --------------------------------------------------------------------------------
+gather_one_colspec = (text) ->
+  specs = {}
+  valid_specs = (text) -> align(text) or width(text) or lines(text) or fg(text) or bg(text)
+  spec = valid_specs(text)
+  while spec
+    specs[] = spec
+    text\skip("%s*")
+    spec = valid_specs(text)
+  specs
+
+
+--------------------------------------------------------------------------------
 export parse_global_formats = (text) ->
-  false
+  cols(text) or
+  align(text) or 
+    bg(text) or 
+    fg(text) or 
+    style(text) or 
+    hlines(text) or
+    vlines(text) or
+    boxed(text)
 
 
 --------------------------------------------------------------------------------
@@ -151,6 +215,8 @@ export parse_selector_formats = (text) ->
   align(text) or 
     bg(text) or 
     fg(text) or 
+    footer(text) or
+    header(text) or
     lines(text) or 
     style(text) or 
     width(text)

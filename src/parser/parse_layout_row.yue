@@ -1,9 +1,9 @@
 -- import "string_scanner" as { StringScanner }
-import "parse_selector" as { :parse_selector }
-import "parse_formats" as { :parse_selector_formats, :parse_global_formats }
-import "string_scanner" as { StringScanner: StringScanner }
-import "util"
-import "util" as { :expect, :dump }
+import "parser.parse_selector" as { :parse_selector }
+import "parser.parse_formats" as { :parse_selector_formats, :parse_global_formats }
+import "parser.string_scanner" as { StringScanner: StringScanner }
+import "parser.util"
+import "parser.util" as { :expect, :dump }
 
 -- layout = blank | comment | caption | global | selected
 -- caption = [#:]+ .*
@@ -25,7 +25,7 @@ A format line can be:
 
   * blank
   * -- a command
-  * # caption or : caption
+  * # caption or :caption
   * selector = format
   * global_format
 
@@ -60,6 +60,7 @@ caption = (row) ->
 ----------------------------------------------------------------------
 selected = (ast, row) ->
   selector = parse_selector(ast, row)
+  return unless selector
   row\expect("%s*=%s*", "expected equals sign between selector and attributes")
   formats = formats_list(parse_selector_formats, row)
   row\expect("%s*$", "extra stuff after last attribute")
@@ -67,7 +68,9 @@ selected = (ast, row) ->
 
 ----------------------------------------------------------------------
 globl = (row) ->
-  parse_global_formats(row)
+  formats = formats_list(parse_global_formats, row)
+  row\expect("%s*$", "extra stuff after last attribute")
+  { type: "global", :formats }
 
 ----------------------------------------------------------------------
 export parse_layout_row = (ast, row_source) ->
