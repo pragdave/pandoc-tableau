@@ -16,21 +16,12 @@
 import "parser.util" as { :dump, :expect }
 
 const color_names = {
-  azure:   true,
-  black:   true,
-  blue:    true,
-  brown:   true,
-  cyan:    true,
-  gray:    true,
-  green:   true,
-  magenta: true,
-  olive:   true,
-  purple:  true,
-  red:     true,
-  teal:    true,
-  violet:  true,
-  white:   true,
-  yellow:  true,
+  "shade",
+  "shade1",
+  "shade2",
+  "shade3",
+  "shade4",
+  "shade5",
 }
 
 const color_hx3 = "#%x%x%x"
@@ -144,12 +135,18 @@ hlines = (text) ->
 lines = (text) ->
   spec = nil
   if text\scan("lines?%(")
-    spec = expect(lines, text, "expecting line specifier, one or more of: ] _ ~ [")
+    spec = expect(lines, text, "expecting line specifier, one or more of: t, b, l, r, x")
     text\expect("%)", "expected closing parenthesis after line specifier")
   else
-    if text\scan("[%[%]_~]+")
+    if text\scan("[tblrx]+")
       spec = { type: "lines", spec: text.last_match }
   spec
+
+--------------------------------------------------------------------------------
+-- span
+span = (text) ->
+  if text\scan("span%f[%A]%s*")
+    { type: "span" }
 
 --------------------------------------------------------------------------------
 --     style = .name
@@ -212,11 +209,12 @@ export parse_selector_formats = (text) ->
   text\skip("%s+")
   return if text\empty()
 
-  align(text) or 
-    bg(text) or 
-    fg(text) or 
+  align(text)    or
+    bg(text)     or
+    fg(text)     or
+    span(text)   or
     footer(text) or
     header(text) or
-    lines(text) or 
-    style(text) or 
+    lines(text)  or
+    style(text)  or
     width(text)

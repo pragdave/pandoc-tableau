@@ -41,6 +41,6 @@ export dump = (value, label=nil) ->
 
 ---------------------------------------------------------------------------------
 export expect = (parse_step, text, msg="Syntax error in table specification") ->
-  parse_step(text) or text\parse_error(msg)
+  parse_step(text) or dump(text)
 
 

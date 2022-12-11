@@ -8,8 +8,8 @@ PARSER=$(addprefix parser/, \
 	string_scanner.yue \
 	util.yue \
 	)
-
-DRIVER=tableau_pre.yue
+REST=iterate_selector.yue virtual_table.yue tableau_pre.yue
+  
 
 ASSETS=assets/tableau_pre/tableau.css
 
@@ -20,7 +20,7 @@ TASSETS=$(TDIR_ASSETS)/tableau.css
 
 TDIRS=$(TDIR) $(TDIR_PARSER) $(TDIR_ASSETS)
 
-TPARSER=$(call targets_for, $(PARSER) $(DRIVER))
+TPARSER=$(call targets_for, $(PARSER) $(REST))
 
 $(TDIR)/%.lua:	src/%.yue
 	yue -o $@ $<

@@ -5,8 +5,6 @@ import "parser.parse_layout_row" as {:parse_layout_row}
 
 -- we want to use the pandoc versions if we're running inside
 -- pandoc, otherwise use the system installed lpeg
-local lpeg
-local re
 unless lpeg then import "lpeg"
 unless re   then import "re" 
 

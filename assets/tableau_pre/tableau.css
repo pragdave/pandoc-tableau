@@ -1,0 +1,257 @@
+.tableau-table {
+}
+
+:root{
+  --hbg-h: 240deg;
+  --hbg-s: 29%;
+  --caption-bg:      hsl(var(--hbg-h) var(--hbg-s) 98%);
+  --header-bg-color: hsl(var(--hbg-h) var(--hbg-s) 60%);
+  --grid-line-color-normal: hsl(var(--hbg-h) var(--hbg-s) 80%);
+  --grid-line-color-header: hsl(var(--hbg-h) var(--hbg-s) 50%);
+  --shade1-bg:       hsl(60deg, 66%, 84%);
+  --shade2-bg:       hsl(95deg, 61%, 79%);
+  --shade3-bg:       hsl(130deg, 61%, 79%);
+  --shade4-bg:       hsl(165deg, 61%, 79%);
+  --shade5-bg:       hsl(200deg, 61%, 79%);
+  --shade6-bg:       hsl(235deg, 61%, 79%);
+  --shade7-bg:       hsl(270deg, 61%, 79%);
+  --shade8-bg:       hsl(305deg, 61%, 79%);
+  --shade9-bg:       hsl(340deg, 61%, 79%);
+  --shade-bg:        var(--shade1-bg);
+  --stripe-bg:       hsl(var(--hbg-h) var(--hbg-s) 95%);
+}
+
+[data-md-color-scheme=slate] {
+  --hbg-h: 240deg;
+  --hbg-s: 29%;
+  --caption-bg:      hsl(var(--hbg-h) var(--hbg-s) 23%);
+  --header-bg-color: hsl(var(--hbg-h) var(--hbg-s) 30%);
+  --grid-line-color-normal: hsl(var(--hbg-h) var(--hbg-s) 50%);
+  --grid-line-color-header: hsl(var(--hbg-h) var(--hbg-s) 50%);
+  --shade1-bg:       hsl(60deg, 61%, 30%);
+  --shade2-bg:       hsl(85deg, 61%, 30%);
+  --shade3-bg:       hsl(100deg, 61%, 30%);
+  --shade4-bg:       hsl(115deg, 61%, 30%);
+  --shade5-bg:       hsl(130deg, 61%, 30%);
+  --shade-bg:        var(--shade1-bg);
+  --stripe-bg:       hsl(var(--hbg-h) var(--hbg-s) 20%);
+
+}
+
+
+table.tableau-table, table.tableau-table th, table.tableau-table td {
+    border: none;
+  }
+
+table.tableau-table.striped tbody tr:nth-of-type(odd) {
+    background-color: inherit;
+  }
+
+table.tableau-table {
+
+  width: auto;  
+  caption-side: bottom
+
+  /* and now our stuff */
+
+}
+
+table.tableau-table caption {
+    margin-top: 0em;
+    padding: 0.25em 0;
+    text-align: center;
+    font-size: 90%;
+    font-feature-settings: "smcp", "c2sc";
+    font-variant: all-small-caps;
+    background: hsl(240, 29%, 98%);
+    background: var(--caption-bg);
+    border-top: 0.5px solid var(--grid-line-color-header);
+    border-bottom: 0.5px solid var(--grid-line-color-header);
+  }
+
+table.tableau-table.tbl-boxed caption {
+    border-left: 0.5px solid var(--grid-line-color-header);
+    border-right: 0.5px solid var(--grid-line-color-header);
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+table.tableau-table td, table.tableau-table th {
+    padding: .25em 0.75em;
+  }
+
+table.tableau-table td[rowspan] {
+  vertical-align: middle;
+}
+table.tableau-table th, table.tableau-table td.tableau-th  {
+    color: white;
+    background: hsl(240, 29%, 60%);
+    background: var(--header-bg-color);
+    font-weight: 500;
+    font-size: 90%;
+  }
+
+table.tableau-table th{
+    vertical-align: middle;
+  }
+
+table.tableau-table p:first-child {
+    margin-top: 0;
+  }
+
+table.tableau-table p:first-child {
+    margin-bottom: 0;
+  }
+
+table.tableau-table .align-h-l, table.tableau-table .align-h-l {
+    text-align: left !important;
+  }
+
+table.tableau-table .align-h-c, table.tableau-table .align-h-c {
+    text-align: center !important;
+  }
+
+table.tableau-table .align-h-r, table.tableau-table .align-h-r {
+    text-align: right !important;
+  }
+
+table.tableau-table.wide {
+    width: 100%;
+  }
+
+table.tableau-table.tbl-hlines tr:first-child td {
+        border-top: 0.25px solid var(--grid-line-color-normal);
+      }
+
+table.tableau-table.tbl-hlines tr:first-child th {
+        border-top: 0.25px solid var(--grid-line-color-header);
+      }
+
+table.tableau-table.tbl-hlines td  {
+      border-bottom: 0.25px solid var(--grid-line-color-normal);
+    }
+
+table.tableau-table.tbl-hlines th  {
+      border-bottom: 0.25px solid var(--grid-line-color-header);
+    }
+
+table.tableau-table.tbl-vlines tr:first-child td {
+        border-top: 0.25px solid var(--grid-line-color-normal);
+      }
+
+table.tableau-table.tbl-vlines tr th:last-child,
+table.tableau-table.tbl-vlines tr td:last-child {
+        border-right: none;
+      }
+
+table.tableau-table.tbl-vlines td  {
+      border-right: 0.25px solid var(--grid-line-color-normal);
+    }
+
+table.tableau-table.tbl-vlines th  {
+      border-right: 0.25px solid var(--grid-line-color-header);
+    }
+
+table.tableau-table th.shade,
+table.tableau-table td.shade {
+  background: var(--shade-bg);
+}
+
+table.tableau-table th.bg-shade,
+table.tableau-table td.bg-shade {
+  background: var(--shade-bg);
+}
+
+table.tableau-table th.bg-shade1,
+table.tableau-table td.bg-shade1 {
+  background: var(--shade1-bg);
+}
+
+table.tableau-table th.bg-shade2,
+table.tableau-table td.bg-shade2 {
+  background: var(--shade2-bg);
+}
+
+table.tableau-table th.bg-shade3,
+table.tableau-table td.bg-shade3 {
+  background: var(--shade3-bg);
+}
+
+table.tableau-table th.bg-shade4,
+table.tableau-table td.bg-shade4 {
+  background: var(--shade4-bg);
+}
+
+table.tableau-table th.bg-shade5,
+table.tableau-table td.bg-shade5 {
+  background: var(--shade5-bg);
+}
+
+table.tableau-table th.bg-shade6,
+table.tableau-table td.bg-shade6 {
+  background: var(--shade6-bg);
+}
+
+table.tableau-table th.bg-shade7,
+table.tableau-table td.bg-shade7 {
+  background: var(--shade7-bg);
+}
+
+table.tableau-table th.bg-shade8,
+table.tableau-table td.bg-shade8 {
+  background: var(--shade8-bg);
+}
+
+table.tableau-table th.bg-shade9,
+table.tableau-table td.bg-shade9 {
+  background: var(--shade9-bg);
+}
+
+table.tableau-table.tbl-boxed {
+  border: 0.5px solid var(--grid-line-color-header);
+}
+
+/* table.tableau-table th.it, */
+/* table.tableau-table td.it { */
+/*   font-style: italic; */
+/* } */
+
+/* table.tableau-table th.cf, */
+/* table.tableau-table td.cf { */
+/*   font-family: var(--bs-font-monospace); */
+/* } */
+
+table.tableau-table th.line-b,
+table.tableau-table td.line-b {
+  border-bottom: 0.25px solid var(--grid-line-color-header);
+}
+
+table.tableau-table th.line-t,
+table.tableau-table td.line-t {
+  border-top: 0.25px solid var(--grid-line-color-header);
+}
+
+table.tableau-table th.line-l,
+table.tableau-table td.line-l {
+  border-left: 0.25px solid var(--grid-line-color-header);
+}
+
+table.tableau-table th.line-r,
+table.tableau-table td.line-r {
+  border-right: 0.25px solid var(--grid-line-color-header);
+}
+
+table.tableau-table th.line-x,
+table.tableau-table td.line-x {
+  border: 0.25px solid var(--grid-line-color-header);
+}
+
+
+/* this one is our version, not the default theme's */
+
+table.tableau-table.striped tbody tr:nth-of-type(odd) {
+    background-color: hsl(240, 29%, 95%);
+    background-color: var(--stripe-bg);
+  }
+
+

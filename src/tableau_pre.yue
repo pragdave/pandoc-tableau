@@ -1,12 +1,15 @@
 dump = require("./parser/util").dump
 parse = require("./parser/ast").parse
+import "virtual_table" as { :VirtualTable }
+
 if false then dump("just here to remove the 'unused' warning") 
 
 ----------------------------------------------------------------------------------
---local append = table.insert
---local md2ast = function (str)
---  return pandoc.read(str).blocks
---end
+local append = table.insert
+
+md2ast = (str) ->
+  pandoc.read(str).blocks
+ 
 
 ----------------------------------------------------------------------------------
 const LINE_LEFT   = 1
@@ -48,227 +51,184 @@ class CellAttribute
           io.error\write("\n\nUnknown format #{fmt.type} ignored\n\n")
 
 ----------------------------------------------------------------------------------
-extract_cells_and_attributes = (ast) ->
+extract_cells_and_attributes = (table) ->
   cells = (row) ->
     return [ CellAttribute(cell.content) for cells in *row ]
-  rows = [ cells(row) for row in *ast.rows ]
-  dump rows, "CELLS"
+  return [ cells(row) for row in *table ]
 
 ----------------------------------------------------------------------------------
-caption = (ast) ->
-  if ast.caption 
-    local capt = md2ast(ast.caption)
-    pandoc.utils.blocks_to_inlines(capt, { pandoc.Str("7777") })
+caption = (cap) ->
+  if cap
+    cap = md2ast(cap)
+    pandoc.utils.blocks_to_inlines(cap, { pandoc.Str("*") })
   else
     {}
 
 ----------------------------------------------------------------------------------
---local function alignmentFor(spec)
---  if spec == "<" then
---    return "AlignLeft"
---  end
---  if spec == ">" then
---    return "AlignRight"
---  end
---  return "AlignCenter"
---end
+alignment_for = (spec) ->
+  switch spec
+    when "<" then "AlignLeft"
+    when ">" then "AlignRight"
+    else          "AlignCenter"
 
 ----------------------------------------------------------------------------------
---local function colspecs(ast)
---  local result = {}
---  local total_width = 0
---  local widths = {}
-
---  for i = 1, #ast.widths do
---    widths[i] = ast.widths[i]
---    total_width = total_width + widths[i]
---  end
-
---  -- for tables with a few columns, the min column width is roughly 10%. Otherwise 
---  -- we just leave things as they are
-
---  if #widths < 10 then
---    local threshold = total_width / 10
---    for i = 1, #widths do
---      if widths[i] < threshold then
---        widths[i] = threshold
---      end
---    end
---  end
-
---  for i, spec in pairs(ast.default_formats) do
---    table.insert(result, { alignmentFor(spec.alignment), widths[i] })
---  end
---  return result
---end
-
----- a little hacky... if the first body has a head, move it to be 
----- the table's head
----- local function head(sects)
-----   if #sects == 0 or #sects[1].head == 0 then
-----     return pandoc.TableHead()
-----   end
-----   local head = sects[1].head
-----   sects[1].head = {}
-----   return pandoc.TableHead(head)
----- end
+colspecs = (table) ->
+  specs = table.colspecs
+  return  [ { alignment_for(s[1]), s[2]} for s in *specs ]
 
 ----------------------------------------------------------------------------------
---local function foot()
---  return pandoc.TableFoot()
---end
+attr = (cell, id) ->
+  classes = {  }
+  for cls in *cell.styles
+    append(classes, cls)
+  
+  classes[] = "fg-#{cell.fg}" if cell.fg
+  classes[] = "bg-#{cell.bg}" if cell.bg
 
-----------------------------------------------------------------------------------
---local function attr(ast, id)
---  local classes = { "table" }
---  for _, cls in pairs(ast.table_classes) do
---    append(classes, cls)
---  end
---  local table_attributes = {}
---  if ast.width then
---    table_attributes = {
---      width = ast.width,
---      style = "width: \"" .. ast.width .. "%\""
---    }
---  end
+  align_h = cell.align_h
+  classes[] = "align-h-#{align_h}" if align_h
 
---  table_attributes.has_hlines = ast.has_hlines
---  table_attributes.all_hlines = ast.all_hlines
---  table_attributes.all_vlines = ast.all_vlines
---  table_attributes.box        = ast.box
+  align_v = cell.align_v
+  classes[] = "align-v-#{align_v}" if align_v
 
---  return pandoc.Attr(id or "", classes, table_attributes)
---end
+
+  table_attributes = {}
+  -- if ast.width
+  --   table_attributes = {
+  --     width = ast.width,
+  --     style = "width: \"" .. ast.width .. "%\""
+  --   }
+  
+
+  -- table_attributes.has_hlines = ast.has_hlines
+  -- table_attributes.all_hlines = ast.all_hlines
+  -- table_attributes.all_vlines = ast.all_vlines
+  -- table_attributes.box        = ast.box
+  pandoc.Attr(id or "", classes, table_attributes)
 
 
 ----------------------------------------------------------------------------------
---local function cell_attr(_, format)
---  local classes = format.css_classes
---  if format.heading then
---    append(classes, "tableau-th")
---  end
---  return pandoc.Attr("", classes, pandoc.AttributeList(format.lines))
---end
+cell_holder = (cell) ->
+  pandoc.Cell(
+    md2ast(cell.content[1]),
+    "AlignCenter",  -- alignmentFor(f.alignment),
+    cell.row_span,
+    cell.col_span
+    attr(cell, "")
+  )
 
 ----------------------------------------------------------------------------------
---local function cell(c)
---  local f = c.format
---  return pandoc.Cell(
---    md2ast(c.content),
---    alignmentFor(f.alignment),
---    c.rowspan_count+1,
---    c.colspan_count+1,
---    cell_attr(c, f)
---  )
---end
-
-
----- There must be a better way, but...
----- An HTML rowspan replaces the cells below:
----- there are no td entries. In TeX, however,
----- we need to include an & for each column.
----- Because we're using the staqndard HTML writer,
----- we have to generate a different AST depending
----- on the target
-
+local maybe_add_hidden_cell
+if quarto.doc.is_format("pdf") 
+  maybe_add_hidden_cell = (cells, c) ->
+    append(cells, cell_holder(c))
+else
+  maybe_add_hidden_cell = (cells, c) ->
+    if not c.hidden_by_span then
+      append(cells, cell_holder(c))
 
 ----------------------------------------------------------------------------------
---local maybe_add_hidden_cell
---if quarto.doc.is_format("pdf") then
---  maybe_add_hidden_cell = function(cells, c)
---    append(cells, cell(c))
---  end
---else
---  maybe_add_hidden_cell = function(cells, c)
---    if not c.hidden then
---      append(cells, cell(c))
---    end
---  end
---end
+convert_row = (cells) ->
+  local *
+  result = {}
+  for cell in *cells
+    maybe_add_hidden_cell(result, cell)
+  pandoc.Row(result)
 
 ----------------------------------------------------------------------------------
---local function row(r)
---  local cells = {}
---  for _, c in pairs(r.cells) do
---    maybe_add_hidden_cell(cells, c)
---  end
---  return pandoc.Row(cells)
---end
-
----- local function body(ast)
-----   local result = {}
-----   for _, r in pairs(ast.rows) do
-----     append(result, row(r))
-----   end
-----   return result
----- end
+convert_rows = (table) ->
+  return [ convert_row(row_of_cells) for row_of_cells in *table]
 
 ----------------------------------------------------------------------------------
-sections = (rows) ->
-  new_section = () ->
-    {
-      head = {},
-      body = {},
-      row_head_columns = 0,
-      attr = pandoc.Attr()
-    }
+----------------------------------------------------------------------------------
+find_and_mark_contiguous_block = (body, r, c, group) -> -- TODO: rework once algo settles
 
-  current = new_section()
-  sects = { current }
+  -- 1. determine # rows with same group in first column -> row_span
+  row_span = 0
+  while (r+row_span) <= #body and body[r+row_span][c].span_group == group
+    row_span += 1
 
-  in_head = true
+  -- 2. For each column, scan down up to row_span rows. If there's a cell
+  --    that doesn't have the same group, row_span becomes it's relative row - 1
+  max_col = #body[1]
+  col = c
+  while col <= max_col and body[r][col].span_group == group
+    row = r
+    while row < (r + row_span) and body[row][col].span_group == group
+      row = row + 1
+    row_span = math.min(row_span, row - r + 1)
+    col += 1
 
-  for r in *rows
-    -- pdrow = row(r)
-    -- if r\looks_like_header(r) then
-    --   if not in_head then
-    --     current = new_section()
-    --     append(sects, current)
-    --     in_head = true
-    --   end
-    --   append(current.head, pdrow)
-    -- else
-    --   in_head = false
-      append(current.body, pdrow)
+  col_span = col - c 
 
-  -- promote the header of the first body part to be the table header
-  -- local main_head
+  -- 3. if row_span > 1 and  col_span > 1 then mark all cells except the root
+  --    as "hidden_by_span", and set the row and column span in the root.
+  if row_span > 1 or col_span > 1
+    for row = 0, row_span - 1
+      for col = 0, col_span - 1
+        body[r+row][c+col].span_group = nil
+        body[r+row][c+col].hidden_by_span = true
 
-  -- if #sects == 0 or #sects[1].head == 0 then
-  --   main_head = pandoc.TableHead()
-  -- else
-  --   local head = sects[1].head
-  --   sects[1].head = {}
-  --   main_head = pandoc.TableHead(head)
-  -- end
-  return main_head, sects
-end
+    dump "Marking #{r} #{c} row #{row_span} col #{col_span}"
+    body[r][c].hidden_by_span = false
+    body[r][c].row_span = row_span if row_span > 1
+    body[r][c].col_span = col_span if col_span > 1
+    dump body[r][c]
+
+----------------------------------------------------------------------------------
+merge_spans = (body) ->
+  for r = 1, #body
+    local row = body[r]
+    for c = 1, #row
+      cell = row[c]
+      if cell.span_group
+        find_and_mark_contiguous_block(body, r, c, cell.span_group)
+
+----------------------------------------------------------------------------------
+table_body = (table) -> 
+  merge_spans(table)
+  body = convert_rows(table)
+  {
+    head: {},
+    body: convert_rows(table)
+    row_head_columns: 0,
+    attr: pandoc.Attr()
+  }
 
 
 ----------------------------------------------------------------------------------
-table_for = (ast, id) ->
-  rows = extract_cells_and_attributes(ast)
-  pandoc.Table \
-    caption(ast),
-    {},
+table_attr = (table) ->
+  classes = { "tableau-table" }
+  for cls in *table.styles
+    append(classes, cls)
+  
+  classes[] = "fg-#{table.fg}" if table.fg
+  classes[] = "bg-#{table.bg}" if table.bg
+
+  table_attributes = {}
+  pandoc.Attr(table.id or "", classes, table_attributes)
+
+----------------------------------------------------------------------------------
+pandoc_table_from = (table, id) ->
+  rows = extract_cells_and_attributes(table)
+  result = pandoc.Table \
+    caption(table.caption),
+    colspecs(table),
     pandoc.TableHead({}),
-    {},
+    { table_body(table.table) }, 
     pandoc.TableFoot({}),
-    {}
-    -- colspecs(ast),
-    -- head,
-    -- sects,
-    -- foot(),
-    -- attr(ast, id)
+    table_attr(table)
+  result
 
 ----------------------------------------------------------------------------------
 export CodeBlock = (block) ->
   return unless block.classes[1] == "tableau"
 
   ast = parse(block.text)
-  dump ast, "initial ast"
-  if ast 
-    return table_for(ast, block.attr.identifier)
+  return unless ast
+
+  table = VirtualTable(ast)
+  pandoc_table_from(table, block.attr.identifier)
 
 quarto.doc.add_html_dependency({
   name: "tableau",
