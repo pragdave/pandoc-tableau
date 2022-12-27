@@ -5,9 +5,12 @@ import "parser.parse_layout_row" as {:parse_layout_row}
 
 -- we want to use the pandoc versions if we're running inside
 -- pandoc, otherwise use the system installed lpeg
-unless lpeg then import "lpeg"
-unless re   then import "re" 
-
+-- util.dump re, "before"
+-- unless lpeg then import "lpeg"
+-- unless re   then import "re" 
+unless re
+  global re
+  import "re"
 
 const LINE_CONTINUATION = "\\\n"
 const NEWLINE_PATTERN = "\r?\n"
@@ -29,6 +32,7 @@ class Ast
     @selector_formats = {}
     @table_formats = {}
     @table_flags = {}
+    @font_size = { type: "normal", amount: 0}
 
   add_row: (row) =>
     @rows[] = row
@@ -58,7 +62,10 @@ class Ast
         when "boxed", "hlines", "vlines"
           @table_flags[fmt.type] = true
 
-        when "fg", "bg", "align", "style"
+        when "small", "normal", "large"
+          @table_font_size = tmp
+
+        when "fg", "bg", "align", "style", "width"
           @table_formats[] = fmt
 
         when "cols"
@@ -66,7 +73,6 @@ class Ast
 
         else
           io.stderr\write("Unknown table-level option: #{fmt.type}")
-
 
 --------------------------------------------------------------------------------
 merge_continuation_lines = (table) ->
@@ -109,13 +115,13 @@ normalize = (content) ->
   spaces = 9999
   for i = 1, #content
     content[i] = expandtabs(content[i])
-    _, e = content[i]\find("^%s+")
+    _, e = content[i]\find("^%s*")
     spaces = math.min(spaces, e)
   return [ r\sub(spaces+1) for r in *content ]
 
 --------------------------------------------------------------------------------
 col_text_re = re.compile([[
-  colheader <- prefix ':' [ \t]* {| colnumber |}
+  colheader <- prefix  [ \t]* {| colnumber |} [ \t]* '{{'
   prefix    <- 'column' / 'col'
   colnumber <- {:col: [1-9][0-9]?  / [a-z] :} 
 ]])
@@ -127,19 +133,27 @@ parse_data = (ast, data) ->
     last_row = parse_data_row(rows[i])
     i += 1
     if i < #rows
-      -- check for "col: nn" block
+      -- check for "col nn:" block
       next = rows[i]\lower()
       col = col_text_re\match(next)
       if col
         content = {}
-        col = decode_column_number(col.col)
+        col_no = decode_column_number(col.col)
         i += 1
         r = rows[i]
-        while r\find("^%s+") and i < #rows
+
+        while not r\find("^%s*}}") and i < #rows
           content[] = r
           i += 1
           r = rows[i]
-        last_row[col].content = normalize(content)
+
+        if i > #rows
+          error("Missing terminating '}}' for 'col #{col_no} {{'")
+
+        i += 1
+
+        if col_no <= #last_row
+          last_row[col_no].content = normalize(content)
 
     ast\add_row(last_row)
 

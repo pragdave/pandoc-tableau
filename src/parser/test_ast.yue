@@ -12,6 +12,7 @@ d1 | d2 | d3
 ===
 hlines fg(red)
 align(l)
+width(100)
 ]]
 
 test.ast["Some global options"] = () ->
@@ -19,12 +20,31 @@ test.ast["Some global options"] = () ->
   test.is_true ast.table_flags.hlines
   fmt = ast.table_formats
   f1 = fmt[1]
-  test.equal f1.color_type, "named-color"
+  test.equal f1.color_type, "any-color"
   test.equal f1.name, "red"
   test.equal f1.type, "fg"
   f2 = fmt[2]
   test.equal f2.type, "align"
   test.equal f2.spec, "l"
+  f3 = fmt[3]
+  test.equal f3.type, "width"
+  test.equal f3.spec, 100
+  
+
+--------------------------------------------------------------------------------
+const tglobal_pw = \
+[[ c1 | c2 | c3
+d1 | d2 | d3
+===
+width(25%)
+]]
+
+test.ast["Global percentage width"] = () ->
+  ast = parse(tglobal_pw)
+  f1 = ast.table_formats[1]
+  test.equal f1.type, "width"
+  test.equal f1.spec, 0.25
+  
 
 --------------------------------------------------------------------------------
 
@@ -58,8 +78,8 @@ test.ast["single selector row with two formats"] = () ->
   test.equal 2, #f
   fg = f[1]
   test.equal fg.type, "fg"
-  test.equal fg.name, "red"
-  test.equal fg.color_type, "named-color"
+  test.equal fg.name, "red2"
+  test.equal fg.color_type, "any-color"
   w = f[2]
   test.equal w.spec, 20
   test.equal w.type, "width"

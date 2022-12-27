@@ -1,0 +1,55 @@
+filters:
+  - _extensions/tableau_pre/tableau_pre.lua
+  - quarto
+  - other_filters/columns.lua
+
+format:
+  html:
+    toc-depth: 4
+    toc: true
+#     theme: 
+#       dark: [ ../ppcc/layouts/html-epub/dark.scss, slate, ../ppcc/layouts/html-epub/html.scss ]
+#       light: [ cerulean, ../ppcc/layouts/html-epub/html.scss ]
+#     footnotes-hover: true
+#     filters:
+#       # - ../ppcc/_extensions/filters/pre_filter/html_convert_answer_to_callout.lua
+#       - ../ppcc/_extensions/filters/pre_filter/shared_map_admonition_names.lua
+#       - ../ppcc/_extensions/filters/pre_filter/pre_move_answers.lua
+#       - quarto
+#       - ../ppcc/_extensions/filters/html_filters.lua
+
+#   epub:
+#     number-depth: 1
+#     identifier: "12-34-567"
+#     creator: The Pragmatic Bookshelf
+#     type: Gardening, Gnomes
+#     theme: [ cerulean, ../ppcc/layouts/html-epub/epub.scss ]
+
+#     filters:
+#       # - ../ppcc/_extensions/filters/pre_filter/html_convert_answer_to_callout.lua
+#       - ../ppcc/_extensions/filters/pre_filter/shared_map_admonition_names.lua
+#       - ../ppcc/_extensions/filters/pre_filter/pre_move_answers.lua
+#       - quarto
+#       - ../ppcc/_extensions/filters/epub_filters.lua
+
+#   pdf:
+#     documentclass: memoir
+#     keep-tex: true
+#     mainfont: "Helvetica Neue"
+#     fontsize: 9pt
+#     monofont: "Fira Code"
+#     filters:
+#       - ../ppcc/_extensions/filters/pre_filter/shared_map_admonition_names.lua
+#       - ../ppcc/_extensions/filters/pre_filter/pre_wrap_in_floats.lua
+#       - ../ppcc/_extensions/filters/pre_filter/pre_move_answers.lua
+#       - quarto
+#       - ../ppcc/_extensions/filters/pdf_filters.lua
+#     include-in-header:
+#       - text: |
+#           \usepackage{import}
+#           \import{../ppcc/layouts/tex/}{header.tex}
+#     include-before-body:
+#       - text: |
+#           \import{../ppcc/layouts/tex/}{before-body.tex}
+
+

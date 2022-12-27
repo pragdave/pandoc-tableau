@@ -17,15 +17,15 @@ const LINE_RIGHT  = 2
 const LINE_TOP    = 4
 const LINE_BOTTOM = 8
 
-decode_lines = (spec) =>
-  result = 0
-  for i = 1, string.len(spec)
-    switch spec\sub(i, 1)
-      when "[" then result |= 1
-      when "]" then result |= 2
-      when "~" then result |= 4
-      when "_" then result |= 8
-  result
+-- decode_lines = (spec) =>
+--   result = 0
+--   for i = 1, string.len(spec)
+--     switch spec\sub(i, 1)
+--       when "[" then result |= 1
+--       when "]" then result |= 2
+--       when "~" then result |= 4
+--       when "_" then result |= 8
+--   result
 
 class CellAttribute
   new: (content)=> 
@@ -59,16 +59,15 @@ extract_cells_and_attributes = (table) ->
 ----------------------------------------------------------------------------------
 caption = (cap) ->
   if cap
-    cap = md2ast(cap)
-    pandoc.utils.blocks_to_inlines(cap, { pandoc.Str("*") })
+    md2ast(cap)
   else
     {}
 
 ----------------------------------------------------------------------------------
 alignment_for = (spec) ->
   switch spec
-    when "<" then "AlignLeft"
-    when ">" then "AlignRight"
+    when "l" then "AlignLeft"
+    when "r" then "AlignRight"
     else          "AlignCenter"
 
 ----------------------------------------------------------------------------------
@@ -78,39 +77,48 @@ colspecs = (table) ->
 
 ----------------------------------------------------------------------------------
 attr = (cell, id) ->
-  classes = {  }
+  classes = {}
+  table_attributes = {}
+
   for cls in *cell.styles
     append(classes, cls)
-  
-  classes[] = "fg-#{cell.fg}" if cell.fg
-  classes[] = "bg-#{cell.bg}" if cell.bg
 
-  align_h = cell.align_h
-  classes[] = "align-h-#{align_h}" if align_h
+  if cell.fg
+    if cell.fg.color_type == "rgb"
+      table_attributes["style"] = "color: #{cell.fg.name}"
+    else
+      classes[] = "fg-#{cell.fg.name}"
 
-  align_v = cell.align_v
-  classes[] = "align-v-#{align_v}" if align_v
+  if cell.bg
+    if cell.bg.color_type == "rgb"
+      table_attributes["style"] = "background-color: #{cell.bg.name}"
+    else
+      classes[] = "bg-#{cell.bg.name}"
+
+  h_align = cell.h_align
+  classes[] = "align-h-#{h_align}" if h_align
+
+  v_align = cell.v_align
+  classes[] = "align-v-#{v_align}" if v_align
 
 
-  table_attributes = {}
-  -- if ast.width
-  --   table_attributes = {
-  --     width = ast.width,
-  --     style = "width: \"" .. ast.width .. "%\""
-  --   }
-  
+  if cell.font_size
+    size = cell.font_size
+    switch size.type
+      when "small", "large"
+        classes[] = "tableau-#{size.type}"
+        if size.amount > 0
+          classes[] = "tableau-size-#{string.rep('x', size.amount)}"
+      when "normal"
+        classes[] = "medium"
 
-  -- table_attributes.has_hlines = ast.has_hlines
-  -- table_attributes.all_hlines = ast.all_hlines
-  -- table_attributes.all_vlines = ast.all_vlines
-  -- table_attributes.box        = ast.box
   pandoc.Attr(id or "", classes, table_attributes)
 
 
 ----------------------------------------------------------------------------------
 cell_holder = (cell) ->
   pandoc.Cell(
-    md2ast(cell.content[1]),
+    md2ast(cell.content |> table.concat("\n")),
     "AlignCenter",  -- alignmentFor(f.alignment),
     cell.row_span,
     cell.col_span
@@ -169,11 +177,9 @@ find_and_mark_contiguous_block = (body, r, c, group) -> -- TODO: rework once alg
         body[r+row][c+col].span_group = nil
         body[r+row][c+col].hidden_by_span = true
 
-    dump "Marking #{r} #{c} row #{row_span} col #{col_span}"
     body[r][c].hidden_by_span = false
     body[r][c].row_span = row_span if row_span > 1
     body[r][c].col_span = col_span if col_span > 1
-    dump body[r][c]
 
 ----------------------------------------------------------------------------------
 merge_spans = (body) ->
@@ -199,15 +205,24 @@ table_body = (table) ->
 ----------------------------------------------------------------------------------
 table_attr = (table) ->
   classes = { "tableau-table" }
+  table_attributes = {}
+
   for cls in *table.styles
     append(classes, cls)
-  
-  classes[] = "fg-#{table.fg}" if table.fg
-  classes[] = "bg-#{table.bg}" if table.bg
 
-  table_attributes = {}
+  if table.fg
+    if table.fg.color_type == "rgb"
+      table_attributes["style"] = "color: #{table.fg.name}"
+    else
+      classes[] = "fg-#{table.fg.name}"
+
+  if table.bg
+    if table.bg.color_type == "rgb"
+      table_attributes["style"] = "background-color: #{table.bg.name}"
+    else
+      classes[] = "bg-#{table.bg.name}"
+
   pandoc.Attr(table.id or "", classes, table_attributes)
-
 ----------------------------------------------------------------------------------
 pandoc_table_from = (table, id) ->
   rows = extract_cells_and_attributes(table)

@@ -1,4 +1,11 @@
-.tableau-table {
+/* override bootstrap, which overrode rtge original pandoc... */ 
+div.columns {
+  display: flex !important; 
+  gap: min(4vw, 1.5em) !important;
+}
+div.column{
+  flex: auto !important; 
+  overflow-x: auto !important;
 }
 
 :root{
@@ -17,6 +24,16 @@
   --shade7-bg:       hsl(270deg, 61%, 79%);
   --shade8-bg:       hsl(305deg, 61%, 79%);
   --shade9-bg:       hsl(340deg, 61%, 79%);
+  --shade-bg:        var(--shade1-bg);
+  --shade1-fg:       hsl(60deg, 66%, 44%);
+  --shade2-fg:       hsl(95deg, 61%, 39%);
+  --shade3-fg:       hsl(130deg, 61%, 39%);
+  --shade4-fg:       hsl(165deg, 61%, 39%);
+  --shade5-fg:       hsl(200deg, 61%, 39%);
+  --shade6-fg:       hsl(235deg, 61%, 39%);
+  --shade7-fg:       hsl(270deg, 61%, 39%);
+  --shade8-fg:       hsl(305deg, 61%, 39%);
+  --shade9-fg:       hsl(340deg, 61%, 39%);
   --shade-bg:        var(--shade1-bg);
   --stripe-bg:       hsl(var(--hbg-h) var(--hbg-s) 95%);
 }
@@ -48,12 +65,12 @@ table.tableau-table.striped tbody tr:nth-of-type(odd) {
   }
 
 table.tableau-table {
-
   width: auto;  
   caption-side: bottom
-
   /* and now our stuff */
-
+}
+table.tableau-table > tbody {
+  border: none;
 }
 
 table.tableau-table caption {
@@ -76,14 +93,22 @@ table.tableau-table.tbl-boxed caption {
     padding-right: 1em;
 }
 
-table.tableau-table td, table.tableau-table th {
+table.tableau-table td {
     padding: .25em 0.75em;
   }
+
+table.tableau-table td.tableau-th {
+    padding: 0.0em 0.75em;
+}
+
 
 table.tableau-table td[rowspan] {
   vertical-align: middle;
 }
-table.tableau-table th, table.tableau-table td.tableau-th  {
+
+table.tableau-table th, table.tableau-table td.tableau-th,
+table.tableau-table tf, table.tableau-table td.tableau-tf
+{
     color: white;
     background: hsl(240, 29%, 60%);
     background: var(--header-bg-color);
@@ -114,6 +139,19 @@ table.tableau-table .align-h-c, table.tableau-table .align-h-c {
 table.tableau-table .align-h-r, table.tableau-table .align-h-r {
     text-align: right !important;
   }
+
+table.tableau-table .align-v-t, table.tableau-table .align-v-t {
+    vertical-align: top !important;
+  }
+
+table.tableau-table .align-v-m, table.tableau-table .align-v-m {
+    vertical-align: middle !important;
+  }
+
+table.tableau-table .align-v-b, table.tableau-table .align-v-b {
+    vertical-align: bottom !important;
+  }
+
 
 table.tableau-table.wide {
     width: 100%;
@@ -155,6 +193,56 @@ table.tableau-table.tbl-vlines th  {
 table.tableau-table th.shade,
 table.tableau-table td.shade {
   background: var(--shade-bg);
+}
+
+table.tableau-table th.fg-shade,
+table.tableau-table td.fg-shade {
+  color: var(--shade-fg);
+}
+
+table.tableau-table th.fg-shade1,
+table.tableau-table td.fg-shade1 {
+  color: var(--shade1-fg);
+}
+
+table.tableau-table th.fg-shade2,
+table.tableau-table td.fg-shade2 {
+  color: var(--shade2-fg);
+}
+
+table.tableau-table th.fg-shade3,
+table.tableau-table td.fg-shade3 {
+  color: var(--shade3-fg);
+}
+
+table.tableau-table th.fg-shade4,
+table.tableau-table td.fg-shade4 {
+  color: var(--shade4-fg);
+}
+
+table.tableau-table th.fg-shade5,
+table.tableau-table td.fg-shade5 {
+  color: var(--shade5-fg);
+}
+
+table.tableau-table th.fg-shade6,
+table.tableau-table td.fg-shade6 {
+  color: var(--shade6-fg);
+}
+
+table.tableau-table th.fg-shade7,
+table.tableau-table td.fg-shade7 {
+  color: var(--shade7-fg);
+}
+
+table.tableau-table th.fg-shade8,
+table.tableau-table td.fg-shade8 {
+  color: var(--shade8-fg);
+}
+
+table.tableau-table th.fg-shade9,
+table.tableau-table td.fg-shade9 {
+  color: var(--shade9-fg);
 }
 
 table.tableau-table th.bg-shade,
@@ -253,5 +341,54 @@ table.tableau-table.striped tbody tr:nth-of-type(odd) {
     background-color: hsl(240, 29%, 95%);
     background-color: var(--stripe-bg);
   }
+
+table.tableau-table  tr td .callout {
+  margin-top: 0;
+}
+
+table.tableau-table tr td.tableau-medium {
+  font-size: medium;
+}
+
+table.tableau-table tr td.tableau-small {
+  font-size: 80%;
+}
+
+table.tableau-table tr td.tableau-small.tableau-size-x {
+  font-size: 70%;
+}
+
+table.tableau-table tr td.tableau-small.tableau-size-xx {
+  font-size: 60%;
+}
+
+
+table.tableau-table tr td.tableau-small .callout.callout-style-default .callout-body {
+  font-size: inherit;
+}
+
+table.tableau-table tr td.tableau-large {
+  font-size: 120%;
+}
+
+table.tableau-table tr td.tableau-large.tableau-size-x{
+  font-size: 140%;
+}
+
+table.tableau-table tr td.tableau-large.tableau-size-xx {
+  font-size: 160%;
+}
+
+table.tableau-table tr td.tableau-large .callout.callout-style-default .callout-body {
+  font-size: inherit;
+}
+
+table.tableau-table .bold {
+  font-weight: bold;
+}
+
+table.tableau-table .italic {
+  font-style: bold;
+}
 
 

@@ -26,6 +26,21 @@ iterate_selector = (selector, cb)  ->
       iterate_combination(rows[r], cols[c], cb)
 
 ---------------------------------------------------------------------------------
+iterate_column = (selector, cb)  ->
+  cols = selector.col
+  for c = 1, #cols
+    for cno in range_of(cols[c], nil)
+      cb(nil, cno)
+
+---------------------------------------------------------------------------------
 export iterate_selectors = (selectors, cb) ->
   for i = 1, #selectors
     iterate_selector(selectors[i], cb)
+
+---------------------------------------------------------------------------------
+-- export iterate_colspecs = (selectors, cb) ->
+--   for i = 1, #selectors
+--     selector = selectors[i]
+--     if not selector.row
+--       iterate_column(selectors[i], cb)
+

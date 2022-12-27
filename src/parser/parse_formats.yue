@@ -2,11 +2,12 @@
 --     fg(color)                   Y          Y
 --     bg(color)                   Y          Y
 --     align([lcrj][tmb])          Y          Y
---     width(n)                    N          Y 
+--     width(n)                    Y          Y 
 --     lines([ []_~ ]+)            N          Y 
 --     style(a,b,c)                Y          Y
 --     header                      N          Y
 --     footer                      N          Y
+--     small                       Y          Y
 --
 --     cols( colspec, colspec...)  Y          N
 --     hlines                      Y          N
@@ -16,12 +17,16 @@
 import "parser.util" as { :dump, :expect }
 
 const color_names = {
-  "shade",
-  "shade1",
-  "shade2",
-  "shade3",
-  "shade4",
-  "shade5",
+  shade: 1,
+  shade1: 1,
+  shade2: 1,
+  shade3: 1,
+  shade4: 1,
+  shade5: 1,
+  shade6: 1,
+  shade7: 1,
+  shade8: 1,
+  shade9: 1,
 }
 
 const color_hx3 = "#%x%x%x"
@@ -32,7 +37,7 @@ gather_one_colspec = () -> "to be defined below"
 --------------------------------------------------------------------------------
 named_color = (text) ->
   text\save_place()
-  name = text\scan("%a+%f[%A]")
+  name = text\scan("%w+%f[%W]")
   unless name and color_names[name]
     text\restore_place()
     return nil
@@ -131,7 +136,14 @@ hlines = (text) ->
     { type: "hlines" }
 
 --------------------------------------------------------------------------------
---     lines([ []_~ ]+)     [ ] _ ~
+--     large
+large = (text) ->
+  match,xs = text\scan("(x*)large%f[%A]")
+  if match
+    { type: "large", amount: if xs then #xs else 0 }
+
+--------------------------------------------------------------------------------
+--     lines([tblrx]+) 
 lines = (text) ->
   spec = nil
   if text\scan("lines?%(")
@@ -141,6 +153,19 @@ lines = (text) ->
     if text\scan("[tblrx]+")
       spec = { type: "lines", spec: text.last_match }
   spec
+
+--------------------------------------------------------------------------------
+--     normal  (font size)
+normal = (text) ->
+  if text\scan("normal%f[%A]")
+    { type: "normal" }
+
+--------------------------------------------------------------------------------
+--     small
+small = (text) ->
+  match,xs = text\scan("(x*)small%f[%A]")
+  if match
+    { type: "small", amount: if xs then #xs else 0 }
 
 --------------------------------------------------------------------------------
 -- span
@@ -167,15 +192,19 @@ vlines = (text) ->
     { type: "vlines" }
 
 --------------------------------------------------------------------------------
---     width(n)             [0-9]
+--     width(n)             [0-9]%?
 width = (text) ->
   spec = nil
   if text\scan("width%(")
     spec = expect(width, text, "expecting an integer width")
     text\expect("%)", "expected closing parenthesis after width")
   else
-    if text\scan("[1-9][0-9]*") 
-      spec = { type: "width", spec: text.last_match |> tonumber }
+    if text\scan("0?%.[1-9][0-9]*") or text\scan("[1-9][0-9]*") 
+
+      wid = text.last_match |> tonumber 
+      if text\scan("%%")
+        wid = wid / 100.0
+      spec = { type: "width", spec: wid }
   spec
 
 
@@ -194,15 +223,18 @@ gather_one_colspec = (text) ->
 
 --------------------------------------------------------------------------------
 export parse_global_formats = (text) ->
-  cols(text) or
-  align(text) or 
-    bg(text) or 
-    fg(text) or 
-    style(text) or 
-    hlines(text) or
-    vlines(text) or
-    boxed(text)
-
+  align(text)     or
+    bg(text)      or
+    boxed(text)   or 
+    cols(text)    or
+    fg(text)      or
+    hlines(text)  or
+    large(text)   or
+    normal(text)  or
+    small(text)   or
+    style(text)   or
+    vlines(text)  or
+    width(text)
 
 --------------------------------------------------------------------------------
 export parse_selector_formats = (text) ->
@@ -212,9 +244,13 @@ export parse_selector_formats = (text) ->
   align(text)    or
     bg(text)     or
     fg(text)     or
-    span(text)   or
     footer(text) or
     header(text) or
-    lines(text)  or
+    large(text)  or
+    normal(text) or
+    small(text)  or
+    span(text)   or
     style(text)  or
-    width(text)
+    width(text)  or
+    lines(text)      -- lines must go at the end, because it swallows single characters
+

@@ -25,7 +25,7 @@ unknown_table_row = (row_source) ->
 cell_fragment = (row) ->
   row\scan("`[^`]+`")    or -- inline code
     row\scan("$[^$]+%$") or -- inline math
-    row\scan("\\|")    or -- escaped pipe
+    row\scan("\\%|")    or -- escaped pipe
     row\scan("[^`$|]+")     -- regular content
 
 
@@ -62,6 +62,9 @@ cell = (row) ->
 
   return false if row\looking_at("\n")
 
+  if row\scan("=empty%s*$")
+    return { width: 0, content: {"&nbsp;"}}
+
   content = cell_content(row)
   if not content or #content == 0
     return false
@@ -81,9 +84,10 @@ content_row = (row) ->
     a_cell = cell(row)
 
   if #result == 0
-    return false
+    { { width: 0, content: {""} }}
+  else
+    result
 
-  result
 
 
 ----------------------------------------------------------------------

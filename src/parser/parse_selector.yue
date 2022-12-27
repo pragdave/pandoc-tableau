@@ -40,9 +40,7 @@ ast_value_constant = (val) ->
 value = (state) ->
   if     state.input\scan('%$r') then ast_value_constant(state.ast.row_count)
   elseif state.input\scan('%$c') then ast_value_constant(state.ast.col_count)
-  elseif state.input\scan('@r')  then (pos) -> 
-    dump pos, "looking at @r"
-    pos.row 
+  elseif state.input\scan('@r')  then (pos) -> pos.row 
   elseif state.input\scan('@c')  then state.input\parse_error("Sorry, '@c' can't be supported, because the row is evaluated before the column")
   else
     s = integer(state)
@@ -146,7 +144,8 @@ term = (state) ->
     r = {{
       n1: ast_value_constant(1), 
       n2: ast_value_constant(state.ast.row_count),
-      skip: (_) -> true
+      skip: (_) -> true,
+      defaulted: true,
     }}
 
   unless c

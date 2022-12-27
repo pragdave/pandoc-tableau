@@ -36,9 +36,8 @@ test.table1["can create vt"] = () ->
 
 --------------------------------------------------------------------------------
 test.table1["table-wide options are transferred"] = () ->
-
-  test.equal table1.align_h, "l"
-  test.equal table1.align_v, "b"
+  test.equal table1.h_align, "l"
+  test.equal table1.v_align, "b"
   test.equal table1.bg, "blue"
   test.equal table1.fg, "red"
 
@@ -48,17 +47,12 @@ test.table1["table-wide options are transferred"] = () ->
       "style1", "style2"
     }
 
-  expected = { 3, 5, 2 }
-  for i = 1, #table1.colspecs
-    test.equal table1.colspecs[i][1], "c"
-    test.equal table1.colspecs[i][2], expected[i]
 
 --------------------------------------------------------------------------------
 test.table1["default colspecs are created"] = () ->
-  expected = { 3, 5, 2 }
   for i = 1, #table1.colspecs
     test.equal table1.colspecs[i][1], "c"
-    test.equal table1.colspecs[i][2], expected[i]
+    test.equal table1.colspecs[i][2], "ColWidthDefault"
 
 --------------------------------------------------------------------------------
 test.table1["cell contents are copied in"] = () ->
@@ -79,7 +73,7 @@ const table2 = [[ \
 |1|22|3
 ===
 r1 = fg(red)
-r2 = green
+r2 = bg(green)
 r2:c2 = bg(pink)
 ]] |> load_table()
 

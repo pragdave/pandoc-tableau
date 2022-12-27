@@ -18,11 +18,11 @@ export class StringScanner
     @skip("%s*")
 
   scan: (pattern) =>
-    s, e = @str\find("^" .. pattern, @pos)
+    s, e, c1, c2, c3 = @str\find("^" .. pattern, @pos)
     return nil unless e
     @pos = e + 1 if e
     @last_match = @str\sub(s, e)
-    @last_match
+    @last_match, c1, c2, c3
 
   expect: (pattern, msg) =>
     @scan(pattern) or @parse_error(msg)

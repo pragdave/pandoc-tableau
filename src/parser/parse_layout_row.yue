@@ -5,19 +5,6 @@ import "parser.string_scanner" as { StringScanner: StringScanner }
 import "parser.util"
 import "parser.util" as { :expect, :dump }
 
--- layout = blank | comment | caption | global | selected
--- caption = [#:]+ .*
--- selected = selector '=' cell_formats
--- global = global_formats
---
---     fg(color)
---     bg(color)
---     align([lcrj][tmb])
---     width(n)
---     lines([ []_~ ]+)
---
--- global_formats = fg bg lines 
-
 
 ----------------------------------------------------------------------
 FMT_MSG = [[
