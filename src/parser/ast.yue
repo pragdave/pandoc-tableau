@@ -126,35 +126,43 @@ col_text_re = re.compile([[
   colnumber <- {:col: [1-9][0-9]?  / [a-z] :} 
 ]])
 
+
+merge_following_column_blocks = (rows, row_no, callback) ->
+
+  while row_no <= #rows
+    -- check for "col nn:" block
+    next = rows[row_no]\lower()
+    col = col_text_re\match(next)
+    return row_no unless col
+
+    content = {}
+    col_no = decode_column_number(col.col)
+    row_no += 1
+    r = rows[row_no]
+
+    while not r\find("^%s*}}") and row_no < #rows
+      content[] = r
+      row_no += 1
+      r = rows[row_no]
+
+    if row_no > #rows
+      error("Missing terminating '}}' for 'col #{col_no} {{'")
+
+    row_no += 1
+
+    callback(col_no, normalize(content))
+
+  row_no
+
 parse_data = (ast, data) ->
   rows = split_into_rows(data)
-  i = 1
-  while i <= #rows
-    last_row = parse_data_row(rows[i])
-    i += 1
-    if i < #rows
-      -- check for "col nn:" block
-      next = rows[i]\lower()
-      col = col_text_re\match(next)
-      if col
-        content = {}
-        col_no = decode_column_number(col.col)
-        i += 1
-        r = rows[i]
-
-        while not r\find("^%s*}}") and i < #rows
-          content[] = r
-          i += 1
-          r = rows[i]
-
-        if i > #rows
-          error("Missing terminating '}}' for 'col #{col_no} {{'")
-
-        i += 1
-
-        if col_no <= #last_row
-          last_row[col_no].content = normalize(content)
-
+  row_no = 1
+  while row_no <= #rows
+    last_row = parse_data_row(rows[row_no])
+    row_no = merge_following_column_blocks(rows, row_no+1, (col, content) ->
+      if col <= #last_row
+        last_row[col].content = content
+    )
     ast\add_row(last_row)
 
 --------------------------------------------------------------------------------

@@ -89,12 +89,13 @@ r1:c2-5 = line(b)
 |            | Sugars 14g            |  0% |
 | Protein 3g                               |
 ===
+width(.5)
 # Nutrition Facts for Yummy Treats
 
 align(l)
 -- box
 
-c1 = width(3)
+c1 = width(0.1)
 c3 = align(r)
 
 r1 = large .bold align(c) span 
@@ -130,19 +131,20 @@ xlarge
 ```
 
 ``` tableau
- 1  | 2  | 3  | 4
- 5  | 6  | 7  | 8
- 9  | 10 | 11 | 12
- 13 | 14 | 15 | 16
+ 1  | 2  | 3  |  4 |  5
+ 6  | 7  | 8  |  9 | 10
+ 11 | 12 | 13 | 14 | 15 
+ 16 | 17 | 18 | 19 | 20
+ 21 | 22 | 23 | 24 | 25
  ===
 r1-3:c1 = span
 r1:c1   = shade1
 
-r1-3:c2-3 = span
-r1:c2     = shade3
+r3:c4-5 = span shade2
 
-r4:c3-4   = span
-r4:c2     = shade6
+r2-4:c2-3 = span
+r2:c2     = shade3
+
 ```
 :::
 
@@ -400,27 +402,69 @@ r3:c3;r4:c3 = bg(shade8)
 
 ##### Longer column content {#sec-lcc}
 
-::::sbs
-London | 54,123 | xxx
+(Because this example is longer, I'm formatting it with the output below the markup.)
+
+~~~~
+~~~ tableau
+Cicero | | |
+col 2 {{
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
+}}
 col 3 {{
+atque corrupti quos dolores et quas molestias
+}}
+| | | |
+col 2 {{
 ::: {.callout-note}
-accurate as of 2020
+On the other hand, we denounce with righteous indignation and dislike men who
+are so beguiled and demoralized by the charms of pleasure of the moment, so
+blinded by desire...
 :::
 }}
 
-Sydney | 23,541 | xxx
+lorem | | |
+col 2 {{
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+}}
 col 3 {{
-this number is disputed. 
-Taylor _et al_[2019] claim
-that overcounting was rife 
-in this survey, and suspect
-the actual number is 
-closer to 14,500
+incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet,
 }}
 ===
-c1,2 = small
-c3   = align(l) xsmall width(0.5)
-::::
+align(l)
+r2:c2-3 = span
+~~~
+~~~~
+
+Ths renders as:
+
+~~~ tableau
+Cicero | | |
+col 2 {{
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
+}}
+col 3 {{
+atque corrupti quos dolores et quas molestias
+}}
+| | | |
+col 2 {{
+::: {.callout-note}
+On the other hand, we denounce with righteous indignation and dislike men who
+are so beguiled and demoralized by the charms of pleasure of the moment, so
+blinded by desire...
+:::
+}}
+
+lorem | | |
+col 2 {{
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+}}
+col 3 {{
+incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet,
+}}
+===
+align(l)
+r2:c2-3 = span
+~~~
 
 * The lines between `col 3 {{` and `}}` are formatted and the
   result is substituted into the third column of the previous row.
