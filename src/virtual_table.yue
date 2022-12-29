@@ -52,7 +52,7 @@ column_widths = (rows) ->
     for r = 1, row_count
       cell = rows[r][c]
       width = cell\calculated_width()
-      if width 
+      if width and width != "ColWidthDefault"
         if width < 1 -- percentage
           if percent_widths[c] < width
             percent_widths[c] = width
@@ -187,7 +187,7 @@ class Cell
     @v_align = v if v
   set_font_size: (size, amount) =>
     @font_size = { type: size, :amount }
-  set_width: (width) => 
+  set_width: (width) =>
     @width = width
 
 --------------------------------------------------------------------------------
@@ -226,12 +226,14 @@ export class VirtualTable
   --------------------  
   merge_table_level_options_into_cells: () =>
     for row in *@table
-      for cell in *row
+      for col = 1, #row
+        local cell = row[col]
         cell\set_align(@h_align, @v_align)
         cell\add_style(@font_size) if @font_size
         cell\add_style(@font_size_amount) if @font_size_amount
         cell\set_fg(@fg) if @fg
         cell\set_bg(@bg) if @bg
+        cell\set_width(@colspecs[col][2])
 
   --------------------  
   merge_styles_from_selectors: (ast)  =>
@@ -258,6 +260,8 @@ export class VirtualTable
     @font_size = "tableau-#{size}"
     if amount > 0
       @font_size_amount = string.rep("x", amount)
+
+  set_width: (width) => @width = width
 
   --------------------  
 

@@ -78,20 +78,20 @@ colspecs = (table) ->
 ----------------------------------------------------------------------------------
 attr = (cell, id) ->
   classes = {}
-  table_attributes = {}
+  cell_attributes = {}
 
   for cls in *cell.styles
     append(classes, cls)
 
   if cell.fg
     if cell.fg.color_type == "rgb"
-      table_attributes["style"] = "color: #{cell.fg.name}"
+      cell_attributes["style"] = "color: #{cell.fg.name}"
     else
       classes[] = "fg-#{cell.fg.name}"
 
   if cell.bg
     if cell.bg.color_type == "rgb"
-      table_attributes["style"] = "background-color: #{cell.bg.name}"
+      cell_attributes["style"] = "background-color: #{cell.bg.name}"
     else
       classes[] = "bg-#{cell.bg.name}"
 
@@ -112,7 +112,7 @@ attr = (cell, id) ->
       when "normal"
         classes[] = "medium"
 
-  pandoc.Attr(id or "", classes, table_attributes)
+  pandoc.Attr(id or "", classes, cell_attributes)
 
 
 ----------------------------------------------------------------------------------
@@ -203,36 +203,59 @@ table_body = (table) ->
 
 
 ----------------------------------------------------------------------------------
-table_attr = (table) ->
-  classes = { "tableau-table" }
-  table_attributes = {}
+table_attr = (tbl, id) ->
+  local classes = { "tableau-table" }
+  local tbl_attributes = {}
+  local style = {}
 
-  for cls in *table.styles
+  for cls in *tbl.styles
     append(classes, cls)
 
-  if table.fg
-    if table.fg.color_type == "rgb"
-      table_attributes["style"] = "color: #{table.fg.name}"
+  if tbl.fg
+    if tbl.fg.color_type == "rgb"
+      style[] = "color: #{tbl.fg.name}"
     else
-      classes[] = "fg-#{table.fg.name}"
+      classes[] = "fg-#{tbl.fg.name}"
 
-  if table.bg
-    if table.bg.color_type == "rgb"
-      table_attributes["style"] = "background-color: #{table.bg.name}"
+  if tbl.bg
+    if tbl.bg.color_type == "rgb"
+      style[] = "background-color: #{tbl.bg.name}"
     else
-      classes[] = "bg-#{table.bg.name}"
+      classes[] = "bg-#{tbl.bg.name}"
 
-  pandoc.Attr(table.id or "", classes, table_attributes)
+  if tbl.width
+      w = tbl.width
+      if w < 1
+        w = "#{w*100}%"
+      else
+        w = "#{w}em"
+
+      style[] = "width: #{w}"
+
+  style, pandoc.Attr(id or "", classes, tbl_attributes)
+
+
 ----------------------------------------------------------------------------------
-pandoc_table_from = (table, id) ->
-  rows = extract_cells_and_attributes(table)
+pandoc_table_from = (tbl, id) ->
+  rows = extract_cells_and_attributes(tbl)
+  style, attrs = table_attr(tbl, id)
   result = pandoc.Table \
-    caption(table.caption),
-    colspecs(table),
+    caption(tbl.caption),
+    colspecs(tbl),
     pandoc.TableHead({}),
-    { table_body(table.table) }, 
+    { table_body(tbl.table) }, 
     pandoc.TableFoot({}),
-    table_attr(table)
+    attrs
+
+  if style
+    if quarto.doc.is_format("html")
+      -- this is necessary because Pandoc doesn't forward style= attributes
+      style = table.concat(style, "; ")
+      result = {
+        pandoc.RawBlock('html', "<div style=\"#{style}\">"),
+        result,
+        pandoc.RawBlock('html', '</div>')
+      }
   result
 
 ----------------------------------------------------------------------------------

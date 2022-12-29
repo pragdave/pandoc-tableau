@@ -126,7 +126,7 @@ r15 = span
 ===
 .gradient
 r2:c2 = .glow
-large
+xlarge
 ```
 
 ``` tableau
@@ -141,7 +141,7 @@ r1:c1   = shade1
 r1-3:c2-3 = span
 r1:c2     = shade3
 
-r4:c2-4   = span
+r4:c3-4   = span
 r4:c2     = shade6
 ```
 :::
@@ -1453,3 +1453,103 @@ is ${cw}_{tot}$. Then we set the ratio width of these columns to their
 character widths times $\frac{rr}{{cw}_{tot}}$.
 
 :::
+
+::: sbs
+one  | two  | three
+four | five | six
+===
+bg(#f0f9ff)
+:::
+
+::: sbs
+one  | two  | three
+four | five | six
+===
+bg(#f0f9ff)
+c1  = width(20)
+c2 = width(4)
+:::
+
+::: sbs
+one  | two  | three
+four | five | six
+===
+bg(#f0f9ff)
+width(.75)
+c1  = width(20)
+c2 = width(4)
+:::
+
+::: sbs
+one  | two  | three
+four | five | six
+===
+bg(#f0f9ff)
+width(.4)
+c1  = width(.2)
+c2 = width(.4)
+:::
+
+# Styling
+
+## HTML Output
+
+Tableau uses CSS for all styling. Scope any changes you make with
+`table.tableau-table` in order to get the correct specificity.
+
+You can override colors using CSS variables.
+
+~~~ css
+:root{
+  --hbg-h: 240deg;
+  --hbg-s: 29%;
+  --caption-bg:      hsl(var(--hbg-h) var(--hbg-s) 98%);
+  --header-bg-color: hsl(var(--hbg-h) var(--hbg-s) 60%);
+  --grid-line-color-normal: hsl(var(--hbg-h) var(--hbg-s) 80%);
+  --grid-line-color-header: hsl(var(--hbg-h) var(--hbg-s) 50%);
+  --shade1-bg:       hsl(60deg, 66%, 84%);
+  --shade2-bg:       hsl(95deg, 61%, 79%);
+  --shade3-bg:       hsl(130deg, 61%, 79%);
+  --shade4-bg:       hsl(165deg, 61%, 79%);
+  --shade5-bg:       hsl(200deg, 61%, 79%);
+  --shade6-bg:       hsl(235deg, 61%, 79%);
+  --shade7-bg:       hsl(270deg, 61%, 79%);
+  --shade8-bg:       hsl(305deg, 61%, 79%);
+  --shade9-bg:       hsl(340deg, 61%, 79%);
+  --shade-bg:        var(--shade1-bg);
+  --shade1-fg:       hsl(60deg, 66%, 44%);
+  --shade2-fg:       hsl(95deg, 61%, 39%);
+  --shade3-fg:       hsl(130deg, 61%, 39%);
+  --shade4-fg:       hsl(165deg, 61%, 39%);
+  --shade5-fg:       hsl(200deg, 61%, 39%);
+  --shade6-fg:       hsl(235deg, 61%, 39%);
+  --shade7-fg:       hsl(270deg, 61%, 39%);
+  --shade8-fg:       hsl(305deg, 61%, 39%);
+  --shade9-fg:       hsl(340deg, 61%, 39%);
+  --shade-bg:        var(--shade1-bg);
+  --stripe-bg:       hsl(var(--hbg-h) var(--hbg-s) 95%);
+}
+~~~
+
+Tableau also has definitions for dark mode:
+
+~~~ css
+[data-md-color-scheme=slate] {
+  --hbg-h: 240deg;
+  --hbg-s: 29%;
+  --caption-bg:      hsl(var(--hbg-h) var(--hbg-s) 23%);
+  --header-bg-color: hsl(var(--hbg-h) var(--hbg-s) 30%);
+  --grid-line-color-normal: hsl(var(--hbg-h) var(--hbg-s) 50%);
+
+        :       :
+~~~
+
+
+You can change the position to the table caption:
+
+~~~ css
+table.tableau-table {
+  width: auto;  
+  caption-side: bottom
+~~~
+
