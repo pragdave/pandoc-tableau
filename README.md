@@ -64,17 +64,8 @@ This second line tells Quarto where in the filter chain it should run.
 
 See [the guide](https://pragdave.github.io/pandoc-tableau/tableau-guide.html).
 
-### TLDR;
+### License
 
-~~~~
-~~~ tableau
-Animal  | Baby   | Cuteness
-cat     | kitten | 8
-dog     | puppy  | 8
-chicken | chick  | 4
-===
-c1-2: align(l)
-r1 = header
-~~~
-~~~~
+Copyright © 2023, Dave Thomas (pragdave)
 
+See [LICENSE.md)[./LICENSE.md]
