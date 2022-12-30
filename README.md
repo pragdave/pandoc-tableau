@@ -68,4 +68,4 @@ See [the guide](https://pragdave.github.io/pandoc-tableau/tableau-guide.html).
 
 Copyright © 2023, Dave Thomas (pragdave)
 
-See [LICENSE.md)[./LICENSE.md]
+See [LICENSE.md](./LICENSE.md)
