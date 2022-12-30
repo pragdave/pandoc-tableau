@@ -31,4 +31,43 @@ row being generated. It also does arithmetic.
 
 ## Documentation
 
-A combined guide and reference [is available](...).
+A combined guide and reference [is available](docs/tableau_guide.html).
+
+## Installation
+
+The Tableau extension is available in the `_extensions` directory.
+
+## Adding to Your Document
+
+This extension must be run prior to the bulk of Quarto processing. Add
+it to your `_quarto.yml` file like this:
+
+~~~ yml
+filters:
+  - _extensions/tableau_pre/tableau_pre.lua
+  - quarto
+  - other_filters_go_here
+~~~
+
+You'll need to add the `tableau_pre` extension at the top of your
+filters, and then add the `- quarto` line (if it isn't already there).
+This second line tells Quarto where in the filter chain it should run.
+
+## Using
+
+See [the guide](docs/tableau_guide.html). 
+
+### TLDR;
+
+~~~~
+~~~ tableau
+Animal  | Baby   | Cuteness
+cat     | kitten | 8
+dog     | puppy  | 8
+chicken | chick  | 4
+===
+c1-2: align(l)
+r1 = header
+~~~
+~~~~
+

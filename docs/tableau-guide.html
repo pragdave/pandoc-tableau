@@ -1,0 +1,3617 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.258">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>tableau-guide</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="tableau-guide_files/libs/clipboard/clipboard.min.js"></script>
+<script src="tableau-guide_files/libs/quarto-html/quarto.js"></script>
+<script src="tableau-guide_files/libs/quarto-html/popper.min.js"></script>
+<script src="tableau-guide_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="tableau-guide_files/libs/quarto-html/anchor.min.js"></script>
+<link href="tableau-guide_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="tableau-guide_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="tableau-guide_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="tableau-guide_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="tableau-guide_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="tableau-guide_files/libs/quarto-contrib/tableau-1.0.0/tableau.css" rel="stylesheet">
+<style>
+/* Styles added by the columns.lua pandoc filter */
+  .columns :first-child {margin-top: 0;}
+  .column-span + * {margin-top: 0;}
+</style>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#tableau" id="toc-tableau" class="nav-link active" data-scroll-target="#tableau">Tableau</a>
+  <ul>
+  <li><a href="#more-examples" id="toc-more-examples" class="nav-link" data-scroll-target="#more-examples">More Examples</a>
+  <ul class="collapse">
+  <li><a href="#apa-style-table" id="toc-apa-style-table" class="nav-link" data-scroll-target="#apa-style-table">APA-style Table</a></li>
+  <li><a href="#nutrition-label" id="toc-nutrition-label" class="nav-link" data-scroll-target="#nutrition-label">Nutrition Label</a></li>
+  <li><a href="#funky-backgrounds-and-flexible-spans" id="toc-funky-backgrounds-and-flexible-spans" class="nav-link" data-scroll-target="#funky-backgrounds-and-flexible-spans">Funky backgrounds and Flexible Spans</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#a-gentle-guide-to-tableau" id="toc-a-gentle-guide-to-tableau" class="nav-link" data-scroll-target="#a-gentle-guide-to-tableau">A Gentle Guide to Tableau</a>
+  <ul>
+  <li><a href="#table-data" id="toc-table-data" class="nav-link" data-scroll-target="#table-data">Table Data</a></li>
+  <li><a href="#table-layout" id="toc-table-layout" class="nav-link" data-scroll-target="#table-layout">Table Layout</a></li>
+  </ul></li>
+  <li><a href="#tableau-reference" id="toc-tableau-reference" class="nav-link" data-scroll-target="#tableau-reference">Tableau Reference</a>
+  <ul>
+  <li><a href="#create-a-table" id="toc-create-a-table" class="nav-link" data-scroll-target="#create-a-table">Create a Table</a></li>
+  <li><a href="#tableau-data-section" id="toc-tableau-data-section" class="nav-link" data-scroll-target="#tableau-data-section">Tableau Data Section</a>
+  <ul class="collapse">
+  <li><a href="#column-data-for-a-row" id="toc-column-data-for-a-row" class="nav-link" data-scroll-target="#column-data-for-a-row">Column Data for a Row</a>
+  <ul class="collapse">
+  <li><a href="#no-format-information-in-the-data-section" id="toc-no-format-information-in-the-data-section" class="nav-link" data-scroll-target="#no-format-information-in-the-data-section">No Format Information in the Data Section</a></li>
+  </ul></li>
+  <li><a href="#blank-lines-1" id="toc-blank-lines-1" class="nav-link" data-scroll-target="#blank-lines-1">Blank Lines</a></li>
+  <li><a href="#empty-lines" id="toc-empty-lines" class="nav-link" data-scroll-target="#empty-lines">Empty Lines</a></li>
+  <li><a href="#column-paragraphs" id="toc-column-paragraphs" class="nav-link" data-scroll-target="#column-paragraphs">Column Paragraphs</a></li>
+  </ul></li>
+  <li><a href="#table-layout-section" id="toc-table-layout-section" class="nav-link" data-scroll-target="#table-layout-section">Table Layout Section</a>
+  <ul class="collapse">
+  <li><a href="#cell-selectors" id="toc-cell-selectors" class="nav-link" data-scroll-target="#cell-selectors">Cell Selectors</a>
+  <ul class="collapse">
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
+  </ul></li>
+  <li><a href="#format-specifiers" id="toc-format-specifiers" class="nav-link" data-scroll-target="#format-specifiers">Format Specifiers</a>
+  <ul class="collapse">
+  <li><a href="#align-horizontal-and-vertical-alignment" id="toc-align-horizontal-and-vertical-alignment" class="nav-link" data-scroll-target="#align-horizontal-and-vertical-alignment"><code>align</code>: Horizontal and vertical alignment</a></li>
+  <li><a href="#bg-background-color" id="toc-bg-background-color" class="nav-link" data-scroll-target="#bg-background-color"><code>bg</code>: Background color</a></li>
+  <li><a href="#boxed-box-table" id="toc-boxed-box-table" class="nav-link" data-scroll-target="#boxed-box-table"><code>boxed</code>: Box table</a></li>
+  <li><a href="#cols-missing" id="toc-cols-missing" class="nav-link" data-scroll-target="#cols-missing"><code>cols</code>: Missing</a></li>
+  <li><a href="#fg-foreground-color" id="toc-fg-foreground-color" class="nav-link" data-scroll-target="#fg-foreground-color"><code>fg</code>: Foreground color</a></li>
+  <li><a href="#footer-specify-table-footer-cells" id="toc-footer-specify-table-footer-cells" class="nav-link" data-scroll-target="#footer-specify-table-footer-cells"><code>footer</code>: Specify table footer cells</a></li>
+  <li><a href="#header-specify-table-header-cells" id="toc-header-specify-table-header-cells" class="nav-link" data-scroll-target="#header-specify-table-header-cells"><code>header</code>: Specify table header cells</a></li>
+  <li><a href="#hlines-draw-lines-between-rows" id="toc-hlines-draw-lines-between-rows" class="nav-link" data-scroll-target="#hlines-draw-lines-between-rows"><code>hlines</code>: Draw lines between rows</a></li>
+  <li><a href="#large-enlarge-text" id="toc-large-enlarge-text" class="nav-link" data-scroll-target="#large-enlarge-text"><code>large</code>: Enlarge text</a></li>
+  <li><a href="#lines-draw-lines-around-cells" id="toc-lines-draw-lines-around-cells" class="nav-link" data-scroll-target="#lines-draw-lines-around-cells"><code>lines</code>: Draw lines around cells</a></li>
+  <li><a href="#normal-normal-sized-font" id="toc-normal-normal-sized-font" class="nav-link" data-scroll-target="#normal-normal-sized-font"><code>normal</code>: Normal-sized font</a></li>
+  <li><a href="#small-reduce-text" id="toc-small-reduce-text" class="nav-link" data-scroll-target="#small-reduce-text"><code>small</code>: Reduce text</a></li>
+  <li><a href="#span-span-cells-horizontally-andor-vertically" id="toc-span-span-cells-horizontally-andor-vertically" class="nav-link" data-scroll-target="#span-span-cells-horizontally-andor-vertically"><code>span</code>: Span cells horizontally and/or vertically</a></li>
+  <li><a href="#style" id="toc-style" class="nav-link" data-scroll-target="#style"><code>.style</code>:</a></li>
+  <li><a href="#width-set-table-or-column-width" id="toc-width-set-table-or-column-width" class="nav-link" data-scroll-target="#width-set-table-or-column-width"><code>width</code>: Set table or column width</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#styling" id="toc-styling" class="nav-link" data-scroll-target="#styling">Styling</a>
+  <ul>
+  <li><a href="#html-output" id="toc-html-output" class="nav-link" data-scroll-target="#html-output">HTML Output</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="tableau" class="level1">
+<h1>Tableau</h1>
+<section id="a-different-kind-of-table-formatter-for-pandocquarto" class="level5">
+<h5 class="anchored" data-anchor-id="a-different-kind-of-table-formatter-for-pandocquarto">A Different Kind of Table Formatter for Pandoc/Quarto</h5>
+<p>Tableau is a Pandoc/Quarto extension that provides greater control over table layout and styling that the traditional Markdown table options.</p>
+<p>Tableau separates the data content of your table from its presentation.</p>
+<p>For example, here’s a multiplication table:</p>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+|  x |  1 |  2 |  3 |  4 |  5 |
+|  1 |  1 |  2 |  3 |  4 |  5 |
+|  2 |  2 |  4 |  6 |  8 | 10 |
+|  3 |  3 |  6 |  9 | 12 | 15 |
+|  4 |  4 |  8 | 12 | 16 | 20 |
+|  5 |  5 | 10 | 15 | 20 | 25 |
+===
+# Times table 
+r1;c1 = header
+r2-$r:c@r = line(lb)
+r2-$r:c2-@r~1  = small bg(shade6)
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<caption><p>Times table</p></caption>
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="tableau-th tableau-th" style="text-align: center;"><p>x</p></td>
+<td class="tableau-th" style="text-align: center;"><p>1</p></td>
+<td class="tableau-th" style="text-align: center;"><p>2</p></td>
+<td class="tableau-th" style="text-align: center;"><p>3</p></td>
+<td class="tableau-th" style="text-align: center;"><p>4</p></td>
+<td class="tableau-th" style="text-align: center;"><p>5</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"><p>1</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>1</p></td>
+<td style="text-align: center;"><p>2</p></td>
+<td style="text-align: center;"><p>3</p></td>
+<td style="text-align: center;"><p>4</p></td>
+<td style="text-align: center;"><p>5</p></td>
+</tr>
+<tr class="odd">
+<td class="tableau-th" style="text-align: center;"><p>2</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>2</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>4</p></td>
+<td style="text-align: center;"><p>6</p></td>
+<td style="text-align: center;"><p>8</p></td>
+<td style="text-align: center;"><p>10</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"><p>3</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>3</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>6</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>9</p></td>
+<td style="text-align: center;"><p>12</p></td>
+<td style="text-align: center;"><p>15</p></td>
+</tr>
+<tr class="odd">
+<td class="tableau-th" style="text-align: center;"><p>4</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>4</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>8</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>12</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>16</p></td>
+<td style="text-align: center;"><p>20</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"><p>5</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>5</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>10</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>15</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>20</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>25</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The text before the three equals signs is the table data; the stuff after is the presentation:</p>
+<dl>
+<dt><code># Times table</code></dt>
+<dd>
+set the caption
+</dd>
+<dt><code>r1;c1 = header</code></dt>
+<dd>
+row 1 and column 1 are headers
+</dd>
+<dt><code>r2-$r:c@r = line(lb)</code></dt>
+<dd>
+for rows two through the last row in the table, select the cell whose column number is the same as the row number and draw a line on its left and below it.
+</dd>
+<dt><code>r2-$r:c2-@r~1  = small bg(shade6)</code></dt>
+<dd>
+for rows two through six, select cells from column two through the column one less than the row number. Make the text small, and shade the background.
+</dd>
+</dl>
+<p>We’ll explain all this in detail later. First, a few more examples:</p>
+</section>
+<section id="more-examples" class="level2">
+<h2 class="anchored" data-anchor-id="more-examples">More Examples</h2>
+<section id="apa-style-table" class="level3">
+<h3 class="anchored" data-anchor-id="apa-style-table">APA-style Table</h3>
+<div style="">
+<table class="tableau-table table">
+<caption><p>Results of Curve-Fitting Analysis Examining the Time Course of Fixations to the Target</p></caption>
+<colgroup>
+<col style="width: 42%">
+<col style="width: 12%">
+<col style="width: 6%">
+<col style="width: 13%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="line-t align-h-l" style="text-align: center;"><p>Logistic parameter</p></td>
+<td colspan="2" class="line-t line-b" style="text-align: center;"><p>9-year-olds</p></td>
+<td colspan="2" class="line-t line-b" style="text-align: center;"><p>16-year-olds</p></td>
+<td class="line-t" style="text-align: center;"><p>t(40)</p></td>
+<td class="line-t" style="text-align: center;"><p><em>p</em></p></td>
+<td class="line-t" style="text-align: center;"><p><em>d</em></p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"></td>
+<td style="text-align: center;"><p>M</p></td>
+<td style="text-align: center;"><p>SD</p></td>
+<td style="text-align: center;"><p>M</p></td>
+<td style="text-align: center;"><p>SD</p></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td class="line-t align-h-l" style="text-align: center;"><p>Maximum asymptote, proportion</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>.843</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>.135</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>.877</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>.082</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>0.951</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>.347</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>0.302</p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>Crossover, in ms</p></td>
+<td class="align-h-r" style="text-align: center;"><p>759</p></td>
+<td class="align-h-r" style="text-align: center;"><p>87</p></td>
+<td class="align-h-r" style="text-align: center;"><p>694</p></td>
+<td class="align-h-r" style="text-align: center;"><p>42</p></td>
+<td class="align-h-r" style="text-align: center;"><p>2.877</p></td>
+<td class="align-h-r" style="text-align: center;"><p>.006</p></td>
+<td class="align-h-r" style="text-align: center;"><p>0.840</p></td>
+</tr>
+<tr class="odd">
+<td class="line-b align-h-l" style="text-align: center;"><p>Slope, as change in proportion per ms</p></td>
+<td class="line-b align-h-r" style="text-align: center;"><p>.001</p></td>
+<td class="line-b align-h-r" style="text-align: center;"><p>.0002</p></td>
+<td class="line-b align-h-r" style="text-align: center;"><p>.002</p></td>
+<td class="line-b align-h-r" style="text-align: center;"><p>.0002</p></td>
+<td class="line-b align-h-r" style="text-align: center;"><p>2.635</p></td>
+<td class="line-b align-h-r" style="text-align: center;"><p>.012</p></td>
+<td class="line-b align-h-r" style="text-align: center;"><p>2.078</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="nutrition-label" class="level3">
+<h3 class="anchored" data-anchor-id="nutrition-label">Nutrition Label</h3>
+<div style="width: 50.0%">
+<table class="tableau-table table">
+<caption><p>Nutrition Facts for Yummy Treats</p></caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 31%">
+<col style="width: 9%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td colspan="3" class="bold bg-shade4 align-h-c tableau-large" style="text-align: center;"><p>Nutrition Information</p></td>
+</tr>
+<tr class="even">
+<td colspan="3" class="bg-shade4 align-h-l" style="text-align: center;"><p>Serving Size 1/2 cup (about 82g)</p></td>
+</tr>
+<tr class="odd">
+<td colspan="3" class="bg-shade4 align-h-l" style="text-align: center;"><p>Servings Per Container 8</p></td>
+</tr>
+<tr class="even">
+<td colspan="3" class="line-t bg-shade1 align-h-l tableau-small tableau-size-x" style="text-align: center;"><p>Amount Per Serving:</p></td>
+</tr>
+<tr class="odd">
+<td colspan="3" class="line-b bg-shade1 align-h-l" style="text-align: center;"><p>Calories 200 • Calories from Fat 130</p></td>
+</tr>
+<tr class="even">
+<td colspan="3" class="bg-shade1 align-h-r" style="text-align: center;"><p>% Daily Value</p></td>
+</tr>
+<tr class="odd">
+<td colspan="2" class="bg-shade1 align-h-l" style="text-align: center;"><p>Total Fat</p></td>
+<td class="bg-shade1 align-h-r" style="text-align: center;"><p>22%</p></td>
+</tr>
+<tr class="even">
+<td class="bg-shade1 align-h-l" style="text-align: center;"></td>
+<td class="bg-shade1 align-h-l" style="text-align: center;"><p>Saturated Fat 9g</p></td>
+<td class="bg-shade1 align-h-r" style="text-align: center;"><p>22%</p></td>
+</tr>
+<tr class="odd">
+<td class="bg-shade1 align-h-l" style="text-align: center;"></td>
+<td class="bg-shade1 align-h-l" style="text-align: center;"><p>Trans Fat 9g</p></td>
+<td class="bg-shade1 align-h-r" style="text-align: center;"><p>0%</p></td>
+</tr>
+<tr class="even">
+<td colspan="2" class="bg-shade1 align-h-l" style="text-align: center;"><p>Cholesterol 55mg</p></td>
+<td class="bg-shade1 align-h-r" style="text-align: center;"><p>18%</p></td>
+</tr>
+<tr class="odd">
+<td colspan="2" class="bg-shade1 align-h-l" style="text-align: center;"><p>Sodium 40mg</p></td>
+<td class="bg-shade1 align-h-r" style="text-align: center;"><p>2%</p></td>
+</tr>
+<tr class="even">
+<td colspan="2" class="bg-shade1 align-h-l" style="text-align: center;"><p>Total Carbohydrate 17g</p></td>
+<td class="bg-shade1 align-h-r" style="text-align: center;"><p>6%</p></td>
+</tr>
+<tr class="odd">
+<td class="bg-shade1 align-h-l" style="text-align: center;"></td>
+<td class="bg-shade1 align-h-l" style="text-align: center;"><p>Dietary Fiber 1g</p></td>
+<td class="bg-shade1 align-h-r" style="text-align: center;"><p>4%</p></td>
+</tr>
+<tr class="even">
+<td class="bg-shade1 align-h-l" style="text-align: center;"></td>
+<td class="bg-shade1 align-h-l" style="text-align: center;"><p>Sugars 14g</p></td>
+<td class="bg-shade1 align-h-r" style="text-align: center;"><p>0%</p></td>
+</tr>
+<tr class="odd">
+<td colspan="3" class="bg-shade1 align-h-l" style="text-align: center;"><p>Protein 3g</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="funky-backgrounds-and-flexible-spans" class="level3">
+<h3 class="anchored" data-anchor-id="funky-backgrounds-and-flexible-spans">Funky backgrounds and Flexible Spans</h3>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div style="">
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="tableau-table gradient table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><p>ant</p></td>
+<td style="text-align: center;"><p>bee</p></td>
+<td style="text-align: center;"><p>cat</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>dog</p></td>
+<td class="glow" style="text-align: center;"><p>elk</p></td>
+<td style="text-align: center;"><p>fox</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>gnu</p></td>
+<td style="text-align: center;"><p>hen</p></td>
+<td style="text-align: center;"><p>idk</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div style="">
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td rowspan="3" class="bg-shade1" style="text-align: center;"><p>1</p></td>
+<td style="text-align: center;"><p>2</p></td>
+<td style="text-align: center;"><p>3</p></td>
+<td style="text-align: center;"><p>4</p></td>
+<td style="text-align: center;"><p>5</p></td>
+</tr>
+<tr class="even">
+<td colspan="2" rowspan="3" class="bg-shade3" style="text-align: center;"><p>7</p></td>
+<td style="text-align: center;"><p>9</p></td>
+<td style="text-align: center;"><p>10</p></td>
+</tr>
+<tr class="odd">
+<td colspan="2" class="bg-shade2" style="text-align: center;"><p>14</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>16</p></td>
+<td style="text-align: center;"><p>19</p></td>
+<td style="text-align: center;"><p>20</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>21</p></td>
+<td style="text-align: center;"><p>22</p></td>
+<td style="text-align: center;"><p>23</p></td>
+<td style="text-align: center;"><p>24</p></td>
+<td style="text-align: center;"><p>25</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="a-gentle-guide-to-tableau" class="level1">
+<h1>A Gentle Guide to Tableau</h1>
+<section id="table-data" class="level2">
+<h2 class="anchored" data-anchor-id="table-data">Table Data</h2>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+| a | b | c |
+| d | e | f |
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><p>a</p></td>
+<td style="text-align: center;"><p>b</p></td>
+<td style="text-align: center;"><p>c</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>d</p></td>
+<td style="text-align: center;"><p>e</p></td>
+<td style="text-align: center;"><p>f</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>Tableau tables are written inside code blocks with the language <code>tableau</code>.</li>
+<li>As is conventional, pipe characters separate columns</li>
+</ul>
+<section id="leading-and-trailing-pipes" class="level5">
+<h5 class="anchored" data-anchor-id="leading-and-trailing-pipes">Leading and Trailing Pipes</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+a | b | c
+d | e | f
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><p>a</p></td>
+<td style="text-align: center;"><p>b</p></td>
+<td style="text-align: center;"><p>c</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>d</p></td>
+<td style="text-align: center;"><p>e</p></td>
+<td style="text-align: center;"><p>f</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>Leading and trailing pipe characters may be omited, but only when the cell they precede or follow is not empty.</li>
+</ul>
+</section>
+<section id="blank-lines" class="level5">
+<h5 class="anchored" data-anchor-id="blank-lines">Blank Lines</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+a | b | c
+d | e | f
+
+g | h | i
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><p>a</p></td>
+<td style="text-align: center;"><p>b</p></td>
+<td style="text-align: center;"><p>c</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>d</p></td>
+<td style="text-align: center;"><p>e</p></td>
+<td style="text-align: center;"><p>f</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>g</p></td>
+<td style="text-align: center;"><p>h</p></td>
+<td style="text-align: center;"><p>i</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>Blank lines generate a small vertical space. This space is actually a data row with no cells; in this table the blank line would be row three, or <code>r3</code>, and the line starting <code>g |…</code> would be <code>r4</code>.</li>
+</ul>
+</section>
+<section id="inline-cell-formatting" class="level5">
+<h5 class="anchored" data-anchor-id="inline-cell-formatting">Inline Cell Formatting</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+Pole star | _Alpha Ursae_ | $323–433 ly$
+Dog star  | _Sirius_ | $8.60 \pm 0.04 ly$ 
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><p>Pole star</p></td>
+<td style="text-align: center;"><p><em>Alpha Ursae</em></p></td>
+<td style="text-align: center;"><p><span class="math inline">\(323–433 ly\)</span></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>Dog star</p></td>
+<td style="text-align: center;"><p><em>Sirius</em></p></td>
+<td style="text-align: center;"><p><span class="math inline">\(8.60 \pm 0.04 ly\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>regular inline markup can be used in table cells.</li>
+</ul>
+</section>
+</section>
+<section id="table-layout" class="level2">
+<h2 class="anchored" data-anchor-id="table-layout">Table Layout</h2>
+<p>Table layout and stying is placed in a separate block that follows the table data, separated from it by three equals signs.</p>
+<pre><code>~~~ tableau
+data
+data
+===
+layout
+layout
+~~~</code></pre>
+<p>Layout can be applied to the table as a whole, or to one or more cells.</p>
+<section id="add-a-caption" class="level5">
+<h5 class="anchored" data-anchor-id="add-a-caption">Add a Caption</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+Animal   | Lifespan
+|        | Average  | Max
+Badger   |  8       | 14
+Elephant | 40       | 70 
+Hare     | 6        | 10
+Mouse    | 1.5      |  4
+===
+# Fake Animal Lifespan Data
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<caption><p>Fake Animal Lifespan Data</p></caption>
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><p>Animal</p></td>
+<td style="text-align: center;"><p>Lifespan</p></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><p>Average</p></td>
+<td style="text-align: center;"><p>Max</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>Badger</p></td>
+<td style="text-align: center;"><p>8</p></td>
+<td style="text-align: center;"><p>14</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>Elephant</p></td>
+<td style="text-align: center;"><p>40</p></td>
+<td style="text-align: center;"><p>70</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>Hare</p></td>
+<td style="text-align: center;"><p>6</p></td>
+<td style="text-align: center;"><p>10</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>Mouse</p></td>
+<td style="text-align: center;"><p>1.5</p></td>
+<td style="text-align: center;"><p>4</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>The <code># ...</code> line is used to set the table’s caption.</li>
+<li>Notice that we needed to include a leading pipe character on the second row. That is because the cell is empty; without the leading pipe tableau would assume the line had leading spaces and that <code>Average</code> was in column one.</li>
+</ul>
+</section>
+<section id="add-lines" class="level5">
+<h5 class="anchored" data-anchor-id="add-lines">Add Lines</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+Animal   | Lifespan
+|        | Average  | Max
+Badger   |  8       | 14
+Elephant | 40       | 70 
+Hare     | 6        | 10
+Mouse    | 1.5      |  4
+===
+# Fake Animal Lifespan Data
+hlines vlines
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table tbl-hlines tbl-vlines table">
+<caption><p>Fake Animal Lifespan Data</p></caption>
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><p>Animal</p></td>
+<td style="text-align: center;"><p>Lifespan</p></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><p>Average</p></td>
+<td style="text-align: center;"><p>Max</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>Badger</p></td>
+<td style="text-align: center;"><p>8</p></td>
+<td style="text-align: center;"><p>14</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>Elephant</p></td>
+<td style="text-align: center;"><p>40</p></td>
+<td style="text-align: center;"><p>70</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>Hare</p></td>
+<td style="text-align: center;"><p>6</p></td>
+<td style="text-align: center;"><p>10</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>Mouse</p></td>
+<td style="text-align: center;"><p>1.5</p></td>
+<td style="text-align: center;"><p>4</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>The <code>hlines</code> format adds lines between each row.</li>
+<li>Similarly, <code>vlines</code> puts lines between each column.</li>
+<li>A layout line can contain any number of format specifiers. Formats can also be written on separate lines.</li>
+</ul>
+</section>
+<section id="add-lines-to-particular-rows-the-hard-way" class="level5">
+<h5 class="anchored" data-anchor-id="add-lines-to-particular-rows-the-hard-way">Add Lines to Particular Rows (the hard way)</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+Animal   | Lifespan
+|        | Average  | Max
+Badger   |  8       | 14
+Elephant | 40       | 70 
+Hare     | 6        | 10
+Mouse    | 1.5      |  4
+===
+# Fake Animal Lifespan Data
+r3 = lines(t)
+r4 = lines(t)
+r5 = lines(t)
+r6 = lines(t)
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<caption><p>Fake Animal Lifespan Data</p></caption>
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><p>Animal</p></td>
+<td style="text-align: center;"><p>Lifespan</p></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><p>Average</p></td>
+<td style="text-align: center;"><p>Max</p></td>
+</tr>
+<tr class="odd">
+<td class="line-t" style="text-align: center;"><p>Badger</p></td>
+<td class="line-t" style="text-align: center;"><p>8</p></td>
+<td class="line-t" style="text-align: center;"><p>14</p></td>
+</tr>
+<tr class="even">
+<td class="line-t" style="text-align: center;"><p>Elephant</p></td>
+<td class="line-t" style="text-align: center;"><p>40</p></td>
+<td class="line-t" style="text-align: center;"><p>70</p></td>
+</tr>
+<tr class="odd">
+<td class="line-t" style="text-align: center;"><p>Hare</p></td>
+<td class="line-t" style="text-align: center;"><p>6</p></td>
+<td class="line-t" style="text-align: center;"><p>10</p></td>
+</tr>
+<tr class="even">
+<td class="line-t" style="text-align: center;"><p>Mouse</p></td>
+<td class="line-t" style="text-align: center;"><p>1.5</p></td>
+<td class="line-t" style="text-align: center;"><p>4</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li><p>This is an example of using <em>selectors</em>. A selector is an expression that appears at the start of a format row, seperAted from the format itself by an equals sign.</p></li>
+<li><p>This time we only wanted horizontal lines between the data rows. We use <code>r3</code>, <code>r4</code>, … to select those rows, and the <code>lines(t)</code> format to draw a line on top of each cell in those rows.</p></li>
+</ul>
+</section>
+<section id="add-lines-to-particular-rows-an-easier-way" class="level5">
+<h5 class="anchored" data-anchor-id="add-lines-to-particular-rows-an-easier-way">Add Lines to Particular Rows (an easier way)</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+Animal   | Lifespan
+|        | Average  | Max
+Badger   |  8       | 14
+Elephant | 40       | 70 
+Hare     | 6        | 10
+Mouse    | 1.5      |  4
+===
+# Fake Animal Lifespan Data
+r3,4,5,6 = lines(t)
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<caption><p>Fake Animal Lifespan Data</p></caption>
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><p>Animal</p></td>
+<td style="text-align: center;"><p>Lifespan</p></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><p>Average</p></td>
+<td style="text-align: center;"><p>Max</p></td>
+</tr>
+<tr class="odd">
+<td class="line-t" style="text-align: center;"><p>Badger</p></td>
+<td class="line-t" style="text-align: center;"><p>8</p></td>
+<td class="line-t" style="text-align: center;"><p>14</p></td>
+</tr>
+<tr class="even">
+<td class="line-t" style="text-align: center;"><p>Elephant</p></td>
+<td class="line-t" style="text-align: center;"><p>40</p></td>
+<td class="line-t" style="text-align: center;"><p>70</p></td>
+</tr>
+<tr class="odd">
+<td class="line-t" style="text-align: center;"><p>Hare</p></td>
+<td class="line-t" style="text-align: center;"><p>6</p></td>
+<td class="line-t" style="text-align: center;"><p>10</p></td>
+</tr>
+<tr class="even">
+<td class="line-t" style="text-align: center;"><p>Mouse</p></td>
+<td class="line-t" style="text-align: center;"><p>1.5</p></td>
+<td class="line-t" style="text-align: center;"><p>4</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>We could list each of the rows in the same selector, separated by commas.</li>
+</ul>
+</section>
+<section id="add-lines-to-particular-rows-the-easiest-way" class="level5">
+<h5 class="anchored" data-anchor-id="add-lines-to-particular-rows-the-easiest-way">Add Lines to Particular Rows (the easiest way)</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+Animal   | Lifespan
+|        | Average  | Max
+Badger   |  8       | 14
+Elephant | 40       | 70 
+Hare     | 6        | 10
+Mouse    | 1.5      |  4
+===
+# Fake Animal Lifespan Data
+r3-6 = lines(t)
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<caption><p>Fake Animal Lifespan Data</p></caption>
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><p>Animal</p></td>
+<td style="text-align: center;"><p>Lifespan</p></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><p>Average</p></td>
+<td style="text-align: center;"><p>Max</p></td>
+</tr>
+<tr class="odd">
+<td class="line-t" style="text-align: center;"><p>Badger</p></td>
+<td class="line-t" style="text-align: center;"><p>8</p></td>
+<td class="line-t" style="text-align: center;"><p>14</p></td>
+</tr>
+<tr class="even">
+<td class="line-t" style="text-align: center;"><p>Elephant</p></td>
+<td class="line-t" style="text-align: center;"><p>40</p></td>
+<td class="line-t" style="text-align: center;"><p>70</p></td>
+</tr>
+<tr class="odd">
+<td class="line-t" style="text-align: center;"><p>Hare</p></td>
+<td class="line-t" style="text-align: center;"><p>6</p></td>
+<td class="line-t" style="text-align: center;"><p>10</p></td>
+</tr>
+<tr class="even">
+<td class="line-t" style="text-align: center;"><p>Mouse</p></td>
+<td class="line-t" style="text-align: center;"><p>1.5</p></td>
+<td class="line-t" style="text-align: center;"><p>4</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>or we could use a range.</li>
+</ul>
+</section>
+<section id="add-a-header" class="level5">
+<h5 class="anchored" data-anchor-id="add-a-header">Add a Header</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+Animal   | Lifespan
+|        | Average  | Max
+Badger   |  8       | 14
+Elephant | 40       | 70 
+Hare     | 6        | 10
+Mouse    | 1.5      |  4
+===
+# Fake Animal Lifespan Data
+r1-2 = header
+r3-6 = lines(t) 
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<caption><p>Fake Animal Lifespan Data</p></caption>
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="tableau-th" style="text-align: center;"><p>Animal</p></td>
+<td class="tableau-th" style="text-align: center;"><p>Lifespan</p></td>
+<td class="tableau-th" style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"></td>
+<td class="tableau-th" style="text-align: center;"><p>Average</p></td>
+<td class="tableau-th" style="text-align: center;"><p>Max</p></td>
+</tr>
+<tr class="odd">
+<td class="line-t" style="text-align: center;"><p>Badger</p></td>
+<td class="line-t" style="text-align: center;"><p>8</p></td>
+<td class="line-t" style="text-align: center;"><p>14</p></td>
+</tr>
+<tr class="even">
+<td class="line-t" style="text-align: center;"><p>Elephant</p></td>
+<td class="line-t" style="text-align: center;"><p>40</p></td>
+<td class="line-t" style="text-align: center;"><p>70</p></td>
+</tr>
+<tr class="odd">
+<td class="line-t" style="text-align: center;"><p>Hare</p></td>
+<td class="line-t" style="text-align: center;"><p>6</p></td>
+<td class="line-t" style="text-align: center;"><p>10</p></td>
+</tr>
+<tr class="even">
+<td class="line-t" style="text-align: center;"><p>Mouse</p></td>
+<td class="line-t" style="text-align: center;"><p>1.5</p></td>
+<td class="line-t" style="text-align: center;"><p>4</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>The line <code>r1-2 = header</code> denotes rows 1 and 2 as header rows.</li>
+</ul>
+</section>
+<section id="span-some-cells" class="level5">
+<h5 class="anchored" data-anchor-id="span-some-cells">Span Some Cells</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+Animal   | Lifespan
+|        | Average  | Max
+Badger   |  8       | 14
+Elephant | 40       | 70 
+Hare     | 6        | 10
+Mouse    | 1.5      |  4
+===
+# Fake Animal Lifespan Data
+r1-2 = header
+r1:c2-3 = span
+r3-6 = lines(t) 
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<caption><p>Fake Animal Lifespan Data</p></caption>
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="tableau-th" style="text-align: center;"><p>Animal</p></td>
+<td colspan="2" class="tableau-th" style="text-align: center;"><p>Lifespan</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"></td>
+<td class="tableau-th" style="text-align: center;"><p>Average</p></td>
+<td class="tableau-th" style="text-align: center;"><p>Max</p></td>
+</tr>
+<tr class="odd">
+<td class="line-t" style="text-align: center;"><p>Badger</p></td>
+<td class="line-t" style="text-align: center;"><p>8</p></td>
+<td class="line-t" style="text-align: center;"><p>14</p></td>
+</tr>
+<tr class="even">
+<td class="line-t" style="text-align: center;"><p>Elephant</p></td>
+<td class="line-t" style="text-align: center;"><p>40</p></td>
+<td class="line-t" style="text-align: center;"><p>70</p></td>
+</tr>
+<tr class="odd">
+<td class="line-t" style="text-align: center;"><p>Hare</p></td>
+<td class="line-t" style="text-align: center;"><p>6</p></td>
+<td class="line-t" style="text-align: center;"><p>10</p></td>
+</tr>
+<tr class="even">
+<td class="line-t" style="text-align: center;"><p>Mouse</p></td>
+<td class="line-t" style="text-align: center;"><p>1.5</p></td>
+<td class="line-t" style="text-align: center;"><p>4</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li><code>r1:c2-3 = span</code> selects columns 2 and 3 in row one, and then spans them.</li>
+</ul>
+</section>
+<section id="align-ranges-of-cells" class="level5">
+<h5 class="anchored" data-anchor-id="align-ranges-of-cells">Align Ranges of Cells</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+Animal   | Lifespan
+|        | Average  | Max
+Badger   |  8       | 14
+Elephant | 40       | 70 
+Hare     | 6        | 10
+Mouse    | 1.5      |  4
+===
+# Fake Animal Lifespan Data
+r1-2 = header
+r1:c2-3 = span
+r3-6 = lines(t) 
+r3-$r:c1    = align(l)
+r3-$r:c2-$c = align(r)
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<caption><p>Fake Animal Lifespan Data</p></caption>
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="tableau-th" style="text-align: center;"><p>Animal</p></td>
+<td colspan="2" class="tableau-th" style="text-align: center;"><p>Lifespan</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"></td>
+<td class="tableau-th" style="text-align: center;"><p>Average</p></td>
+<td class="tableau-th" style="text-align: center;"><p>Max</p></td>
+</tr>
+<tr class="odd">
+<td class="line-t align-h-l" style="text-align: center;"><p>Badger</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>8</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>14</p></td>
+</tr>
+<tr class="even">
+<td class="line-t align-h-l" style="text-align: center;"><p>Elephant</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>40</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>70</p></td>
+</tr>
+<tr class="odd">
+<td class="line-t align-h-l" style="text-align: center;"><p>Hare</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>6</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>10</p></td>
+</tr>
+<tr class="even">
+<td class="line-t align-h-l" style="text-align: center;"><p>Mouse</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>1.5</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>4</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>The notations <code>$r</code> and <code>$c</code> refer to the last row and column</li>
+<li>The new format lines align column 1 in rows 3 through 6 to the left,</li>
+<li>and the cels in rows 3-6, columns 2 and 3 to the right.</li>
+</ul>
+</section>
+<section id="shade-the-background-of-some-cells" class="level5">
+<h5 class="anchored" data-anchor-id="shade-the-background-of-some-cells">Shade the Background of Some Cells</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+Animal   | Lifespan
+|        | Average  | Max
+Badger   |  8       | 14
+Elephant | 40       | 70 
+Hare     | 6        | 10
+Mouse    | 1.5      |  4
+===
+# Fake Animal Lifespan Data
+r1-2 = header
+r1:c2-3 = span
+r3-6 = lines(t) 
+r3-$r:c1    = align(l)
+r3-$r:c2-$c = align(r)
+r5:c2;r6:c2 = bg(shade)
+r3:c3;r4:c3 = bg(shade8)
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<caption><p>Fake Animal Lifespan Data</p></caption>
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="tableau-th" style="text-align: center;"><p>Animal</p></td>
+<td colspan="2" class="tableau-th" style="text-align: center;"><p>Lifespan</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"></td>
+<td class="tableau-th" style="text-align: center;"><p>Average</p></td>
+<td class="tableau-th" style="text-align: center;"><p>Max</p></td>
+</tr>
+<tr class="odd">
+<td class="line-t align-h-l" style="text-align: center;"><p>Badger</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>8</p></td>
+<td class="line-t bg-shade8 align-h-r" style="text-align: center;"><p>14</p></td>
+</tr>
+<tr class="even">
+<td class="line-t align-h-l" style="text-align: center;"><p>Elephant</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>40</p></td>
+<td class="line-t bg-shade8 align-h-r" style="text-align: center;"><p>70</p></td>
+</tr>
+<tr class="odd">
+<td class="line-t align-h-l" style="text-align: center;"><p>Hare</p></td>
+<td class="line-t bg-shade align-h-r" style="text-align: center;"><p>6</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>10</p></td>
+</tr>
+<tr class="even">
+<td class="line-t align-h-l" style="text-align: center;"><p>Mouse</p></td>
+<td class="line-t bg-shade align-h-r" style="text-align: center;"><p>1.5</p></td>
+<td class="line-t align-h-r" style="text-align: center;"><p>4</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li><p>We’ve shaded the background of the cells of the two animals with the shortest average life, and used a different color to shade the animals with the longest maximum life.</p></li>
+<li><p>We used a semicolon to separate multiple selectors with the same format. We could also write these selectors as</p>
+<pre><code>r5,6:c2 = bg(shade)
+r3,4:c3 = bg(shade8)</code></pre></li>
+<li><p>Tableau comes with a palette of shades that complement each other. They adapt to dark and light modes.</p></li>
+</ul>
+</section>
+<section id="sec-lcc" class="level5">
+<h5 class="anchored" data-anchor-id="sec-lcc">Longer column content</h5>
+<p>(Because this example is longer, I’m formatting it with the output below the markup.)</p>
+<pre><code>~~~ tableau
+Cicero | | |
+col 2 {{
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
+}}
+col 3 {{
+atque corrupti quos dolores et quas molestias
+}}
+| | | |
+col 2 {{
+::: {.callout-note}
+On the other hand, we denounce with righteous indignation and dislike men who
+are so beguiled and demoralized by the charms of pleasure of the moment, so
+blinded by desire...
+:::
+}}
+
+lorem | | |
+col 2 {{
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+}}
+col 3 {{
+incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet,
+}}
+===
+align(l)
+r2:c2-3 = span
+~~~</code></pre>
+<p>Ths renders as:</p>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>Cicero</p></td>
+<td class="align-h-l" style="text-align: center;"><p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p></td>
+<td class="align-h-l" style="text-align: center;"><p>atque corrupti quos dolores et quas molestias</p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"></td>
+<td colspan="2" class="align-h-l" style="text-align: center;"><div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire…</p>
+</div>
+</div></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"></td>
+<td class="align-h-l" style="text-align: center;"></td>
+<td class="align-h-l" style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>lorem</p></td>
+<td class="align-h-l" style="text-align: center;"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p></td>
+<td class="align-h-l" style="text-align: center;"><p>incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet,</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>The lines between <code>col 3 {{</code> and <code>}}</code> are formatted and the result is substituted into the third column of the previous row.</li>
+<li>In this table, we are substituting into the last column. We need to make sure this column actually exists, so we added some placeholder values (<code>xxx</code>). This wouldn’t be necessary if we were substituting into a know column.</li>
+<li>we left-align the third column, and have it rendered in a smaller font.</li>
+</ul>
+</section>
+<section id="matching-the-current-row" class="level5">
+<h5 class="anchored" data-anchor-id="matching-the-current-row">Matching the Current Row</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+|  x |  1 |  2 |  3 |  4 |  5 |
+|  1 |  1 |  2 |  3 |  4 |  5 |
+|  2 |  2 |  4 |  6 |  8 | 10 |
+|  3 |  3 |  6 |  9 | 12 | 15 |
+|  4 |  4 |  8 | 12 | 16 | 20 |
+|  5 |  5 | 10 | 15 | 20 | 25 |
+===
+r1;c1 = header
+r2-6:c@r = line(lb)
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="tableau-th tableau-th" style="text-align: center;"><p>x</p></td>
+<td class="tableau-th" style="text-align: center;"><p>1</p></td>
+<td class="tableau-th" style="text-align: center;"><p>2</p></td>
+<td class="tableau-th" style="text-align: center;"><p>3</p></td>
+<td class="tableau-th" style="text-align: center;"><p>4</p></td>
+<td class="tableau-th" style="text-align: center;"><p>5</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"><p>1</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>1</p></td>
+<td style="text-align: center;"><p>2</p></td>
+<td style="text-align: center;"><p>3</p></td>
+<td style="text-align: center;"><p>4</p></td>
+<td style="text-align: center;"><p>5</p></td>
+</tr>
+<tr class="odd">
+<td class="tableau-th" style="text-align: center;"><p>2</p></td>
+<td style="text-align: center;"><p>2</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>4</p></td>
+<td style="text-align: center;"><p>6</p></td>
+<td style="text-align: center;"><p>8</p></td>
+<td style="text-align: center;"><p>10</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"><p>3</p></td>
+<td style="text-align: center;"><p>3</p></td>
+<td style="text-align: center;"><p>6</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>9</p></td>
+<td style="text-align: center;"><p>12</p></td>
+<td style="text-align: center;"><p>15</p></td>
+</tr>
+<tr class="odd">
+<td class="tableau-th" style="text-align: center;"><p>4</p></td>
+<td style="text-align: center;"><p>4</p></td>
+<td style="text-align: center;"><p>8</p></td>
+<td style="text-align: center;"><p>12</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>16</p></td>
+<td style="text-align: center;"><p>20</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"><p>5</p></td>
+<td style="text-align: center;"><p>5</p></td>
+<td style="text-align: center;"><p>10</p></td>
+<td style="text-align: center;"><p>15</p></td>
+<td style="text-align: center;"><p>20</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>25</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li><p><code>r1;c1 = header</code> uses the <code>;</code> to separate distinct selectors: the result selects all the cells in row one and in column one.</p></li>
+<li><p><code>r2-6:c@r</code> selects rows two through six. In each row, it then selects the cell whose column equals the row number (that’s the <code>@r</code> notation).</p></li>
+<li><p>For each selected sell, we draw a line on the left and the bottom.</p></li>
+</ul>
+</section>
+<section id="matching-a-range-based-on-the-current-row" class="level5">
+<h5 class="anchored" data-anchor-id="matching-a-range-based-on-the-current-row">Matching a Range Based on the Current Row</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+|  x |  1 |  2 |  3 |  4 |  5 |
+|  1 |  1 |  2 |  3 |  4 |  5 |
+|  2 |  2 |  4 |  6 |  8 | 10 |
+|  3 |  3 |  6 |  9 | 12 | 15 |
+|  4 |  4 |  8 | 12 | 16 | 20 |
+|  5 |  5 | 10 | 15 | 20 | 25 |
+===
+r1;c1 = header
+r2-6:c@r = line(lb)
+r2-6:c2-@r~1  = small bg(shade6)
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="tableau-th tableau-th" style="text-align: center;"><p>x</p></td>
+<td class="tableau-th" style="text-align: center;"><p>1</p></td>
+<td class="tableau-th" style="text-align: center;"><p>2</p></td>
+<td class="tableau-th" style="text-align: center;"><p>3</p></td>
+<td class="tableau-th" style="text-align: center;"><p>4</p></td>
+<td class="tableau-th" style="text-align: center;"><p>5</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"><p>1</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>1</p></td>
+<td style="text-align: center;"><p>2</p></td>
+<td style="text-align: center;"><p>3</p></td>
+<td style="text-align: center;"><p>4</p></td>
+<td style="text-align: center;"><p>5</p></td>
+</tr>
+<tr class="odd">
+<td class="tableau-th" style="text-align: center;"><p>2</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>2</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>4</p></td>
+<td style="text-align: center;"><p>6</p></td>
+<td style="text-align: center;"><p>8</p></td>
+<td style="text-align: center;"><p>10</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"><p>3</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>3</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>6</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>9</p></td>
+<td style="text-align: center;"><p>12</p></td>
+<td style="text-align: center;"><p>15</p></td>
+</tr>
+<tr class="odd">
+<td class="tableau-th" style="text-align: center;"><p>4</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>4</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>8</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>12</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>16</p></td>
+<td style="text-align: center;"><p>20</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"><p>5</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>5</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>10</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>15</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>20</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>25</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li><p><code>r2-6:c2-@r~1</code> is probably the most complex selector so far. Let’s disect it:</p>
+<ul>
+<li><code>r2-6</code> selects rows two through six</li>
+<li><code>:</code> then selects some cells within that row</li>
+<li><code>c2-@r~1</code> selects the cells starting in column two and ending at the current now number (<code>@r</code>) minus one (<code>~1</code>).</li>
+<li>Note that we use <code>~</code> (tilde) for minus, because we already use the minus sign to denote a range.</li>
+</ul></li>
+</ul>
+</section>
+<section id="selecting-periodic-values-in-a-range" class="level5">
+<h5 class="anchored" data-anchor-id="selecting-periodic-values-in-a-range">Selecting Periodic Values in a Range</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+|  x |  1 |  2 |  3 |  4 |  5 |
+|  1 |  1 |  2 |  3 |  4 |  5 |
+|  2 |  2 |  4 |  6 |  8 | 10 |
+|  3 |  3 |  6 |  9 | 12 | 15 |
+|  4 |  4 |  8 | 12 | 16 | 20 |
+|  5 |  5 | 10 | 15 | 20 | 25 |
+===
+r1;c1 = header
+r2-6/even:c2-$c = bg(shade1)
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="tableau-th tableau-th" style="text-align: center;"><p>x</p></td>
+<td class="tableau-th" style="text-align: center;"><p>1</p></td>
+<td class="tableau-th" style="text-align: center;"><p>2</p></td>
+<td class="tableau-th" style="text-align: center;"><p>3</p></td>
+<td class="tableau-th" style="text-align: center;"><p>4</p></td>
+<td class="tableau-th" style="text-align: center;"><p>5</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"><p>1</p></td>
+<td class="bg-shade1" style="text-align: center;"><p>1</p></td>
+<td class="bg-shade1" style="text-align: center;"><p>2</p></td>
+<td class="bg-shade1" style="text-align: center;"><p>3</p></td>
+<td class="bg-shade1" style="text-align: center;"><p>4</p></td>
+<td class="bg-shade1" style="text-align: center;"><p>5</p></td>
+</tr>
+<tr class="odd">
+<td class="tableau-th" style="text-align: center;"><p>2</p></td>
+<td style="text-align: center;"><p>2</p></td>
+<td style="text-align: center;"><p>4</p></td>
+<td style="text-align: center;"><p>6</p></td>
+<td style="text-align: center;"><p>8</p></td>
+<td style="text-align: center;"><p>10</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"><p>3</p></td>
+<td class="bg-shade1" style="text-align: center;"><p>3</p></td>
+<td class="bg-shade1" style="text-align: center;"><p>6</p></td>
+<td class="bg-shade1" style="text-align: center;"><p>9</p></td>
+<td class="bg-shade1" style="text-align: center;"><p>12</p></td>
+<td class="bg-shade1" style="text-align: center;"><p>15</p></td>
+</tr>
+<tr class="odd">
+<td class="tableau-th" style="text-align: center;"><p>4</p></td>
+<td style="text-align: center;"><p>4</p></td>
+<td style="text-align: center;"><p>8</p></td>
+<td style="text-align: center;"><p>12</p></td>
+<td style="text-align: center;"><p>16</p></td>
+<td style="text-align: center;"><p>20</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"><p>5</p></td>
+<td class="bg-shade1" style="text-align: center;"><p>5</p></td>
+<td class="bg-shade1" style="text-align: center;"><p>10</p></td>
+<td class="bg-shade1" style="text-align: center;"><p>15</p></td>
+<td class="bg-shade1" style="text-align: center;"><p>20</p></td>
+<td class="bg-shade1" style="text-align: center;"><p>25</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li><p><code>r2-6/even</code> selects just the even-numbered rows in the given range. The syntax <code>$c</code> represents the last column, so <code>c2-$c</code> is the cells in column two though to the end of the row. For each of these, we add a background color.</p></li>
+<li><p>We can also use <code>/odd</code> to select odd numbered rows, and <code>/n</code> to select rows that are a multiple of <span class="math inline">\(n\)</span>.</p></li>
+</ul>
+</section>
+<section id="selecting-periodic-rows-and-columns" class="level5">
+<h5 class="anchored" data-anchor-id="selecting-periodic-rows-and-columns">Selecting Periodic Rows And Columns</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+| ♜ | ♞ | ♝ | ♛ | ♚ | ♝ | ♞ | ♜ |
+| ♟ | ♟︎ | ♟︎ | ♟︎ | ♟︎ | ♟︎ | ♟︎ | ♟︎ |
+=empty
+=empty
+=empty
+=empty
+| ♙ | ♙ | ♙ | ♙ | ♙ | ♙ | ♙ | ♙ |
+| ♖ | ♘ | ♗ | ♕ | ♔ | ♗ | ♘ | ♖ |
+===
+xlarge
+r1-8/even:c1-8/odd = bg(shade6)
+r1-8/odd:c1-8/even = bg(shade6)
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><p>♜</p></td>
+<td class="bg-shade6" style="text-align: center;"><p>♞</p></td>
+<td style="text-align: center;"><p>♝</p></td>
+<td class="bg-shade6" style="text-align: center;"><p>♛</p></td>
+<td style="text-align: center;"><p>♚</p></td>
+<td class="bg-shade6" style="text-align: center;"><p>♝</p></td>
+<td style="text-align: center;"><p>♞</p></td>
+<td class="bg-shade6" style="text-align: center;"><p>♜</p></td>
+</tr>
+<tr class="even">
+<td class="bg-shade6" style="text-align: center;"><p>♟</p></td>
+<td style="text-align: center;"><p>♟︎</p></td>
+<td class="bg-shade6" style="text-align: center;"><p>♟︎</p></td>
+<td style="text-align: center;"><p>♟︎</p></td>
+<td class="bg-shade6" style="text-align: center;"><p>♟︎</p></td>
+<td style="text-align: center;"><p>♟︎</p></td>
+<td class="bg-shade6" style="text-align: center;"><p>♟︎</p></td>
+<td style="text-align: center;"><p>♟︎</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>&nbsp;</p></td>
+<td class="bg-shade6" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td class="bg-shade6" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td class="bg-shade6" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td class="bg-shade6" style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td class="bg-shade6" style="text-align: center;"><p>&nbsp;</p></td>
+<td style="text-align: center;"></td>
+<td class="bg-shade6" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td class="bg-shade6" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td class="bg-shade6" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>&nbsp;</p></td>
+<td class="bg-shade6" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td class="bg-shade6" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td class="bg-shade6" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td class="bg-shade6" style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td class="bg-shade6" style="text-align: center;"><p>&nbsp;</p></td>
+<td style="text-align: center;"></td>
+<td class="bg-shade6" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td class="bg-shade6" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td class="bg-shade6" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>♙</p></td>
+<td class="bg-shade6" style="text-align: center;"><p>♙</p></td>
+<td style="text-align: center;"><p>♙</p></td>
+<td class="bg-shade6" style="text-align: center;"><p>♙</p></td>
+<td style="text-align: center;"><p>♙</p></td>
+<td class="bg-shade6" style="text-align: center;"><p>♙</p></td>
+<td style="text-align: center;"><p>♙</p></td>
+<td class="bg-shade6" style="text-align: center;"><p>♙</p></td>
+</tr>
+<tr class="even">
+<td class="bg-shade6" style="text-align: center;"><p>♖</p></td>
+<td style="text-align: center;"><p>♘</p></td>
+<td class="bg-shade6" style="text-align: center;"><p>♗</p></td>
+<td style="text-align: center;"><p>♕</p></td>
+<td class="bg-shade6" style="text-align: center;"><p>♔</p></td>
+<td style="text-align: center;"><p>♗</p></td>
+<td class="bg-shade6" style="text-align: center;"><p>♘</p></td>
+<td style="text-align: center;"><p>♖</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li><p>To create a chess board, we highlight the odd columns on the even rows, and the even columns on the odd rows.</p></li>
+<li><p>Rather than enter the four blank rows as a set of eight empty cells each, we used the shortcut <code>=empty</code>, which fills them in for us. (If we’d just used a blank line, the row height would be a lot smaller.)</p></li>
+<li><p>I have no idea why the black pawns look different to the white pawns.</p></li>
+</ul>
+</section>
+<section id="selecting-rows-or-column-numbers-that-are-a-multiple-of-a-value" class="level5">
+<h5 class="anchored" data-anchor-id="selecting-rows-or-column-numbers-that-are-a-multiple-of-a-value">Selecting Rows or Column Numbers That Are a Multiple Of a Value</h5>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+County Number | County Name | FIPS Code | Public Health Region | Health Service Region
+1 | Anderson | 48001 | 4 | 4/5N
+2 | Andrews | 48003 | 9 | 9/10
+3 | Angelina | 48005 | 5 | 4/5N
+4 | Aransas | 48007 | 11 | 11
+5 | Archer | 48009 | 2 | 2/3
+6 | Armstrong | 48011 | 1 | 1
+7 | Atascosa | 48013 | 8 | 8
+8 | Austin | 48015 | 6 | 6/5S
+9 | Bailey | 48017 | 1 | 1
+10 | Bandera | 48019 | 8 | 8
+11 | Bastrop | 48021 | 7 | 7
+12 | Baylor | 48023 | 2 | 2/3
+13 | Bee | 48025 | 11 | 11
+14 | Bell | 48027 | 7 | 7
+15 | Bexar | 48029 | 8 | 8
+===
+r1 = header
+r1-$r\4 = line(b)
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 15%">
+<col style="width: 12%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="tableau-th line-b" style="text-align: center;"><p>County Number</p></td>
+<td class="tableau-th line-b" style="text-align: center;"><p>County Name</p></td>
+<td class="tableau-th line-b" style="text-align: center;"><p>FIPS Code</p></td>
+<td class="tableau-th line-b" style="text-align: center;"><p>Public Health Region</p></td>
+<td class="tableau-th line-b" style="text-align: center;"><p>Health Service Region</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>1</p></td>
+<td style="text-align: center;"><p>Anderson</p></td>
+<td style="text-align: center;"><p>48001</p></td>
+<td style="text-align: center;"><p>4</p></td>
+<td style="text-align: center;"><p>4/5N</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>2</p></td>
+<td style="text-align: center;"><p>Andrews</p></td>
+<td style="text-align: center;"><p>48003</p></td>
+<td style="text-align: center;"><p>9</p></td>
+<td style="text-align: center;"><p>9/10</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>3</p></td>
+<td style="text-align: center;"><p>Angelina</p></td>
+<td style="text-align: center;"><p>48005</p></td>
+<td style="text-align: center;"><p>5</p></td>
+<td style="text-align: center;"><p>4/5N</p></td>
+</tr>
+<tr class="odd">
+<td class="line-b" style="text-align: center;"><p>4</p></td>
+<td class="line-b" style="text-align: center;"><p>Aransas</p></td>
+<td class="line-b" style="text-align: center;"><p>48007</p></td>
+<td class="line-b" style="text-align: center;"><p>11</p></td>
+<td class="line-b" style="text-align: center;"><p>11</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>5</p></td>
+<td style="text-align: center;"><p>Archer</p></td>
+<td style="text-align: center;"><p>48009</p></td>
+<td style="text-align: center;"><p>2</p></td>
+<td style="text-align: center;"><p>2/3</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>6</p></td>
+<td style="text-align: center;"><p>Armstrong</p></td>
+<td style="text-align: center;"><p>48011</p></td>
+<td style="text-align: center;"><p>1</p></td>
+<td style="text-align: center;"><p>1</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>7</p></td>
+<td style="text-align: center;"><p>Atascosa</p></td>
+<td style="text-align: center;"><p>48013</p></td>
+<td style="text-align: center;"><p>8</p></td>
+<td style="text-align: center;"><p>8</p></td>
+</tr>
+<tr class="odd">
+<td class="line-b" style="text-align: center;"><p>8</p></td>
+<td class="line-b" style="text-align: center;"><p>Austin</p></td>
+<td class="line-b" style="text-align: center;"><p>48015</p></td>
+<td class="line-b" style="text-align: center;"><p>6</p></td>
+<td class="line-b" style="text-align: center;"><p>6/5S</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>9</p></td>
+<td style="text-align: center;"><p>Bailey</p></td>
+<td style="text-align: center;"><p>48017</p></td>
+<td style="text-align: center;"><p>1</p></td>
+<td style="text-align: center;"><p>1</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>10</p></td>
+<td style="text-align: center;"><p>Bandera</p></td>
+<td style="text-align: center;"><p>48019</p></td>
+<td style="text-align: center;"><p>8</p></td>
+<td style="text-align: center;"><p>8</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>11</p></td>
+<td style="text-align: center;"><p>Bastrop</p></td>
+<td style="text-align: center;"><p>48021</p></td>
+<td style="text-align: center;"><p>7</p></td>
+<td style="text-align: center;"><p>7</p></td>
+</tr>
+<tr class="odd">
+<td class="line-b" style="text-align: center;"><p>12</p></td>
+<td class="line-b" style="text-align: center;"><p>Baylor</p></td>
+<td class="line-b" style="text-align: center;"><p>48023</p></td>
+<td class="line-b" style="text-align: center;"><p>2</p></td>
+<td class="line-b" style="text-align: center;"><p>2/3</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>13</p></td>
+<td style="text-align: center;"><p>Bee</p></td>
+<td style="text-align: center;"><p>48025</p></td>
+<td style="text-align: center;"><p>11</p></td>
+<td style="text-align: center;"><p>11</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>14</p></td>
+<td style="text-align: center;"><p>Bell</p></td>
+<td style="text-align: center;"><p>48027</p></td>
+<td style="text-align: center;"><p>7</p></td>
+<td style="text-align: center;"><p>7</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>15</p></td>
+<td style="text-align: center;"><p>Bexar</p></td>
+<td style="text-align: center;"><p>48029</p></td>
+<td style="text-align: center;"><p>8</p></td>
+<td style="text-align: center;"><p>8</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>The selector <code>r1-$r\4</code> breaks down as
+<ul>
+<li>select the first to last row, and then</li>
+<li>only pick every fourth of them. Using <code>\</code> causes the numbering to be based on relative row numbers.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="tableau-reference" class="level1">
+<h1>Tableau Reference</h1>
+<section id="create-a-table" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-table">Create a Table</h2>
+<p>Tableau tables created inside code blocks with a language of tableau.</p>
+<pre><code>~~~ tableau
+...
+~~~</code></pre>
+<p>As with all code blocks, you can add additional attributes. For example, we can add an ID so we can reference the table elsewhere:</p>
+<pre><code>~~~ {.tableau #my-table}
+...
+~~~</code></pre>
+<p>The table contains a data section and an optional layout section, separated by a line containing just three rquals signs:</p>
+<pre><code>~~~ tableau
+«data»
+===
+«layout»
+~~~</code></pre>
+<p>Both the data and layout sections are normally interpreted line-by-line. One or more lines in the input may end with a backslash character, in which case they will be concatenated with the line that follows before being processed.</p>
+<pre><code>~~~ tableau
+a | \
+b | \
+c
+d | e | f
+g \
+| h | \
+i
+~~~</code></pre>
+<p>is interpreted as if it were:</p>
+<pre><code>~~~ tableau
+a | b | c
+d | e | f
+g | h | i
+~~~</code></pre>
+<p>When we talk about lines in the following descriptions, we mean these concatenated lines.</p>
+</section>
+<section id="tableau-data-section" class="level2">
+<h2 class="anchored" data-anchor-id="tableau-data-section">Tableau Data Section</h2>
+<p>It data section is normally interpreted line by line. There are four line types. The first three each correspond to a roew in the resulting table:</p>
+<ul>
+<li>column data for a row</li>
+<li>an empty line</li>
+<li>a blank line</li>
+</ul>
+<p>The fourth type lets you enter paragraph data to fill a column.</p>
+<section id="column-data-for-a-row" class="level3">
+<h3 class="anchored" data-anchor-id="column-data-for-a-row">Column Data for a Row</h3>
+<p>Tableau follows the standard Markdown convention of using pipe characters to separate columns in a row.</p>
+<pre><code>~~~ tableau
+| a | b | c |
+| d | e | f |
+| g | h | i |
+~~~</code></pre>
+<p>Oening pipe characters are optional <em>unless</em> the cell they are adjacent to is blank.</p>
+<pre><code>  a | b | c
+    | d | e
+| f | h</code></pre>
+<p>In this example, the first row has values in columns 1, 2, and 3. In the second row, tableau interprets the pipe character as opening the first column, and so this row has data in columns 1 and 2, and not columns 2 and 3.</p>
+<p>Include a literal pipe character in a column by escaping it with a backslash. Percent characters must also be escaped.</p>
+<section id="no-format-information-in-the-data-section" class="level4">
+<h4 class="anchored" data-anchor-id="no-format-information-in-the-data-section">No Format Information in the Data Section</h4>
+<p>Unlike most Markdown tables, Tableau does not interpret lines containing minus signs between pipe characters as a heading separator and column alignment specification. If you write</p>
+<pre><code>~~~ tableau
+| a | b | c |
+|---|---|---|
+| d | e | f |
+| g | h | i |
+~~~</code></pre>
+<p>you’ll just see a table whose second row contains minus signs.</p>
+<p>In Tableau, we specify layout in a separate section.</p>
+</section>
+</section>
+<section id="blank-lines-1" class="level3">
+<h3 class="anchored" data-anchor-id="blank-lines-1">Blank Lines</h3>
+<p>A line consistiong of zero or more spaces will create a half-height empty row in the displayed table.</p>
+</section>
+<section id="empty-lines" class="level3">
+<h3 class="anchored" data-anchor-id="empty-lines">Empty Lines</h3>
+<p>A line containing just the test <code>=EMPTY</code> creates a row containing empty cells, where each cell will have same same height as a filled table row.</p>
+</section>
+<section id="column-paragraphs" class="level3">
+<h3 class="anchored" data-anchor-id="column-paragraphs">Column Paragraphs</h3>
+<p>Any column data row may be followed by one or more column paragraph entries. Tnese look like:</p>
+<pre><code>col «n» {{
+    paragraph text
+    .. .. .. .. ..
+}}</code></pre>
+<p>The text between the opening <code>{{</code> and closing <code>}}</code> will be interpreted at the Markdown block level, and so may contain paragraphs, code blocks, divs, and so on. This text will be formatted, and the result will be used as the value of column «n» of the previous row. See <a href="#sec-lcc">Section&nbsp;2.2.0.0.10</a> for an example.</p>
+</section>
+</section>
+<section id="table-layout-section" class="level2">
+<h2 class="anchored" data-anchor-id="table-layout-section">Table Layout Section</h2>
+<p>Blank lines, and lines starting with two minus signs are ignored in the layout section.</p>
+<p>All other lines have the form</p>
+<p><em>«cell selector(s)» = «format specification(s)»</em></p>
+<p>or</p>
+<p><em>«format specification(s)»</em></p>
+<p>The <em>cell selectors</em> specify one or more cells. The <em>format specifications</em> are applied to these cells.</p>
+<p>In the second form (with no cell selectors or equals sign), the format specifications apply to all cells: they are table-level formats.</p>
+<section id="cell-selectors" class="level3">
+<h3 class="anchored" data-anchor-id="cell-selectors">Cell Selectors</h3>
+<p>Here’s the raw syntax of cell selectors. This is followed by an annotated version.</p>
+<pre class="bnf"><code>&lt;cell selector&gt;   := &lt;cell range&gt; ( ";" &lt;cell range&gt; )*
+
+&lt;cell range&gt;      := &lt;row&gt; ( ":" &lt;col&gt; )?
+                  |  &lt;col&gt;
+
+&lt;row&gt;             := "r" &lt;numbers&gt;
+&lt;col&gt;             := "c" &lt;numbers&gt;
+
+&lt;numbers&gt;         := &lt;number range&gt; ( "," &lt;number range&gt; )*
+
+&lt;number range&gt;    := &lt;adjusted number&gt; | &lt;adjusted number&gt; "-" &lt;adjusted number&gt; &lt;skip&gt;?
+
+&lt;adjusted number&gt; := &lt;number&gt; ( [~+] &lt;integer&gt; )
+
+&lt;number&gt;          := &lt;integer&gt;
+                  | '$c'
+                  | '$r' | '@r'
+
+&lt;skip&gt;          := ( "/" | "\" ) ( "odd" | "even" | &lt;integer&gt; )</code></pre>
+<section id="notes" class="level4">
+<h4 class="anchored" data-anchor-id="notes">Notes</h4>
+<ul>
+<li><pre class="bnf"><code>  &lt;cell selector&gt;   := &lt;cell range&gt; ( ";" &lt;cell range&gt; )*</code></pre>
+<p>A selector consists of one or more cell range specifications, separated by semicolons. The corresponding format specifiers are associated independently with each selector, so</p>
+<pre><code>sel1;sell2;sell3 = fmt1 fmt2</code></pre>
+<p>is the same as writing</p>
+<pre><code>sel1 = fmt1 fmt2
+sel2 = fmt1 fmt2
+sel3 = fmt1 fmt2</code></pre></li>
+<li><pre class="bnf"><code>&lt;cell range&gt;      := &lt;row&gt; ( ":" &lt;col&gt; )?
+                  |  &lt;col&gt;
+
+&lt;row&gt;             := "r" &lt;numbers&gt;
+&lt;col&gt;             := "c" &lt;numbers&gt;</code></pre>
+<p>Each individual selector specifies a number or rows and/or columns. If only a row is specified, all columns in that row are implied. If only a column is specified, the specifier applied to that column in all rows.</p>
+<p>For example:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode lua code-with-copy"><code class="sourceCode lua"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- select the cell at row 2, column 3</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>r2<span class="op">:</span>c3</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- select every cell in row 4</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>r4</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- select the cell in column 5 of every row</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>c5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><pre class="bnf"><code>&lt;numbers&gt;         := &lt;number range&gt; ( "," &lt;number range&gt; )*</code></pre>
+<p>The <code>r</code> or <code>c</code> of a row or column selector is followed by one or more comma-separated number ranges. We’ll look at the details of these ranges next, but for now here’s an example using the simplest type of range: an integer:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode lua code-with-copy"><code class="sourceCode lua"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- select rows 1 and 3</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>r1<span class="op">,</span><span class="dv">3</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- select columns 2, 4, and 5</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>c2<span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">5</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- select the cells in columns 2, 4, and 5 or rows 1 and 3</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>r1<span class="op">,</span><span class="dv">3</span><span class="op">:</span>c2<span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can view the <code>:</code> as a kind of outer product: it produces a list of all the cells specified by every combination of the row and column specifiers.</p></li>
+</ul>
+<p>We’re going to look at the remaining syntax in a different order, starting with the definition of a number</p>
+<ul>
+<li><pre class="bnf"><code>  &lt;number&gt;          := &lt;integer&gt;
+                    | '$c' 
+                    | '$r' | '@r'</code></pre>
+<p>A number represents a particular row or column. Both are numbered starting at 1.</p>
+<p>The values <code>$c</code> and <code>$r</code> represent the maximum column and row values.</p>
+<p>The value <code>@r</code> represents the current row. For example, the selector <code>r1,3,5:c@r</code> represents the three cells <code>r1:c1</code>, <code>r3:c3</code>, and <code>r5:c5</code>.</p>
+<p>This will be more useful when we look at ranges.</p></li>
+<li><pre class="bnf"><code>  &lt;adjusted number&gt; := &lt;number&gt; ( [~+] &lt;integer&gt; )</code></pre>
+<p>You can add or subtract a fixed amount from a number. This is typically only used when using the special values <code>@r</code>1, <code>$c</code>, and <code>$r</code>.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode lua code-with-copy"><code class="sourceCode lua"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- select the second to last row</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>r$r<span class="op">~</span><span class="dv">1</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- select the cell whose cvolumn numberr is two more than the current row</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>number<span class="op">.</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>c@r<span class="op">+</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that we use a tidle (<code>~</code>) to represent subtraction.</p></li>
+<li><pre class="bnf"><code>  &lt;number range&gt;    := &lt;adjusted number&gt; | &lt;adjusted number&gt; "-" &lt;adjusted number&gt; &lt;skip&gt;?</code></pre>
+<p>Each number can be either a single value or a range of values. The range selects each cell from the starting value to the end value.</p>
+<p>We saw this when we shaded the multiplication table:</p></li>
+</ul>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+  |  x |  1 |  2 |  3 |  4 |  5 |
+  |  1 |  1 |  2 |  3 |  4 |  5 |
+  |  2 |  2 |  4 |  6 |  8 | 10 |
+  |  3 |  3 |  6 |  9 | 12 | 15 |
+  |  4 |  4 |  8 | 12 | 16 | 20 |
+  |  5 |  5 | 10 | 15 | 20 | 25 |
+  ===
+  # Times table 
+  r1;c1 = header
+  r2-$r:c@r = line(lb)
+  r2-$r:c2-@r~1  = small bg(shade6)
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<caption><p>Times table</p></caption>
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="tableau-th tableau-th" style="text-align: center;"><p>x</p></td>
+<td class="tableau-th" style="text-align: center;"><p>1</p></td>
+<td class="tableau-th" style="text-align: center;"><p>2</p></td>
+<td class="tableau-th" style="text-align: center;"><p>3</p></td>
+<td class="tableau-th" style="text-align: center;"><p>4</p></td>
+<td class="tableau-th" style="text-align: center;"><p>5</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"><p>1</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>1</p></td>
+<td style="text-align: center;"><p>2</p></td>
+<td style="text-align: center;"><p>3</p></td>
+<td style="text-align: center;"><p>4</p></td>
+<td style="text-align: center;"><p>5</p></td>
+</tr>
+<tr class="odd">
+<td class="tableau-th" style="text-align: center;"><p>2</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>2</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>4</p></td>
+<td style="text-align: center;"><p>6</p></td>
+<td style="text-align: center;"><p>8</p></td>
+<td style="text-align: center;"><p>10</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"><p>3</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>3</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>6</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>9</p></td>
+<td style="text-align: center;"><p>12</p></td>
+<td style="text-align: center;"><p>15</p></td>
+</tr>
+<tr class="odd">
+<td class="tableau-th" style="text-align: center;"><p>4</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>4</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>8</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>12</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>16</p></td>
+<td style="text-align: center;"><p>20</p></td>
+</tr>
+<tr class="even">
+<td class="tableau-th" style="text-align: center;"><p>5</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>5</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>10</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>15</p></td>
+<td class="bg-shade6 tableau-small" style="text-align: center;"><p>20</p></td>
+<td class="line-l line-b" style="text-align: center;"><p>25</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The selector <code>r2-6:c@r</code> selects cells in rowes 2 through the end of the table whose column number is the same as the row number.</p>
+<p><code>r2-$r:c2-@r~1</code> looks at rows 2 through 6. In each row, it selects the cells starting at column 2 and ending at the current row number minus 1.</p>
+<ul>
+<li><pre class="bnf"><code>  &lt;skip&gt;          := ( "/" | "\" ) ( "odd" | "even" | &lt;integer&gt; )</code></pre>
+<p>Finally, a skip can be applied to a range. This can be <code>odd</code> to select odd values, <code>even</code> for even values, or an integer to select values that are multiples of that integer.</p>
+<p>The first character of the skip is either <code>/</code> or <code>\\</code>. If you use <code>/</code>, then the skip test uses the absolute value of each number in the range. If instead you use <code>\\</code>, the test uses the offset into the range: the first value in the range has a skiup vaue of 0, the second has a value of 1 andf so on.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode lua code-with-copy"><code class="sourceCode lua"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>r3<span class="op">-</span><span class="dv">8</span><span class="op">/</span>even  <span class="op">-&gt;</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">6</span><span class="op">,</span> <span class="dv">8</span>  <span class="op">(</span> absolute <span class="op">=</span> n<span class="op">)</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>r3<span class="op">-</span><span class="dv">8</span>\even  <span class="op">-&gt;</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">7</span>     <span class="op">(</span>relative <span class="op">=</span>  n<span class="op">-</span>start<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<!-- ==================================================================== -->
+</section>
+</section>
+<section id="format-specifiers" class="level3">
+<h3 class="anchored" data-anchor-id="format-specifiers">Format Specifiers</h3>
+<p>Apart from captions, comments and blank lines, all layout lines look like</p>
+<p><em>«cell selector(s)» = «format specification(s)»</em></p>
+<p>or</p>
+<p><em>«format specification(s)»</em></p>
+<p>Lines that contain cell selectors apply their formats to the selected cells.</p>
+<p>Lines that do not contain cell selectors apply to the table as a whole.</p>
+<p>There are some format selectors thst only make sense when applied to the whole table, and others only apply to cells.</p>
+<div style="">
+<table class="tableau-table table">
+<caption><p>Tableau Format Specifiers</p></caption>
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 50%">
+<col style="width: 50%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="tableau-th align-h-l" style="text-align: center;"><p>Format</p></td>
+<td class="tableau-th" style="text-align: center;"><p>Table</p></td>
+<td class="tableau-th" style="text-align: center;"><p>Cell</p></td>
+<td class="tableau-th line-r" style="text-align: center;"></td>
+<td class="tableau-th" style="text-align: center;"></td>
+<td class="tableau-th align-h-l" style="text-align: center;"><p>Format</p></td>
+<td class="tableau-th" style="text-align: center;"><p>Table</p></td>
+<td class="tableau-th" style="text-align: center;"><p>Cell</p></td>
+</tr>
+<tr class="even">
+<td class="line-t align-h-l" style="text-align: center;"><p>align</p></td>
+<td class="line-t" style="text-align: center;"><p>Y</p></td>
+<td class="line-t" style="text-align: center;"><p>Y</p></td>
+<td class="line-t line-r" style="text-align: center;"></td>
+<td class="line-t" style="text-align: center;"></td>
+<td class="line-t align-h-l" style="text-align: center;"><p>large</p></td>
+<td class="line-t" style="text-align: center;"><p>Y</p></td>
+<td class="line-t" style="text-align: center;"><p>Y</p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>bg</p></td>
+<td style="text-align: center;"><p>Y</p></td>
+<td style="text-align: center;"><p>Y</p></td>
+<td class="line-r" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td class="align-h-l" style="text-align: center;"><p>lines</p></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><p>Y</p></td>
+</tr>
+<tr class="even">
+<td class="line-t align-h-l" style="text-align: center;"><p>boxed</p></td>
+<td class="line-t" style="text-align: center;"><p>Y</p></td>
+<td class="line-t" style="text-align: center;"></td>
+<td class="line-t line-r" style="text-align: center;"></td>
+<td class="line-t" style="text-align: center;"></td>
+<td class="line-t align-h-l" style="text-align: center;"><p>normal</p></td>
+<td class="line-t" style="text-align: center;"><p>Y</p></td>
+<td class="line-t" style="text-align: center;"><p>Y</p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>cols</p></td>
+<td style="text-align: center;"><p>Y</p></td>
+<td style="text-align: center;"></td>
+<td class="line-r" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td class="align-h-l" style="text-align: center;"><p>small</p></td>
+<td style="text-align: center;"><p>Y</p></td>
+<td style="text-align: center;"><p>Y</p></td>
+</tr>
+<tr class="even">
+<td class="line-t align-h-l" style="text-align: center;"><p>fg</p></td>
+<td class="line-t" style="text-align: center;"><p>Y</p></td>
+<td class="line-t" style="text-align: center;"><p>Y</p></td>
+<td class="line-t line-r" style="text-align: center;"></td>
+<td class="line-t" style="text-align: center;"></td>
+<td class="line-t align-h-l" style="text-align: center;"><p>span</p></td>
+<td class="line-t" style="text-align: center;"></td>
+<td class="line-t" style="text-align: center;"><p>Y</p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>footer</p></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><p>Y</p></td>
+<td class="line-r" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td class="align-h-l" style="text-align: center;"><p>style</p></td>
+<td style="text-align: center;"><p>Y</p></td>
+<td style="text-align: center;"><p>Y</p></td>
+</tr>
+<tr class="even">
+<td class="line-t align-h-l" style="text-align: center;"><p>header</p></td>
+<td class="line-t" style="text-align: center;"></td>
+<td class="line-t" style="text-align: center;"><p>Y</p></td>
+<td class="line-t line-r" style="text-align: center;"></td>
+<td class="line-t" style="text-align: center;"></td>
+<td class="line-t align-h-l" style="text-align: center;"><p>vlines</p></td>
+<td class="line-t" style="text-align: center;"><p>Y</p></td>
+<td class="line-t" style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>hlines</p></td>
+<td style="text-align: center;"><p>Y</p></td>
+<td style="text-align: center;"></td>
+<td class="line-r" style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td class="align-h-l" style="text-align: center;"><p>width</p></td>
+<td style="text-align: center;"><p>Y</p></td>
+<td style="text-align: center;"><p>Y</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Many formats have both explicit and implicit forms. The explicit form is the name of the format, with options between parentheses. The implicit form uses just the options. For example, the following three lines are the same:</p>
+<pre><code>r1:c2 = align(lt) bg(shade2)
+r1:r2 = lt bg(shade2)
+r1:r2 = lt shade2</code></pre>
+<p>The descriptions that follow show whether a particular format has an implicit form, and when it can be used.</p>
+<section id="align-horizontal-and-vertical-alignment" class="level4">
+<h4 class="anchored" data-anchor-id="align-horizontal-and-vertical-alignment"><code>align</code>: Horizontal and vertical alignment</h4>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 100%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>context:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>table and cell</p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>explicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>align(</code> [lcrj] [tmb] <code>)</code></p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>implicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>[lcrj] [tmb]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Set horizontal cell alignment (left, center, right, justified) and/or vertical cell alignment (top, middle, bottom)</p>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+| lt | ct | rt | Now is the time for all
+| lb | cm | rt | Now is the time for all
+| b  | rm | l  | Now is the time for all
+===
+vlines hlines
+r1:c1 = lt
+r1:c2 = ct
+r1:c3 = rt
+r1:c4 = j
+r2:c1 = lt
+r2:c2 = cm
+r2:c3 = rb
+r2:c4 = lt
+r3:c1 = b 
+r3:c2 = rm 
+r3:c3 = l
+r3:c4 = r
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table tbl-vlines tbl-hlines table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l align-v-t" style="text-align: center;"><p>lt</p></td>
+<td class="align-h-c align-v-t" style="text-align: center;"><p>ct</p></td>
+<td class="align-h-r align-v-t" style="text-align: center;"><p>rt</p></td>
+<td class="align-h-j" style="text-align: center;"><p>Now is the time for all</p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l align-v-t" style="text-align: center;"><p>lb</p></td>
+<td class="align-h-c align-v-m" style="text-align: center;"><p>cm</p></td>
+<td class="align-h-r align-v-b" style="text-align: center;"><p>rt</p></td>
+<td class="align-h-l align-v-t" style="text-align: center;"><p>Now is the time for all</p></td>
+</tr>
+<tr class="odd">
+<td class="align-v-b" style="text-align: center;"><p>b</p></td>
+<td class="align-h-r align-v-m" style="text-align: center;"><p>rm</p></td>
+<td class="align-h-l" style="text-align: center;"><p>l</p></td>
+<td class="align-h-r" style="text-align: center;"><p>Now is the time for all</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="bg-background-color" class="level4">
+<h4 class="anchored" data-anchor-id="bg-background-color"><code>bg</code>: Background color</h4>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 100%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>context:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>table and cell</p></td>
+<td class="align-h-l" style="text-align: center;"></td>
+<td class="align-h-l" style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>explicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>bg(</code> any_string <code>)</code></p></td>
+<td class="align-h-l" style="text-align: center;"></td>
+<td class="align-h-l" style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>implicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>#</code> xxx<br>
+</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>#</code> xxxxxx<br>
+</p></td>
+<td class="align-h-l" style="text-align: center;"><p>‘shade’[1-9]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Set the background color of a cell. Hex colors and the predefined shade_n_ colors are called <em>known colors</em>, and can be used implicitly.</p>
+<p>Unknown colors <em>must</em> appear inside a <code>bg(...)</code> specifier. For HTML output, these colors are converted into a CSS class name, prefixed by <code>bg-</code>. This means thatg <code>bg(warning)</code> becomes the CSS class <code>bg-warning</code>. It also means that you can use more complex backgrounds, such as gradients and images.</p>
+<style>
+@keyframes pulse-warning {
+  0%   { background-color: orange; }
+  100% { background-color: red }
+}
+
+.bg-pulse {
+  animation-name: pulse-warning;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.bg-mycolor {
+  background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+}
+
+.bg-yourcolor {
+  background-image: url("./rule_segment_wave_40px.svg");
+}
+</style>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+shade1 | shade2 | shade3 | shade4 
+shade5 | shade6 | shade7 | shade8 
+shade9 | #cdf   | #94a8cb | nothing 
+mycolor | yourcolor | warning
+===
+r1:c1 = shade1  
+r1:c2 = shade2  
+r1:c3 = shade3  
+r1:c4 = shade4  
+r2:c1 = shade5  
+r2:c2 = shade6  
+r2:c3 = shade7  
+r2:c4 = shade8  
+r3:c1 = shade9  
+r3:c2 = #cdf
+r3:c3 = #94a8cb
+r4:c1 = bg(mycolor)
+r4:c2 = bg(yourcolor)
+r4:c3 = bg(pulse)
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="bg-shade1" style="text-align: center;"><p>shade1</p></td>
+<td class="bg-shade2" style="text-align: center;"><p>shade2</p></td>
+<td class="bg-shade3" style="text-align: center;"><p>shade3</p></td>
+<td class="bg-shade4" style="text-align: center;"><p>shade4</p></td>
+</tr>
+<tr class="even">
+<td class="bg-shade5" style="text-align: center;"><p>shade5</p></td>
+<td class="bg-shade6" style="text-align: center;"><p>shade6</p></td>
+<td class="bg-shade7" style="text-align: center;"><p>shade7</p></td>
+<td class="bg-shade8" style="text-align: center;"><p>shade8</p></td>
+</tr>
+<tr class="odd">
+<td class="bg-shade9" style="text-align: center;"><p>shade9</p></td>
+<td style="text-align: center; background-color: #cdf;"><p>#cdf</p></td>
+<td style="text-align: center; background-color: #94a8cb;"><p>#94a8cb</p></td>
+<td style="text-align: center;"><p>nothing</p></td>
+</tr>
+<tr class="even">
+<td class="bg-mycolor" style="text-align: center;"><p>mycolor</p></td>
+<td class="bg-yourcolor" style="text-align: center;"><p>yourcolor</p></td>
+<td class="bg-pulse" style="text-align: center;"><p>warning</p></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Expand to see the styles used in the previous table
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb50"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>&lt;style<span class="op">&gt;</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="im">@keyframes</span> pulse-warning {</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0%</span>   { <span class="kw">background-color</span>: <span class="cn">orange</span><span class="op">;</span> }</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">100%</span> { <span class="kw">background-color</span>: <span class="cn">red</span> }</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.bg-pulse</span> {</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation-name</span>: pulse-warning<span class="op">;</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation-duration</span>: <span class="dv">1</span><span class="dt">s</span><span class="op">;</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation-iteration-count</span>: <span class="dv">infinite</span><span class="op">;</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation-direction</span>: <span class="dv">alternate</span><span class="op">;</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a><span class="fu">.bg-mycolor</span> {</span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background</span>: <span class="fu">linear-gradient(</span><span class="dv">0.25</span><span class="dt">turn</span><span class="op">,</span> <span class="cn">#3f87a6</span><span class="op">,</span> <span class="cn">#ebf8e1</span><span class="op">,</span> <span class="cn">#f69d3c</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a><span class="fu">.bg-yourcolor</span> {</span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-image</span>: <span class="fu">url(</span><span class="st">"./rule_segment_wave_40px.svg"</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a>&lt;/style<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="boxed-box-table" class="level4">
+<h4 class="anchored" data-anchor-id="boxed-box-table"><code>boxed</code>: Box table</h4>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 100%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>context:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>table only</p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>explicit:</p></td>
+<td class="align-h-l" style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>implicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>n/a</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Draw a box around the entire table.</p>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+cat  | kitten
+dog  | puppy
+deer | fawn
+===
+boxed
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table tbl-boxed table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><p>cat</p></td>
+<td style="text-align: center;"><p>kitten</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>dog</p></td>
+<td style="text-align: center;"><p>puppy</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>deer</p></td>
+<td style="text-align: center;"><p>fawn</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="cols-missing" class="level4">
+<h4 class="anchored" data-anchor-id="cols-missing"><code>cols</code>: Missing</h4>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 100%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>explicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>align(</code> [lcrj] [tmb] <code>)</code></p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>implicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>[lcrj] [tmb]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>set horizontal cell alignment (left, center, right, justified) and/or vertical cell alignment (top, middle, bottom)</p>
+</section>
+<section id="fg-foreground-color" class="level4">
+<h4 class="anchored" data-anchor-id="fg-foreground-color"><code>fg</code>: Foreground color</h4>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 100%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>context:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>table and cells</p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>explicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>fg(</code> color <code>)</code></p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>implicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>n/a</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Set the foreground color of the selected cells. See the description of <code>bg</code> for notes on the color parameter.</p>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+cat  | kitten | 27 | medium
+dog  | puppy  | 42 | large
+deer | fawn   | 68 | larger
+===
+fg(#a00)
+r2:c2-3 = fg(shade4)
+~~~</code></pre>
+</div>
+<div style="color: #a00">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center; color: #a00;"><p>cat</p></td>
+<td style="text-align: center; color: #a00;"><p>kitten</p></td>
+<td style="text-align: center; color: #a00;"><p>27</p></td>
+<td style="text-align: center; color: #a00;"><p>medium</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center; color: #a00;"><p>dog</p></td>
+<td class="fg-shade4" style="text-align: center;"><p>puppy</p></td>
+<td class="fg-shade4" style="text-align: center;"><p>42</p></td>
+<td style="text-align: center; color: #a00;"><p>large</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center; color: #a00;"><p>deer</p></td>
+<td style="text-align: center; color: #a00;"><p>fawn</p></td>
+<td style="text-align: center; color: #a00;"><p>68</p></td>
+<td style="text-align: center; color: #a00;"><p>larger</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="footer-specify-table-footer-cells" class="level4">
+<h4 class="anchored" data-anchor-id="footer-specify-table-footer-cells"><code>footer</code>: Specify table footer cells</h4>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 100%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>context:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>cells only</p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>explicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>footer</code></p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>implicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>n/a</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The selected cells are made into a table footer. Normally applied to whole rows or columns. See the description of <code>header</code> for an example.</p>
+</section>
+<section id="header-specify-table-header-cells" class="level4">
+<h4 class="anchored" data-anchor-id="header-specify-table-header-cells"><code>header</code>: Specify table header cells</h4>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 100%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>context:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>cells only</p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>explicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>header</code></p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>implicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>n/a</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The selected cells are made into a table footer. Normally applied to whole rows or columns.</p>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+adult | child  | beta | concern
+cat   | kitten | 27 | medium
+dog   | puppy  | 42 | large
+deer  | fawn   | 68 | larger
+adult | child  | beta | concern
+===
+r1   = header
+r$r: = footer
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="tableau-th" style="text-align: center;"><p>adult</p></td>
+<td class="tableau-th" style="text-align: center;"><p>child</p></td>
+<td class="tableau-th" style="text-align: center;"><p>beta</p></td>
+<td class="tableau-th" style="text-align: center;"><p>concern</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>cat</p></td>
+<td style="text-align: center;"><p>kitten</p></td>
+<td style="text-align: center;"><p>27</p></td>
+<td style="text-align: center;"><p>medium</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>dog</p></td>
+<td style="text-align: center;"><p>puppy</p></td>
+<td style="text-align: center;"><p>42</p></td>
+<td style="text-align: center;"><p>large</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>deer</p></td>
+<td style="text-align: center;"><p>fawn</p></td>
+<td style="text-align: center;"><p>68</p></td>
+<td style="text-align: center;"><p>larger</p></td>
+</tr>
+<tr class="odd">
+<td class="tableau-tf" style="text-align: center;"><p>adult</p></td>
+<td class="tableau-tf" style="text-align: center;"><p>child</p></td>
+<td class="tableau-tf" style="text-align: center;"><p>beta</p></td>
+<td class="tableau-tf" style="text-align: center;"><p>concern</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="hlines-draw-lines-between-rows" class="level4">
+<h4 class="anchored" data-anchor-id="hlines-draw-lines-between-rows"><code>hlines</code>: Draw lines between rows</h4>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 100%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>context:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>table only</p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>explicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>hlines</code></p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>implicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>n/a</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Draw lines between table rows.</p>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+cat   | kitten | 27 | medium
+dog   | puppy  | 42 | large
+deer  | fawn   | 68 | larger
+===
+hlines
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table tbl-hlines table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><p>cat</p></td>
+<td style="text-align: center;"><p>kitten</p></td>
+<td style="text-align: center;"><p>27</p></td>
+<td style="text-align: center;"><p>medium</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>dog</p></td>
+<td style="text-align: center;"><p>puppy</p></td>
+<td style="text-align: center;"><p>42</p></td>
+<td style="text-align: center;"><p>large</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>deer</p></td>
+<td style="text-align: center;"><p>fawn</p></td>
+<td style="text-align: center;"><p>68</p></td>
+<td style="text-align: center;"><p>larger</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="large-enlarge-text" class="level4">
+<h4 class="anchored" data-anchor-id="large-enlarge-text"><code>large</code>: Enlarge text</h4>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 100%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>context:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>table and cells</p></td>
+<td class="align-h-l" style="text-align: center;"></td>
+<td class="align-h-l" style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>explicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>large</code><br>
+</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>xlarge</code><br>
+</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>xxlarge</code></p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>implicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>n/a</p></td>
+<td class="align-h-l" style="text-align: center;"></td>
+<td class="align-h-l" style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Increase font size by a small, medium, or large amount. Also see <code>normal</code> and <code>small</code>.</p>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+  small  | xsmall | xxsmall
+  normal | normal | normal
+  xxlarge | xlarge | large
+===
+r1;r3 = align(m)
+r1:c1 = small
+r1:c2 = xsmall
+r1:c3 = xxsmall
+r3:c1 = xxlarge
+r3:c2 = xlarge
+r3:c3 = large
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-v-m tableau-small" style="text-align: center;"><p>small</p></td>
+<td class="align-v-m tableau-small tableau-size-x" style="text-align: center;"><p>xsmall</p></td>
+<td class="align-v-m tableau-small tableau-size-xx" style="text-align: center;"><p>xxsmall</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>normal</p></td>
+<td style="text-align: center;"><p>normal</p></td>
+<td style="text-align: center;"><p>normal</p></td>
+</tr>
+<tr class="odd">
+<td class="align-v-m tableau-large tableau-size-xx" style="text-align: center;"><p>xxlarge</p></td>
+<td class="align-v-m tableau-large tableau-size-x" style="text-align: center;"><p>xlarge</p></td>
+<td class="align-v-m tableau-large" style="text-align: center;"><p>large</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="lines-draw-lines-around-cells" class="level4">
+<h4 class="anchored" data-anchor-id="lines-draw-lines-around-cells"><code>lines</code>: Draw lines around cells</h4>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 100%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>context:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>cells only</p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>explicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>lines(</code> [tblrx]+ <code>)</code></p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>implicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>na</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Draw lines on the (t)op, (b)ottom, (l)edft, or (r)ight of the selected cells. The bo(x) attribute drawsm a box afound the cell. Multiple sides may be given in a single <code>lines</code> specifier.</p>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+ 1  | 2  | 3  | 4
+ 5  | 6  | 7  | 8
+ 9  | 10 | 11 | 12
+ 13 | 14 | 15 | 16
+ ===
+ align(c)
+r1:c1-2 = lines(x)
+r1:c4 = lines(tbr)
+r4 = lines(l)
+r4:c1-$c/even = lines(t)
+r4:c1-$c/odd = lines(b)
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="line-x align-h-c" style="text-align: center;"><p>1</p></td>
+<td class="line-x align-h-c" style="text-align: center;"><p>2</p></td>
+<td class="align-h-c" style="text-align: center;"><p>3</p></td>
+<td class="line-t line-b line-r align-h-c" style="text-align: center;"><p>4</p></td>
+</tr>
+<tr class="even">
+<td class="align-h-c" style="text-align: center;"><p>5</p></td>
+<td class="align-h-c" style="text-align: center;"><p>6</p></td>
+<td class="align-h-c" style="text-align: center;"><p>7</p></td>
+<td class="align-h-c" style="text-align: center;"><p>8</p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-c" style="text-align: center;"><p>9</p></td>
+<td class="align-h-c" style="text-align: center;"><p>10</p></td>
+<td class="align-h-c" style="text-align: center;"><p>11</p></td>
+<td class="align-h-c" style="text-align: center;"><p>12</p></td>
+</tr>
+<tr class="even">
+<td class="line-l line-b align-h-c" style="text-align: center;"><p>13</p></td>
+<td class="line-l line-t align-h-c" style="text-align: center;"><p>14</p></td>
+<td class="line-l line-b align-h-c" style="text-align: center;"><p>15</p></td>
+<td class="line-l line-t align-h-c" style="text-align: center;"><p>16</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Note that the <code>lines</code> specifier applies to each selected cell individually.</p>
+</section>
+<section id="normal-normal-sized-font" class="level4">
+<h4 class="anchored" data-anchor-id="normal-normal-sized-font"><code>normal</code>: Normal-sized font</h4>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 100%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>context:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>table and cells</p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>explicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>normal</code></p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>implicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>n/a</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Makes the text in selected cells normal size. Typically only used to override a more encompassing <code>small</code> or <code>large</code> specifier. See <code>large</code> for an example.</p>
+</section>
+<section id="small-reduce-text" class="level4">
+<h4 class="anchored" data-anchor-id="small-reduce-text"><code>small</code>: Reduce text</h4>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 100%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>context:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>table and cells</p></td>
+<td class="align-h-l" style="text-align: center;"></td>
+<td class="align-h-l" style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>explicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>small</code><br>
+</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>xsmall</code><br>
+</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>xxsmall</code></p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>implicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>n/a</p></td>
+<td class="align-h-l" style="text-align: center;"></td>
+<td class="align-h-l" style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Decrease font size by a small, medium, or large amount. Also see <code>large</code> for an example.</p>
+</section>
+<section id="span-span-cells-horizontally-andor-vertically" class="level4">
+<h4 class="anchored" data-anchor-id="span-span-cells-horizontally-andor-vertically"><code>span</code>: Span cells horizontally and/or vertically</h4>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 100%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>context:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>cells only</p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>explicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>span</code></p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>implicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>n/a</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Looks for contiguous rectangular blocks amoung the selected cells, and makes each block into a single logical cell, whose content and style is taken from the top-left–most cell in each block.</p>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+ 1  | 2  | 3  | 4
+ 5  | 6  | 7  | 8
+ 9  | 10 | 11 | 12
+ 13 | 14 | 15 | 16
+ ===
+r1-3:c1 = span
+r1:c1   = shade1
+
+r1-3:c2-3 = span
+r1:c2     = shade3
+
+r4:c2-4   = span
+r4:c2     = shade6
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td rowspan="3" class="bg-shade1" style="text-align: center;"><p>1</p></td>
+<td colspan="2" rowspan="3" class="bg-shade3" style="text-align: center;"><p>2</p></td>
+<td style="text-align: center;"><p>4</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>8</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>12</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>13</p></td>
+<td colspan="3" class="bg-shade6" style="text-align: center;"><p>14</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="style" class="level4">
+<h4 class="anchored" data-anchor-id="style"><code>.style</code>:</h4>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 100%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>context:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>table and cells</p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>explicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>.stylename</code></p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>implicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>n/a</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Associates the given style with the selected cells. The interpretation of the style depends on the output format used. For HTML output, the style becomes a CSS selector.</p>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+ ant | bee | cat
+ dog | elk | fox
+ gnu | hen | idk
+===
+.gradient
+r2:c2 = .glow
+~~~</code></pre>
+</div>
+<div style="">
+<table class="tableau-table gradient table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><p>ant</p></td>
+<td style="text-align: center;"><p>bee</p></td>
+<td style="text-align: center;"><p>cat</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><p>dog</p></td>
+<td class="glow" style="text-align: center;"><p>elk</p></td>
+<td style="text-align: center;"><p>fox</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><p>gnu</p></td>
+<td style="text-align: center;"><p>hen</p></td>
+<td style="text-align: center;"><p>idk</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<style>
+.gradient {
+  background: linear-gradient(0.1turn, #3f87a6, #ebf8e1, #f69d3c);
+}
+
+table.tableau-table td.glow {
+  box-shadow: 0px 0px 20px 14px rgba(255,46,46,0.9);
+}
+</style>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Expand to see the CSS for the previous table
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb59"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.gradient</span> {</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background</span>: <span class="fu">linear-gradient(</span><span class="dv">0.1</span><span class="dt">turn</span><span class="op">,</span> <span class="cn">#3f87a6</span><span class="op">,</span> <span class="cn">#ebf8e1</span><span class="op">,</span> <span class="cn">#f69d3c</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>table<span class="fu">.tableau-table</span> td<span class="fu">.glow</span> {</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">box-shadow</span>: <span class="dv">0</span><span class="dt">px</span> <span class="dv">0</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span> <span class="dv">14</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">255</span><span class="op">,</span><span class="dv">46</span><span class="op">,</span><span class="dv">46</span><span class="op">,</span><span class="dv">0.9</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="width-set-table-or-column-width" class="level4">
+<h4 class="anchored" data-anchor-id="width-set-table-or-column-width"><code>width</code>: Set table or column width</h4>
+<div style="">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 100%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>context:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>table and cells</p></td>
+</tr>
+<tr class="even">
+<td class="align-h-l" style="text-align: center;"><p>explicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p><code>width(</code> number <code>)</code></p></td>
+</tr>
+<tr class="odd">
+<td class="align-h-l" style="text-align: center;"><p>implicit:</p></td>
+<td class="align-h-l" style="text-align: center;"><p>n/a</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The <code>width</code> specifier takes a number. If this number is a float greater than 0.0 and less that 1.0, then it is interpreted as a ratio (multiply it by 100 in your head ikf you prefer working with percentages). If it is an integer greater than one, it uses the approximate width of that many characters in the default font.</p>
+<p>When applied at the table level, <code>width</code> specifies the width of the table as a whole. When a ratio if given, the width is that ration of the line length.</p>
+<p>When applied to a cell, it represents the width of that cell. Column widths are calculated from the widths of cells in that column using a heuristic which attempts to maintain proportional widths depending on the widths of the cells in each column.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+If you want to know how this works, expand this
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>if no widths are given for a particular column, then the width is approximated by the widt of the widest cell in the column.</p></li>
+<li><p>if a character width is specified for one or more cells, then the width is set to the largest of these.</p></li>
+<li><p>if on or more cells has a ratio as a width, the column width is set to the largest of these.</p></li>
+</ul>
+<p>At this point we have a list of columns. Some may have ratio widths, others may have character widths. Our goal is to convert them all into ratios, such that the ratios add up to 1.0.</p>
+<p>We first remove the columns with ratio widths, adding up those ratios. We subtract the total from 1.0, giving the ratio remaining. Call it <span class="math inline">\({rr}i\)</span>.</p>
+<p>We than add up the character widths of the remaining columns. Call this total is <span class="math inline">\({cw}_{tot}\)</span>. Then we set the ratio width of these columns to their character widths times <span class="math inline">\(\frac{rr}{{cw}_{tot}}\)</span>.</p>
+</div>
+</div>
+</div>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+one  | two  | three
+four | five | six
+===
+bg(#f0f9ff)
+~~~</code></pre>
+</div>
+<div style="background-color: #f0f9ff">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center; background-color: #f0f9ff;"><p>one</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>two</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>three</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center; background-color: #f0f9ff;"><p>four</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>five</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>six</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+one  | two  | three
+four | five | six
+===
+bg(#f0f9ff)
+c1  = width(20)
+c2 = width(4)
+~~~</code></pre>
+</div>
+<div style="background-color: #f0f9ff">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 83%">
+<col style="width: 16%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center; background-color: #f0f9ff;"><p>one</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>two</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>three</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center; background-color: #f0f9ff;"><p>four</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>five</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>six</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+one  | two  | three
+four | five | six
+===
+bg(#f0f9ff)
+width(.75)
+c1  = width(20)
+c2 = width(4)
+~~~</code></pre>
+</div>
+<div style="background-color: #f0f9ff; width: 75.0%">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 83%">
+<col style="width: 16%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center; background-color: #f0f9ff;"><p>one</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>two</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>three</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center; background-color: #f0f9ff;"><p>four</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>five</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>six</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div style="columns: 2; column-gap: 3em; column-rule: 1px solid #969; margin: 1em 0 .75em;">
+<div style="background: #fff2ff; padding: 0.5em 1em; break-after: column;">
+<pre><code>~~~ tableau
+one  | two  | three
+four | five | six
+===
+bg(#f0f9ff)
+width(.4)
+c1  = width(.2)
+c2 = width(.4)
+~~~</code></pre>
+</div>
+<div style="background-color: #f0f9ff; width: 40.0%">
+<table class="tableau-table table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 40%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center; background-color: #f0f9ff;"><p>one</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>two</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>three</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center; background-color: #f0f9ff;"><p>four</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>five</p></td>
+<td style="text-align: center; background-color: #f0f9ff;"><p>six</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section id="styling" class="level1">
+<h1>Styling</h1>
+<section id="html-output" class="level2">
+<h2 class="anchored" data-anchor-id="html-output">HTML Output</h2>
+<p>Tableau uses CSS for all styling. Scope any changes you make with <code>table.tableau-table</code> in order to get the correct specificity.</p>
+<p>You can override colors using CSS variables.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="in">:root</span>{</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">--hbg-h</span>: <span class="dv">240</span><span class="dt">deg</span><span class="op">;</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">--hbg-s</span>: <span class="dv">29</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="va">--caption-bg</span>:      <span class="fu">hsl(var(</span><span class="va">--hbg-h</span><span class="fu">)</span> <span class="fu">var(</span><span class="va">--hbg-s</span><span class="fu">)</span> <span class="dv">98</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>  <span class="va">--header-bg-color</span>: <span class="fu">hsl(var(</span><span class="va">--hbg-h</span><span class="fu">)</span> <span class="fu">var(</span><span class="va">--hbg-s</span><span class="fu">)</span> <span class="dv">60</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>  <span class="va">--grid-line-color-normal</span>: <span class="fu">hsl(var(</span><span class="va">--hbg-h</span><span class="fu">)</span> <span class="fu">var(</span><span class="va">--hbg-s</span><span class="fu">)</span> <span class="dv">80</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>  <span class="va">--grid-line-color-header</span>: <span class="fu">hsl(var(</span><span class="va">--hbg-h</span><span class="fu">)</span> <span class="fu">var(</span><span class="va">--hbg-s</span><span class="fu">)</span> <span class="dv">50</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>  --shade1-bg:       <span class="fu">hsl(</span><span class="dv">60</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">66</span><span class="dt">%</span><span class="op">,</span> <span class="dv">84</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>  --shade2-bg:       <span class="fu">hsl(</span><span class="dv">95</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">79</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a>  --shade3-bg:       <span class="fu">hsl(</span><span class="dv">130</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">79</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a>  --shade4-bg:       <span class="fu">hsl(</span><span class="dv">165</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">79</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a>  --shade5-bg:       <span class="fu">hsl(</span><span class="dv">200</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">79</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-13"><a href="#cb64-13" aria-hidden="true" tabindex="-1"></a>  --shade6-bg:       <span class="fu">hsl(</span><span class="dv">235</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">79</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-14"><a href="#cb64-14" aria-hidden="true" tabindex="-1"></a>  --shade7-bg:       <span class="fu">hsl(</span><span class="dv">270</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">79</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-15"><a href="#cb64-15" aria-hidden="true" tabindex="-1"></a>  --shade8-bg:       <span class="fu">hsl(</span><span class="dv">305</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">79</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-16"><a href="#cb64-16" aria-hidden="true" tabindex="-1"></a>  --shade9-bg:       <span class="fu">hsl(</span><span class="dv">340</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">79</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-17"><a href="#cb64-17" aria-hidden="true" tabindex="-1"></a>  <span class="va">--shade-bg</span>:        <span class="fu">var(</span><span class="va">--shade1-bg</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-18"><a href="#cb64-18" aria-hidden="true" tabindex="-1"></a>  --shade1-fg:       <span class="fu">hsl(</span><span class="dv">60</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">66</span><span class="dt">%</span><span class="op">,</span> <span class="dv">44</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-19"><a href="#cb64-19" aria-hidden="true" tabindex="-1"></a>  --shade2-fg:       <span class="fu">hsl(</span><span class="dv">95</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">39</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-20"><a href="#cb64-20" aria-hidden="true" tabindex="-1"></a>  --shade3-fg:       <span class="fu">hsl(</span><span class="dv">130</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">39</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-21"><a href="#cb64-21" aria-hidden="true" tabindex="-1"></a>  --shade4-fg:       <span class="fu">hsl(</span><span class="dv">165</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">39</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-22"><a href="#cb64-22" aria-hidden="true" tabindex="-1"></a>  --shade5-fg:       <span class="fu">hsl(</span><span class="dv">200</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">39</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-23"><a href="#cb64-23" aria-hidden="true" tabindex="-1"></a>  --shade6-fg:       <span class="fu">hsl(</span><span class="dv">235</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">39</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-24"><a href="#cb64-24" aria-hidden="true" tabindex="-1"></a>  --shade7-fg:       <span class="fu">hsl(</span><span class="dv">270</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">39</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-25"><a href="#cb64-25" aria-hidden="true" tabindex="-1"></a>  --shade8-fg:       <span class="fu">hsl(</span><span class="dv">305</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">39</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-26"><a href="#cb64-26" aria-hidden="true" tabindex="-1"></a>  --shade9-fg:       <span class="fu">hsl(</span><span class="dv">340</span><span class="dt">deg</span><span class="op">,</span> <span class="dv">61</span><span class="dt">%</span><span class="op">,</span> <span class="dv">39</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-27"><a href="#cb64-27" aria-hidden="true" tabindex="-1"></a>  <span class="va">--shade-bg</span>:        <span class="fu">var(</span><span class="va">--shade1-bg</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-28"><a href="#cb64-28" aria-hidden="true" tabindex="-1"></a>  <span class="va">--stripe-bg</span>:       <span class="fu">hsl(var(</span><span class="va">--hbg-h</span><span class="fu">)</span> <span class="fu">var(</span><span class="va">--hbg-s</span><span class="fu">)</span> <span class="dv">95</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb64-29"><a href="#cb64-29" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Tableau also has definitions for dark mode:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[data-md-color-scheme</span><span class="op">=</span><span class="st">slate</span><span class="ex">]</span> {</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">--hbg-h</span>: <span class="dv">240</span><span class="dt">deg</span><span class="op">;</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">--hbg-s</span>: <span class="dv">29</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="va">--caption-bg</span>:      <span class="fu">hsl(var(</span><span class="va">--hbg-h</span><span class="fu">)</span> <span class="fu">var(</span><span class="va">--hbg-s</span><span class="fu">)</span> <span class="dv">23</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>  <span class="va">--header-bg-color</span>: <span class="fu">hsl(var(</span><span class="va">--hbg-h</span><span class="fu">)</span> <span class="fu">var(</span><span class="va">--hbg-s</span><span class="fu">)</span> <span class="dv">30</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>  <span class="va">--grid-line-color-normal</span>: <span class="fu">hsl(var(</span><span class="va">--hbg-h</span><span class="fu">)</span> <span class="fu">var(</span><span class="va">--hbg-s</span><span class="fu">)</span> <span class="dv">50</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a>        <span class="in">:       :</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can change the position to the table caption:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>table<span class="fu">.tableau-table</span> {</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span>: <span class="bu">auto</span><span class="op">;</span>  </span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">caption-side</span>: <span class="dv">bottom</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -36,14 +36,16 @@ $(TASSETS): $(ASSETS)
 $(TDIRS):
 		mkdir -p $@
 
+############################################# doc
+
 .PHONY: doc
-doc: tableau.html
+doc: docs/tableau-guide.html
 
-tableau.html: tableau.qmd build
-	quarto render tableau.qmd
+docs/tableau-guide.html: docs/tableau-guide.qmd build
+	quarto render docs/tableau-guide.qmd
 
-tableau.qmd: tableau.docco util/sbs.lua
-	lua util/sbs.lua <tableau.docco >tableau.qmd
+docs/tableau-guide.qmd: docs/tableau-guide.docco util/sbs.lua
+	lua util/sbs.lua <docs/tableau-guide.docco >docs/tableau-guide.qmd
 
 
 # $(TDIR_PARSER):
