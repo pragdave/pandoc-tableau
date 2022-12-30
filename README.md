@@ -29,9 +29,16 @@ row being generated. It also does arithmetic.
 
 ![Multiplication table](README_ASSETS/times-table.png)
 
+## Status
+
+* HTML generation: working
+* PDF generation:
+  * prototype/poc working
+  * development starting
+
 ## Documentation
 
-A combined guide and reference [is available](docs/tableau_guide.html).
+A combined guide and reference [is available](https://pragdave.github.io/pandoc-tableau/tableau-guide.html).
 
 ## Installation
 
@@ -55,7 +62,7 @@ This second line tells Quarto where in the filter chain it should run.
 
 ## Using
 
-See [the guide](docs/tableau_guide.html). 
+See [the guide](https://pragdave.github.io/pandoc-tableau/tableau-guide.html).
 
 ### TLDR;
 
