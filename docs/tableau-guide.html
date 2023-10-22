@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.258">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,9 +17,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -46,43 +47,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -97,12 +68,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link href="tableau-guide_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="tableau-guide_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <link href="tableau-guide_files/libs/quarto-contrib/tableau-1.0.0/tableau.css" rel="stylesheet">
-<style>
-/* Styles added by the columns.lua pandoc filter */
-  .columns :first-child {margin-top: 0;}
-  .column-span + * {margin-top: 0;}
-</style>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
@@ -204,7 +171,7 @@ r2-$r:c2-@r~1  = small bg(shade6)
 </div>
 <div style="">
 <table class="tableau-table table">
-<caption><p>Times table</p></caption>
+<caption>Times table</caption>
 <colgroup>
 <col style="width: 0%">
 <col style="width: 0%">
@@ -293,7 +260,7 @@ for rows two through six, select cells from column two through the column one le
 <h3 class="anchored" data-anchor-id="apa-style-table">APA-style Table</h3>
 <div style="">
 <table class="tableau-table table">
-<caption><p>Results of Curve-Fitting Analysis Examining the Time Course of Fixations to the Target</p></caption>
+<caption>Results of Curve-Fitting Analysis Examining the Time Course of Fixations to the Target</caption>
 <colgroup>
 <col style="width: 42%">
 <col style="width: 12%">
@@ -361,7 +328,7 @@ for rows two through six, select cells from column two through the column one le
 <h3 class="anchored" data-anchor-id="nutrition-label">Nutrition Label</h3>
 <div style="width: 50.0%">
 <table class="tableau-table table">
-<caption><p>Nutrition Facts for Yummy Treats</p></caption>
+<caption>Nutrition Facts for Yummy Treats</caption>
 <colgroup>
 <col style="width: 10%">
 <col style="width: 31%">
@@ -703,7 +670,7 @@ Mouse    | 1.5      |  4
 </div>
 <div style="">
 <table class="tableau-table table">
-<caption><p>Fake Animal Lifespan Data</p></caption>
+<caption>Fake Animal Lifespan Data</caption>
 <colgroup>
 <col style="width: 0%">
 <col style="width: 0%">
@@ -767,7 +734,7 @@ hlines vlines
 </div>
 <div style="">
 <table class="tableau-table tbl-hlines tbl-vlines table">
-<caption><p>Fake Animal Lifespan Data</p></caption>
+<caption>Fake Animal Lifespan Data</caption>
 <colgroup>
 <col style="width: 0%">
 <col style="width: 0%">
@@ -835,7 +802,7 @@ r6 = lines(t)
 </div>
 <div style="">
 <table class="tableau-table table">
-<caption><p>Fake Animal Lifespan Data</p></caption>
+<caption>Fake Animal Lifespan Data</caption>
 <colgroup>
 <col style="width: 0%">
 <col style="width: 0%">
@@ -899,7 +866,7 @@ r3,4,5,6 = lines(t)
 </div>
 <div style="">
 <table class="tableau-table table">
-<caption><p>Fake Animal Lifespan Data</p></caption>
+<caption>Fake Animal Lifespan Data</caption>
 <colgroup>
 <col style="width: 0%">
 <col style="width: 0%">
@@ -962,7 +929,7 @@ r3-6 = lines(t)
 </div>
 <div style="">
 <table class="tableau-table table">
-<caption><p>Fake Animal Lifespan Data</p></caption>
+<caption>Fake Animal Lifespan Data</caption>
 <colgroup>
 <col style="width: 0%">
 <col style="width: 0%">
@@ -1026,7 +993,7 @@ r3-6 = lines(t)
 </div>
 <div style="">
 <table class="tableau-table table">
-<caption><p>Fake Animal Lifespan Data</p></caption>
+<caption>Fake Animal Lifespan Data</caption>
 <colgroup>
 <col style="width: 0%">
 <col style="width: 0%">
@@ -1091,7 +1058,7 @@ r3-6 = lines(t)
 </div>
 <div style="">
 <table class="tableau-table table">
-<caption><p>Fake Animal Lifespan Data</p></caption>
+<caption>Fake Animal Lifespan Data</caption>
 <colgroup>
 <col style="width: 0%">
 <col style="width: 0%">
@@ -1157,7 +1124,7 @@ r3-$r:c2-$c = align(r)
 </div>
 <div style="">
 <table class="tableau-table table">
-<caption><p>Fake Animal Lifespan Data</p></caption>
+<caption>Fake Animal Lifespan Data</caption>
 <colgroup>
 <col style="width: 0%">
 <col style="width: 0%">
@@ -1227,7 +1194,7 @@ r3:c3;r4:c3 = bg(shade8)
 </div>
 <div style="">
 <table class="tableau-table table">
-<caption><p>Fake Animal Lifespan Data</p></caption>
+<caption>Fake Animal Lifespan Data</caption>
 <colgroup>
 <col style="width: 0%">
 <col style="width: 0%">
@@ -1322,18 +1289,8 @@ r2:c2-3 = span
 </tr>
 <tr class="even">
 <td class="align-h-l" style="text-align: center;"></td>
-<td colspan="2" class="align-h-l" style="text-align: center;"><div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<td colspan="2" class="align-h-l" style="text-align: center;"><div class="callout-note">
 <p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire…</p>
-</div>
 </div></td>
 </tr>
 <tr class="odd">
@@ -2037,23 +1994,23 @@ sel3 = fmt1 fmt2</code></pre></li>
 <p>Each individual selector specifies a number or rows and/or columns. If only a row is specified, all columns in that row are implied. If only a column is specified, the specifier applied to that column in all rows.</p>
 <p>For example:</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode lua code-with-copy"><code class="sourceCode lua"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- select the cell at row 2, column 3</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>r2<span class="op">:</span>c3</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="va">r2</span><span class="op">:</span><span class="va">c3</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- select every cell in row 4</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>r4</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="va">r4</span></span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- select the cell in column 5 of every row</span></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>c5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="va">c5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><pre class="bnf"><code>&lt;numbers&gt;         := &lt;number range&gt; ( "," &lt;number range&gt; )*</code></pre>
 <p>The <code>r</code> or <code>c</code> of a row or column selector is followed by one or more comma-separated number ranges. We’ll look at the details of these ranges next, but for now here’s an example using the simplest type of range: an integer:</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode lua code-with-copy"><code class="sourceCode lua"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- select rows 1 and 3</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>r1<span class="op">,</span><span class="dv">3</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="va">r1</span><span class="op">,</span><span class="dv">3</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- select columns 2, 4, and 5</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>c2<span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">5</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="va">c2</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">5</span></span>
 <span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- select the cells in columns 2, 4, and 5 or rows 1 and 3</span></span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>r1<span class="op">,</span><span class="dv">3</span><span class="op">:</span>c2<span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="va">r1</span><span class="op">,</span><span class="dv">3</span><span class="op">:</span><span class="va">c2</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You can view the <code>:</code> as a kind of outer product: it produces a list of all the cells specified by every combination of the row and column specifiers.</p></li>
 </ul>
 <p>We’re going to look at the remaining syntax in a different order, starting with the definition of a number</p>
@@ -2068,11 +2025,11 @@ sel3 = fmt1 fmt2</code></pre></li>
 <li><pre class="bnf"><code>  &lt;adjusted number&gt; := &lt;number&gt; ( [~+] &lt;integer&gt; )</code></pre>
 <p>You can add or subtract a fixed amount from a number. This is typically only used when using the special values <code>@r</code>1, <code>$c</code>, and <code>$r</code>.</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode lua code-with-copy"><code class="sourceCode lua"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- select the second to last row</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>r$r<span class="op">~</span><span class="dv">1</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="va">r</span>$<span class="va">r</span><span class="op">~</span><span class="dv">1</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- select the cell whose cvolumn numberr is two more than the current row</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>number<span class="op">.</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>c@r<span class="op">+</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="va">number</span><span class="op">.</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="va">c</span>@<span class="va">r</span><span class="op">+</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Note that we use a tidle (<code>~</code>) to represent subtraction.</p></li>
 <li><pre class="bnf"><code>  &lt;number range&gt;    := &lt;adjusted number&gt; | &lt;adjusted number&gt; "-" &lt;adjusted number&gt; &lt;skip&gt;?</code></pre>
 <p>Each number can be either a single value or a range of values. The range selects each cell from the starting value to the end value.</p>
@@ -2096,7 +2053,7 @@ sel3 = fmt1 fmt2</code></pre></li>
 </div>
 <div style="">
 <table class="tableau-table table">
-<caption><p>Times table</p></caption>
+<caption>Times table</caption>
 <colgroup>
 <col style="width: 0%">
 <col style="width: 0%">
@@ -2164,8 +2121,8 @@ sel3 = fmt1 fmt2</code></pre></li>
 <li><pre class="bnf"><code>  &lt;skip&gt;          := ( "/" | "\" ) ( "odd" | "even" | &lt;integer&gt; )</code></pre>
 <p>Finally, a skip can be applied to a range. This can be <code>odd</code> to select odd values, <code>even</code> for even values, or an integer to select values that are multiples of that integer.</p>
 <p>The first character of the skip is either <code>/</code> or <code>\\</code>. If you use <code>/</code>, then the skip test uses the absolute value of each number in the range. If instead you use <code>\\</code>, the test uses the offset into the range: the first value in the range has a skiup vaue of 0, the second has a value of 1 andf so on.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode lua code-with-copy"><code class="sourceCode lua"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>r3<span class="op">-</span><span class="dv">8</span><span class="op">/</span>even  <span class="op">-&gt;</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">6</span><span class="op">,</span> <span class="dv">8</span>  <span class="op">(</span> absolute <span class="op">=</span> n<span class="op">)</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>r3<span class="op">-</span><span class="dv">8</span>\even  <span class="op">-&gt;</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">7</span>     <span class="op">(</span>relative <span class="op">=</span>  n<span class="op">-</span>start<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb46"><pre class="sourceCode lua code-with-copy"><code class="sourceCode lua"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="va">r3</span><span class="op">-</span><span class="dv">8</span><span class="op">/</span><span class="va">even</span>  <span class="op">-&gt;</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">6</span><span class="op">,</span> <span class="dv">8</span>  <span class="op">(</span> <span class="va">absolute</span> <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="va">r3</span><span class="op">-</span><span class="dv">8</span>\<span class="va">even</span>  <span class="op">-&gt;</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">7</span>     <span class="op">(</span><span class="va">relative</span> <span class="op">=</span>  <span class="va">n</span><span class="op">-</span><span class="va">start</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
 <!-- ==================================================================== -->
 </section>
@@ -2181,7 +2138,7 @@ sel3 = fmt1 fmt2</code></pre></li>
 <p>There are some format selectors thst only make sense when applied to the whole table, and others only apply to cells.</p>
 <div style="">
 <table class="tableau-table table">
-<caption><p>Tableau Format Specifiers</p></caption>
+<caption>Tableau Format Specifiers</caption>
 <colgroup>
 <col style="width: 0%">
 <col style="width: 0%">
@@ -2488,22 +2445,22 @@ r4:c3 = bg(pulse)
 </table>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Expand to see the styles used in the previous table
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="sourceCode" id="cb50"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>&lt;style<span class="op">&gt;</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="im">@keyframes</span> pulse-warning {</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0%</span>   { <span class="kw">background-color</span>: <span class="cn">orange</span><span class="op">;</span> }</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">100%</span> { <span class="kw">background-color</span>: <span class="cn">red</span> }</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  0%   { <span class="kw">background-color</span>: <span class="cn">orange</span><span class="op">;</span> }</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  100% { <span class="kw">background-color</span>: <span class="cn">red</span> }</span>
 <span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.bg-pulse</span> {</span>
@@ -3215,17 +3172,17 @@ table.tableau-table td.glow {
   box-shadow: 0px 0px 20px 14px rgba(255,46,46,0.9);
 }
 </style>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Expand to see the CSS for the previous table
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="sourceCode" id="cb59"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.gradient</span> {</span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background</span>: <span class="fu">linear-gradient(</span><span class="dv">0.1</span><span class="dt">turn</span><span class="op">,</span> <span class="cn">#3f87a6</span><span class="op">,</span> <span class="cn">#ebf8e1</span><span class="op">,</span> <span class="cn">#f69d3c</span><span class="fu">)</span><span class="op">;</span></span>
@@ -3265,17 +3222,17 @@ Expand to see the CSS for the previous table
 <p>The <code>width</code> specifier takes a number. If this number is a float greater than 0.0 and less that 1.0, then it is interpreted as a ratio (multiply it by 100 in your head ikf you prefer working with percentages). If it is an integer greater than one, it uses the approximate width of that many characters in the default font.</p>
 <p>When applied at the table level, <code>width</code> specifies the width of the table as a whole. When a ratio if given, the width is that ration of the line length.</p>
 <p>When applied to a cell, it represents the width of that cell. Column widths are calculated from the widths of cells in that column using a heuristic which attempts to maintain proportional widths depending on the widths of the cells in each column.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 If you want to know how this works, expand this
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><p>if no widths are given for a particular column, then the width is approximated by the widt of the widest cell in the column.</p></li>
@@ -3504,9 +3461,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -3571,6 +3542,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

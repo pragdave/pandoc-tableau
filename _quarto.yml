@@ -1,7 +1,7 @@
 filters:
   - _extensions/tableau_pre/tableau_pre.lua
   - quarto
-  - other_filters/columns.lua
+  # - other_filters/columns.lua
 
 format:
   html:

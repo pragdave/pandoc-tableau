@@ -1,5 +1,4 @@
 local _module_0 = { }
-local inspect = require("inspect")
 local trim
 trim = function(str)
 	return string.gsub(string.gsub(str, "^%s+", ""), "%s+$", "")
@@ -40,7 +39,7 @@ dump = function(value, label)
 	if label then
 		print("\nvvv " .. tostring(label))
 	end
-	print(inspect(value))
+	print(value)
 	if label then
 		print("^^^\n")
 	end

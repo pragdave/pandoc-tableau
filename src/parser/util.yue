@@ -1,4 +1,4 @@
-import "inspect"
+-- import "inspect"
 
 ---------------------------------------------------------------------------------
 export trim = (str) ->
@@ -32,7 +32,8 @@ export dump = (value, label=nil) ->
   if label
     print "\nvvv #{label}"
   
-  value |> inspect |> print 
+  -- value |> inspect |> print 
+  value |> print 
 
   if label
     print "^^^\n"
