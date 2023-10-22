@@ -29,6 +29,12 @@ row being generated. It also does arithmetic.
 
 ![Multiplication table](README_ASSETS/times-table.png)
 
+## Installation
+
+~~~
+$ quarto add pragdave/pandoc-tableau
+~~~
+
 ## Status
 
 * HTML generation: working
