@@ -31,7 +31,7 @@ $(TDIR)/%.lua:	src/%.yue
 .default: build
 
 build: $(TDIRS) $(TASSETS) $(TPARSER)
-  cp _extension.yml $(TDIR)/
+	cp _extension.yml $(TDIR)/
 
 $(TASSETS): $(ASSETS)
 	cp $(ASSETS) $(TASSETS)
