@@ -1,3 +1,5 @@
+YUE_CMD=$(shell luarocks show yue | sed -nf find_path.sed)
+
 targets_for = $(patsubst %.yue, $(TDIR)/%.lua, $1)
 PARSER=$(addprefix parser/, \
 	ast.yue \
@@ -23,7 +25,7 @@ TDIRS=$(TDIR) $(TDIR_PARSER) $(TDIR_ASSETS)
 TPARSER=$(call targets_for, $(PARSER) $(REST))
 
 $(TDIR)/%.lua:	src/%.yue
-	yue -o $@ $<
+	$(YUE_CMD) -o $@ $<
 
 
 .default: build
